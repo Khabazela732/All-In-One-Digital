@@ -1,0 +1,107 @@
+{% extends "coordination/global/base.html" %} {% block content %}
+<div class="page-heading">
+  <h3>Qualifications</h3>
+</div>
+<div class="page-content">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-md-6 order-md-1 order-last">
+        <a href="">Qualifications</a>
+        <p class="text-subtitle text-muted">Add Qualificationsq</p>
+      </div>
+      <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav
+          aria-label="breadcrumb"
+          class="breadcrumb-header float-start float-lg-end"
+        >
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Qualifications
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal jQuery Datatable start -->
+  <section class="section">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Qualifications</h5>
+      </div>
+      <div class="card-header">
+        <button class="btn btn-primary" id="addQualificationBtn" onclick="AddQualification()">
+          Add Qualification
+        </button>
+      </div>
+      <div class="card" style="display:none" id="addQualification_form">
+        <div class="card-header">
+          <h5 class="card-title">Add Qualification</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive datatable-minimal" style="display:block" id="qualifications_table">
+          <table class="table" id="induction-posts">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>CODE</th>
+                <th>NAME</th>
+                <th>DURATION(In years)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for qualifictaion in qualifictaions %}
+              <tr>
+                <td>{{ qualifictaion.id }}</td>
+                <td>
+                  <a
+                    href="{% url 'qualification' qualification_id=qualifictaion.id %}"
+                    >{{ qualifictaion.code }}</a
+                  >
+                </td>
+                <td>{{ qualifictaion.name }}</td>
+                <td>{{ qualifictaion.duration_in_yrs }}</td>
+                {% comment %}
+                <td>
+                  <a href="{% url 'induction-application-posts' induction.id %}"
+                    >View Applications</a
+                  >
+                </td>
+                {% endcomment %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Minimal jQuery Datatable end -->
+</div>
+<script>
+    const qualificationTable = document.getElementById("qualifications_table")
+    const addQualificationForm = document.getElementById("addQualification_form")
+    const addQualificationBtn = document.getElementById("addQualificationBtn")
+
+    function AddQualification() {
+        if(addQualificationForm.style.display == 'none'){
+            addQualificationForm.style.display = "block"
+            qualificationTable.style.display = "none"
+            addQualificationBtn.innerHTML = "Cancel"
+        } else {
+            addQualificationForm.style.display = "none"
+            qualificationTable.style.display = "block"
+            addQualificationBtn.innerHTML = "Add Qualification"
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,137 @@
+{% extends "administration/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Qualification - {{ qualification.code }}</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="{% url 'qualifications' %}">Qualifications</a>
+                <p class="text-subtitle text-muted">{{ qualification.name }}</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Qualification</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ qualification.code }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    {{ qualification.name }}
+                </h5>
+            </div>
+            <div class="card-body">
+                {{ qualification.description }} 
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    Work Items
+                </h5>
+            </div>
+            <div class="card-header">
+                <button class="btn btn-primary" id="addWorkItemBtn" onclick="AddWorkItem()">Add Work Item</button>
+            </div>
+            <div class="card" style="display:none" id="addWorkItem_form">
+                <div class="card-header">
+                  <h5 class="card-title">Add Work Item</h5>
+                </div>
+                <div class="card-body">
+                  <form method="post" id="workitem-form" action="{% url 'qualification' qualification.id %}">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="id_name">Name</label>
+                        {{ form.name }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_description">Description</label>
+                        {{ form.description }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_subject">Subject</label>
+                        {{ form.subject }}
+                        <small>
+                        <a href="javascript:void(0);" onclick="openAddSubjectPopup()">Can't find it? Add a new subject</a>
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Add</button>
+                 </form>
+                </div>
+                </div>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive datatable-minimal" style="display:block" id="workitems_table">
+                    <table class="table" id="induction-posts">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NAME</th>
+                                <th>DELIVERABLES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for workItem in workItems %}
+                        <tr>
+                            <td>{{ workItem.id }}</td>
+                            <td><a href="{% url 'workitem' workitem_id=workItem.id %}">{{ workItem.name }}</a></td>
+                            <td>{{ workItem.deliverables.all.count }}</td>
+                            {% comment %} <td><a href="{% url 'induction-application-posts' induction.id %}">View Applications</a></td> {% endcomment %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+<script>       
+    const workItemsTable = document.getElementById("workitems_table")
+    const addWorkItemForm = document.getElementById("addWorkItem_form")
+    const addWorkItemBtn = document.getElementById("addWorkItemBtn")
+
+    function AddWorkItem() {
+        if(addWorkItemForm.style.display == 'none'){
+            addWorkItemForm.style.display = "block"
+            workItemsTable.style.display = "none"
+            addWorkItemBtn.innerHTML = "Cancel"
+        } else {
+            addWorkItemForm.style.display = "none"
+            workItemsTable.style.display = "block"
+            addWorkItemBtn.innerHTML = "Add Add workItem"
+        }
+    }
+    function openAddSubjectPopup() {
+        var url = "{% url 'add_subject' %}";
+        var windowName = 'AddSubjectPopup';
+        var width = 600;
+        var height = 500;
+        var left = (window.innerWidth - width) / 2;
+        var top = (window.innerHeight - height) / 2;
+        var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+        window.open(url, windowName, features);
+    }
+  </script>
+{% endblock content %}

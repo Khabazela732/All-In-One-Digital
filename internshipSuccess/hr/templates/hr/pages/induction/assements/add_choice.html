@@ -1,0 +1,20 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Add Choices</title>
+</head>
+<body>
+    <h1>Add Choices</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table>
+            {% for form in formset %}
+            {{ form }}
+            {% endfor %}
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+{% endblock %}

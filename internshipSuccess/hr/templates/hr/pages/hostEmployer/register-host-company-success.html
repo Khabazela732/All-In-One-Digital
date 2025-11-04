@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Member</title>
+    <script>
+        const ReloadInductionApplicationPostPage = (url) => {
+            window.location.href = url;
+            window.close();
+        };
+
+        // Automatically redirect and close the window after 2 seconds
+        setTimeout(() => {
+            ReloadInductionApplicationPostPage(`{% url "induction" %}`);
+        }, 2000);
+    </script>
+</head>
+<body>
+    <p>You Have Successfully created a new Staff Member</p>
+    <button onclick="ReloadInductionApplicationPostPage(`{% url "induction" %}`)">Close Window</button>
+</body>
+</html>

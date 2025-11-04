@@ -1,0 +1,72 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>   
+<div class="page-heading">
+    <h3>Host Employers</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="">All Interns</a>
+                <p class="text-subtitle text-muted">All Interns internship success</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">All Interns</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    All Interns
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive datatable-minimal">
+                    <table class="table" id="induction-posts">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>User Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Joined Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for intern in interns %}
+                        <tr>
+                            <td>{{ intern.id }}</td>
+                            <td>{{ intern.username }}</td>
+                            <td>{{ intern.first_name }}</td>
+                            <td>{{ intern.last_name }}</td>
+                            <td>{{ intern.email }}</td>
+                            <td>{{ intern.date_joined }}</td>
+                            <td><a href="{% url 'intern_profil' intern_id=intern.id %}">View</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+{% endblock content %}

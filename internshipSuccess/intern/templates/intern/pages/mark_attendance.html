@@ -1,0 +1,37 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mark Attendance</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Mark Attendance</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div>
+        <h2>Today's Attendance</h2>
+        <p>Status: {{ attendance.status }}</p>
+        <p>Sign-in Time: {{ attendance.sign_in_time }}</p>
+        <p>Sign-out Time: {{ attendance.sign_out_time }}</p>
+        <p>Duty Hours: {{ attendance.duty_hours }}</p>
+        <p>Stipend Earned: {{ attendance.stipend_earned }}</p>
+    </div>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}'
+                });
+            {% endfor %}
+        {% endif %}
+    </script>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,183 @@
+{% extends "global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>{{ host_employer.company_name }}</h3>
+</div> 
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+             Our Departments
+            </h5>
+        </div>
+            <div class="card-header">
+                <button class="btn btn-primary" onclick="adddepartment()">Add Department</button>
+            </div>
+            
+            <script>
+                function adddepartment() {
+                    Swal.fire({
+                        title: `You are about to add Department `,
+                        html: `Department cannot be added without a name`,
+                        icon: 'warning',
+                        confirmButtonColor: 'red',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Add',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (name) => {
+                            if (!name) {
+                                Swal.showValidationMessage('Please enter Department Name');
+                            } else {
+                                const url = '/hostcompany/departments/add/'; // Update this URL with the correct endpoint
+                                const formData = new FormData();
+                                formData.append('name', name);
+                
+                                return fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFToken': '{{ csrf_token }}',
+                                    },
+                                    body: formData,
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Department added successfully',
+                                    });
+                                    setTimeout(() => { location.reload() }, 1000);
+                                })
+                                .catch(error => {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed to add Department',
+                                        text: error.message,
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
+                function deleteDepartment(departmentId) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You are about to delete this department.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: 'red',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const url = `/hostcompany/departments/delete/${departmentId}/`;
+                            fetch(url, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',
+                                    'Content-Type': 'application/json'
+                                },
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Department deleted successfully',
+                                });
+                                setTimeout(() => { location.reload() }, 1000);
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to delete Department',
+                                    text: error.message,
+                                });
+                            });
+                        }
+                    });
+                } 
+                function editDepartment(departmentId) {
+                    // Retrieve the new name for the department using an input dialog or prompt
+                    const newName = prompt('Enter the new name for the department:');
+                    if (newName) {
+                        // Send a POST request to the edit department endpoint
+                        const url = `/hostcompany/departments/edit/${departmentId}/`;
+                        const formData = new FormData();
+                        formData.append('new_name', newName);
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: formData,
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Show success message and reload the page
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Department updated successfully',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                        .catch(error => {
+                            // Show error message if the request fails
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed to update department',
+                                text: error.message,
+                            });
+                        });
+                    }
+                }
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <div class="card-body">
+            <div class="table-responsive datatable-minimal">
+                <table class="table" id="induction-posts">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created At</th>
+                            <th>Number Of Interns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for department in departments %}
+                    <tr>
+                        <td>{{ department.name }}</td>
+                        <td>None</td>
+                        <td>None</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="editDepartment('{{ department.id }}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteDepartment('{{ department.id }}')">Delete</button>
+                        </td>  
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

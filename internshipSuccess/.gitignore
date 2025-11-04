@@ -1,0 +1,10 @@
+venv/
+*.env
+
+staticfiles/
+
+media/
+*.pyc
+*/__pycache__/*.pyc
+db.sqlite3
+core/local_settings.py

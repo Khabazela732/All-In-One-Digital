@@ -1,0 +1,41 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionaire</title>
+</head>
+<body>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Thank you for writing the assigment</h5>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}
+<form method="post">
+    {% csrf_token %}
+    {% for question in questions %}
+    <div class="question">
+        <p>{{ question.text }}</p>
+        {% if question.question_type == 'multiple_choice' %}
+        <ul>
+            {% for choice in question.choice_set.all %}
+            <li>
+                <label>
+                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                    {{ choice.text }}
+                </label>
+            </li>
+            {% endfor %}
+        </ul>
+        {% elif question.question_type == 'essay' %}
+        <textarea name="question_{{ question.id }}"></textarea>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>

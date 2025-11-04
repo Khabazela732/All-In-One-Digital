@@ -1,0 +1,35 @@
+{% extends "global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Rotation Schedule</h3>
+    <a href="{% url 'rotation-create' %}" class="btn btn-success mb-3">+ Add New Rotation</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Intern</th>
+                <th>Qualification</th>
+                <th>Department</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rotation in rotations %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ rotation.intern }}</td>
+                <td>{{ rotation.qualification }}</td>
+                <td>{{ rotation.department.name }}</td>
+                <td>{{ rotation.start_date }}</td>
+                <td>{{ rotation.end_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No rotations found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

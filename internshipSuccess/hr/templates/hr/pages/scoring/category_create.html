@@ -1,0 +1,14 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<div class="container">
+    <h3>Create Scoring Category</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.name.label_tag }} {{ form.name }}
+        </div>
+        <button type="submit" class="btn btn-primary">Create Category</button>
+    </form>
+
+</div>
+{% endblock %}

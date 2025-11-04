@@ -1,0 +1,127 @@
+{% load static %}
+<section class="services-details-area pt-120 pb-80 pt-md-60 pb-md-25 pt-xs-50 pb-xs-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="services-left mb-30">
+                    <img class="img-fluid" src="{% static 'web/assets/img/services/handing-in-cv.webp' %}" alt="Internship Recruitment in Nelspruit">
+                    <h3 class="s-sub-title mt-55 mb-20">Recuitment of Interns</h3>
+                    <p class="mb-30">Internship Success has signed memorandums of Understanding with a number of 
+                        Higher Education around Mpumalanga such as the University of Mpumalanga, Tshwane University of Technology, Ehlanzeni TVET College, and many private Colleges 
+                        from which we recruit students who may have completed their learning programme and are seeking industrial attachment.</p>
+                    
+                    
+                        <img class="img-fluid" src="{% static 'web/assets/img/services/training.webp' %}" alt="Internship Recruitment and Training">
+                        <h3 class="s-sub-title mt-55 mb-20">Intern Workplace Readiness Training</h3>
+                        <p class="mb-30">With the use of the Position Paper developed in conjunction with the department of Higher Education, the University of Pretoria and Organised Business, 
+                            Internship Success conducts 
+                            training and induction for interns for workplace readiness.<br><br>
+
+                            Such training workshops ensure that all interns placed at various workplaces through Internship Success are fully equipped with an industrial mindset, 
+                            which makes them competitive teamplayers who are resilient and dedicated to learning and being employable.</p>
+                    
+                    <blockquote class="blockquote grey-bg2 text-center">
+                        <img class="q-icon" src="{% static 'web/assets/img/services/quote-sm.png' %}" alt="Icon">
+                        <p class="h4">“ We conduct training and induction workshop with all our interns which makes them competitive teamplayers who are resilient and dedicated to learning and being employable.</p>
+                        <div class="author-box d-flex align-items-center justify-content-center">
+                            <div class="author-img">
+                                <img src="{% static 'web/assets/img/services/certify-icon.png' %}" alt="Author Img">
+                            </div>
+                            
+                        </div>
+                    </blockquote>
+                    <h3 class="s-sub-title mt-55 mb-20">Host Employer Sourcing and Development</h3>
+                        <p class="mb-30">Internship Success’s management continuously participates in Private Sector and Organised Business’s continuous improvement training workshops and 
+                        meetings in an effort to bridge the skills gap throughout South Africa. With involvement in the management platforms of businesses 
+                        and organisations such as the Business Chamber (KLBCBT, Services SETA National Council, Merseta Provincial Council, and the Mpumalanga 
+                        HR Steering Committee first established in the Premier's office, Representing RMI (with nearly 8000 business members))in Mpumalanga 
+                        allows Internship Success to have a working relationship with so many industrial bodies and companies, thus paving the way to prepare 
+                        companies to accept interns in their industrial establishments. </p>
+
+                        <div class="row mb-30 mt-55">
+                        <div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+                            <img class="w-100" src="{% static 'web/assets/img/services/teamwork.jpg' %}"
+                                alt="Internship Success in Mbombela">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+                            <img class="w-100" src="{% static 'web/assets/img/services/mentorship.webp' %}"
+                                alt="Internship Success in Mbombela">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+                            <img class="w-100" src="{% static 'web/assets/img/services/mentor.webp' %}"
+                                alt="Internship Success in Mbombela">
+                        </div>
+                    </div>
+                        <h3 class="s-sub-title mt-55 mb-20">Mentorship and Site Supervisor Development</h3>
+                        <p class="mb-30">We maintain a constant relationship with our Interns and Host companies which allows us to constantly monitor the development and 
+                            progress of each and every intern. We ensure that every intern placed through Internship Success is mentored, supervised and monitored to maximise 
+                            their experience and completion of their log books so that by the time they complete their internships, they will be highly sought-after team players 
+                            who can be absorbed into any company.</p>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4 pl-25 pl-lg-15 pl-md-15 pl-xs-15">
+                <div class="services-right-widget">
+                    <div class="widget widget-categories mb-40">
+                        <div class="widget-title-box pb-25 mb-30">
+                            {% comment %} <h6 class="widget-sub-title mb-10">Whats We Do in Our Company</h6> {% endcomment %}
+                            <h4 class="widget-sub-title2">Our Services</h4>
+                        </div>
+                        <ul class="list-none">
+                            <li><a href="{% url 'InternRecruitment-page' %}">Recuitment of Interns <span class="f-right"><i
+                                            class="fal fa-long-arrow-right"></i></span></a></li>
+                            <li><a href="{% url 'InternWorkplace-page' %}">Intern Workplace Readiness Training <span class="f-right"><i
+                                            class="fal fa-long-arrow-right"></i></span></a></li>
+                            <li><a href="{% url 'hostSourcing-page' %}">Host Employer Sourcing and Development <span class="f-right"><i
+                                            class="fal fa-long-arrow-right"></i></span></a></li>
+                            <li><a href="{% url 'mentorship_and_site-page' %}">Mentorship and Site Supervisor Development <span class="f-right"><i
+                                            class="fal fa-long-arrow-right"></i></span></a></li>      
+                        </ul>
+                    </div>
+                    <div class="widget widget-subscribe mb-40">
+                        <div class="widget-title-box pb-25 mb-30">
+                            <h6 class="widget-sub-title mb-10">Contact</h6>
+                            <h4 class="widget-sub-title2">Get In Touch</h4>
+                        </div>
+                        <form class="row contact-form" action="#">
+                            <div class="col-lg-12 col-md-6">
+                                <div class="input-box mb-20">
+                                    <input type="text" placeholder="Full name">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6">
+                                <div class="input-box mail-input mb-20">
+                                    <input type="text" placeholder="Email address">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6">
+                                <div class="input-box sub-input mb-20">
+                                    <input type="text" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-box text-input mb-20">
+                                    <textarea name="message" cols="30" rows="10"
+                                        placeholder="Enter massge"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mb-15">
+                                <button class="form-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="widget widget-banner-add">
+                        <div class="banner-content">
+                            {% comment %} <a class="banner-logo" href="index.html"><img src="{% static 'web/assets/img/logo/internship-success-logo-1.png' %}"
+                                    alt="Logo"></a> {% endcomment %}
+                            <h3 class="s-sub-title text-white"> +27 13 753 3353</h3>
+                            <p>Contact Us</p>
+                            <a href="{% url 'about-page' %}" class="theme_btn text-capitalize mt-30">About Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

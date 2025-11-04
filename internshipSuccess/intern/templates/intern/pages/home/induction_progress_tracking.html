@@ -1,0 +1,91 @@
+
+<style>
+        
+
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.track{
+position: relative;
+background-color: #ddd;
+height: 4px;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+margin-bottom: 60px;
+margin-top: 50px;
+border-radius: 5px;
+}
+.track .step{
+-webkit-box-flex: 1;
+-ms-flex-positive: 1;
+flex-grow: 1;
+width: 25%;
+margin-top: -18px;
+text-align: center;
+position: relative
+}
+.track .step.active:before{
+background: #435ebe
+}
+.track .step::before{
+height: 5px;
+border-radius: 5px;
+position: absolute;
+content: "";
+width: 100%;
+left: 0;
+top: 18px
+}
+.track .step.active .icon{
+background: #435ebe;
+color: #fff
+}
+.track .icon{
+display: inline-block;
+width: 40px;
+height: 40px;
+line-height: 40px;
+position: relative;
+border-radius: 100%;
+background: #ddd
+}
+.track .step.active .text{
+/* font-weight: 400; */
+font-weight: bold;
+}
+.track .text{
+display: block;
+margin-top: 7px
+}
+
+
+    
+</style>
+<div class="card-body">
+    <div class="track">
+        <div class="step {% if induction_enrollment.admitted %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Admitted</span>
+        </div>
+        <div class="step {% if induction_enrollment.acknowledged %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Acknowledged Induction</span>
+        </div>
+        <div class="step {% if induction_enrollment.day_1 %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Day 1 Attended</span>
+        </div>
+        <div class="step {% if induction_enrollment.day_2 %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Day 2 Attended</span>
+        </div>
+        <div class="step {% if induction_enrollment.pending_placement %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Pending Placement</span>
+        </div>
+        <div class="step {% if induction_enrollment.placed %}active{% endif %}">
+            <span class="icon"> <i class="bi bi-check"></i></span>
+            <span class="text">Placed</span>
+        </div>
+    </div>
+</div>

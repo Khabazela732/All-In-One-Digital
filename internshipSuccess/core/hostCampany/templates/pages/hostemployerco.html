@@ -1,0 +1,125 @@
+{% extends "coordination/global/base.html" %}
+{% load static %}
+{% block content %}
+<header class="mb-3">
+    <a href="#" class="burger-btn d-block d-xl-none">
+        <i class="bi bi-justify fs-3"></i>
+    </a>
+</header>
+<div class="row">
+    <div class="col-12 col-md-6 order-md-1 order-last">
+        <h3>Host Employer Profile</h3>
+        <p class="text-subtitle text-muted">A page where users can change profile information</p>
+    </div>
+    <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item">Account</li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="{% static 'profile.png' %}" alt="p">
+                            </div>
+                            <h3 class="mt-3">{{ host_employer.first_name }} {{ host_employer.last_name }}</h3>
+                            <p class="text-small">{{ host_employer.email }}</p>
+                        </div>
+                        <div class="about">
+                            <h5>About</h5>
+                            <p>{{ host_employer.hostemployerprofile.about }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                    <h6 class="mt-3 mb-2 text-primary">Add Host Company</h6>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ company_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Add Company</button>
+                    </form>
+                    <h6 class="mt-3 mb-2 text-primary">Host Companies</h6>
+                    <ul>
+                        {% for company in host_companies %}
+                            <li>
+                                <a href="{% url 'co-company-view-employer-profile' company.id %}">{{ company.company_name }}</a>
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function changeInternShift(internName, internId, availableShifts) {
+        Swal.fire({
+            title: 'Change Intern Shift',
+            icon: 'info',
+            html: `
+                <p>Select a shift for ${internName}:</p>
+                <select id="shift-select" class="form-control">
+                    ${availableShifts.map(shift => `<option value="${shift.id}">${shift.name}</option>`).join('')}
+                </select>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Change Shift',
+            confirmButtonColor: "#18ce0f",
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const shiftId = document.querySelector('#shift-select').value;
+                const url = `/change_shift/${internId}/`;
+                
+                // Send POST request with selected shift ID
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        'shift_id': shiftId,
+                    }),
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Shift changed successfully',
+                        });
+                        setTimeout(() => { location.reload() }, 1000);
+                    } else {
+                        throw new Error('Failed to change shift');
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to change shift',
+                        text: error.message,
+                    });
+                });
+            }
+        });
+    }
+</script>
+{% endblock content %}

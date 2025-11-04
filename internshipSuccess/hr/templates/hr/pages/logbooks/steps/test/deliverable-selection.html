@@ -1,0 +1,41 @@
+<section class="section">
+    {% comment %} 
+    In this section this is where you make 
+    select statements for all the deliverables required - See the rough layout from Victor Mahluza {% endcomment %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                deliverables selection
+            </h5>
+        </div>
+        <div class="container mt-4">
+            <h2>Select Deliverables</h2>
+            <form method="post" action="{% url 'deliverable-selection' logbook_template_id=logbook_template.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="deliverables">Deliverables</label>
+                    <div id="deliverables">
+                        {% for workitem in workitems.all %}
+                            {% for deliverable in workitem.deliverables.all %}
+                            <div class="form-check">
+                                <input
+                                    type="checkbox"
+                                    id="deliverable-{{ deliverable.id }}"
+                                    name="deliverables"
+                                    value="{{ deliverable.id }}"
+                                    class="form-check-input"
+                                />
+                                <label for="deliverable-{{ deliverable.id }}" class="form-check-label">
+                                    {{ deliverable.name }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
+        </div>
+        
+    </div>
+</section>

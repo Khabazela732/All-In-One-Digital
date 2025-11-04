@@ -1,0 +1,14 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow p-4" style="width: 100%; max-width: 500px;">
+        <h2 class="text-center text-danger mb-3">Delete Payment</h2>
+        <p class="text-center mb-4">Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+        <form method="post" class="d-flex justify-content-between">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'payment_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

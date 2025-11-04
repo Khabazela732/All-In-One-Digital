@@ -1,0 +1,10 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<h1>Update Passcode</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.passcode }}
+    <br>
+    <button class="btn btn-primary btn-sm" type="submit">Update Passcode</button>
+</form>
+{% endblock %}

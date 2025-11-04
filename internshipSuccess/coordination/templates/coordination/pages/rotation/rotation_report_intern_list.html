@@ -1,0 +1,17 @@
+{% extends "coordination/global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Rotation Report - Select Intern</h3>
+    <ul class="list-group">
+        {% for intern in interns %}
+        <li class="list-group-item">
+            <a href="{% url 'rotation-report-detail' intern.id %}">
+                {{ intern.get_full_name }}
+            </a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No interns have rotation plans yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

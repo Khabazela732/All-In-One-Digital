@@ -1,0 +1,13 @@
+[33m6d3cc8f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m6d3cc8f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: pull origin main --rebase (start): checkout 6d3cc8f980c71ef0cba655a465bd30a1cc7b14c8
+[33m6ba31c3[m HEAD@{2}: commit: IDT-134 - HR Portal
+[33m3c35900[m HEAD@{3}: commit: IDT-133 - Induction
+[33md03a363[m HEAD@{4}: commit: IDT-132 - Values
+[33mfa5b36f[m HEAD@{5}: pull: Fast-forward
+[33ma414110[m HEAD@{6}: commit: IDT-126 - leave
+[33m47738f4[m HEAD@{7}: commit: IDT-125 - error fixed for placing intern
+[33mac5daa7[m HEAD@{8}: commit: IDT-10 - Attendace
+[33m843cc63[m HEAD@{9}: commit: IDT-113 - Analytics
+[33m4e6d51d[m HEAD@{10}: commit: IDT-112 - Fix exit report
+[33m6af6c49[m HEAD@{11}: commit: IDT-111 - Restore all previous feactures
+[33m790522a[m HEAD@{12}: clone: from https://github.com/FortuneBenn/internshipSuccess.git

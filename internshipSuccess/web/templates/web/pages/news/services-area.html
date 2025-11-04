@@ -1,0 +1,119 @@
+{% load static %}
+<section class="news-details-area pt-105 pb-90 pt-md-60 pb-md-25 pt-xs-50 pb-xs-20">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div id="newsCarousel" class="carousel slide col-lg-8 col-md-10 col-sm-12 mb-30" data-ride="carousel">
+        <div class="carousel-inner">
+          {% comment %} <div class="carousel-item active">
+            <div class="news-details-left text-center">
+              <div class="blogs__meta">
+                <span><i class="fal fa-calendar-alt"></i> 10th August 2023</span>
+              </div>
+              <img class="img-fluid" src="{% static 'web/assets/img/blog/meeting-at-mapulaneng-campus.webp' %}" alt="Internship Success">
+              <h3 class="mt-55 mb-25"><a class="s-sub-title" href="blog-details.html">Strategic Meeting To Strengthen MOU</a></h3>
+              <p>
+                On Tuesday the 8th of August the Internship Success’ management, Ehlanzeni TVET College’s Central Office management, Ehlanzeni TVET College’s Mapulaneng Campus management together with a group of interns met to discuss issues affecting Interns in their various workplaces. Key on the agenda was to hear the grievances raised by some interns who felt unhappy in their previous host company.
+                <br><br>The meeting discussed key issues which paved way for proper communication between the Interns, Campuses and Internship Success as well as seeking intermediary ways of mitigating any possible challenges in the future.
+                <br><br>The meeting was also one of the ways of strengthening the working relationship between the Ehlanzeni TVET College, its associates and Internship Success. Internship success strives to be transparent in all its services both to the educational institutions, host companies, recruited interns as well as prospective interns.
+              </p>
+            </div>
+          </div> {% endcomment %}
+          {% if newsletters %}
+          {% for newsletter in newsletters %}
+          {% if forloop.first %}
+          
+          <div class="carousel-item active">
+            <div class="news-details-left text-center">
+              <div class="blogs__meta">
+                <span><i class="fal fa-calendar-alt"></i> - {{ newsletter.created|date:"j F Y" }}
+                </span>
+              </div>
+              <img class="img-fluid" src="{{ newsletter.image.url }}" alt="Internship Success">
+              <h3 class="mt-55 mb-25"><a class="s-sub-title" href="blog-details.html">{{ newsletter.title }}</a></h3>
+              <p>
+                {{ newsletter.description }}
+              </p>
+            </div>
+          </div>
+            {% else %}
+                
+            <div class="carousel-item">
+              <div class="news-details-left text-center">
+                <div class="blogs__meta">
+                  <span><i class="fal fa-calendar-alt"></i> - {{ newsletter.created|date:"j F Y" }}
+                  </span>
+                </div>
+                <img class="img-fluid" src="{{ newsletter.image.url }}" alt="Internship Success">
+                <h3 class="mt-55 mb-25"><a class="s-sub-title" href="blog-details.html">{{ newsletter.title }}</a></h3>
+                <p>
+                  {{ newsletter.description }}
+                </p>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+
+        </div>
+        <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#newsCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+  }
+  
+  .carousel-control-prev {
+    left: -20px; /* Position the prev button to the left of the image */
+  }
+  
+  .carousel-control-next {
+    right: -20px; /* Position the next button to the right of the image */
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    font-size: 16px;
+    color: white;
+    text-align: center;
+  }
+  
+  .carousel-control-prev-icon {
+    content: '\f104'; /* Font Awesome icon for left arrow */
+  }
+  
+  .carousel-control-next-icon {
+    content: '\f105'; /* Font Awesome icon for right arrow */
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-control-prev, .carousel-control-next {
+      left: 5px;
+      right: 5px;
+    }
+  }
+  
+  
+
+</style> 

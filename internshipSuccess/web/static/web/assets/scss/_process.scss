@@ -1,0 +1,107 @@
+//work-process-area
+.process-bg {
+    position: relative;
+    z-index: 2;
+    &::before {
+        content: "";
+        position: absolute;
+        background: $grey3;
+        width: 100%;
+        min-height: 500px;
+        left: 0;
+        top: 0;
+        z-index: -1;
+    }
+}
+.single-work {
+    background: url(../img/work/work-bg1.jpg) no-repeat;
+    width: 100%;
+    height: 100%;
+    padding: 38px 40px 39px 40px;
+    position: relative;
+    z-index: 2;
+    @media #{$md} {
+        padding: 40px 15px;
+    }
+    @media #{$xs} {
+        padding: 40px 15px;
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        background: $white;
+        box-shadow: 0px 16px 32px 0px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        @include transition(0.3s);
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        box-shadow: 0px 16px 32px 0px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        height: 0;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        @include transition(0.3s);
+    }
+
+    h5 {
+        color: $heding3;
+        line-height: 1.5;
+        @media #{$xs} {
+            font-size: 18px;
+        }
+    }
+    .number {
+        font-size: 14px;
+        font-weight: 700;
+        color: $heding3;
+        border: 2px solid rgb(242, 242, 242);
+        border-radius: 50%;
+        background: $white;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 40px;
+        width: 54px;
+        height: 54px;
+        z-index: 2;
+        text-align: center;
+        line-height: 52px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        @include transition(0.3s);
+        @media #{$md} {
+            right: 15px;
+        }
+        @media #{$xs} {
+            right: 15px;
+        }
+    }
+    &:hover {
+        &::before {
+            height: 0;
+            top: auto;
+            bottom: 0;
+        }
+        &::after {
+            background: rgb(4, 4, 4);
+            opacity: 0.6;
+            height: 100%;
+        }
+        img {
+            filter: brightness(0) invert(1);
+            -webkit-filter: brightness(0) invert(1);
+        }
+        h5 {
+            color: $white;
+        }
+    }
+}

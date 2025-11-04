@@ -1,0 +1,13 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+  <h2>Add Questions to {{ questionnaire.title }}</h2>
+  <form method="post" action="{% url "question_type" questionnaire.id %}">
+    {% csrf_token %}
+    <label>Select question type:</label>
+    <select name="question_type">
+      <option value="multiple_choice">Multiple Choice</option>
+      <option value="essay">Essay</option>
+    </select>
+    <button type="submit">Next</button>
+  </form>
+{% endblock %}

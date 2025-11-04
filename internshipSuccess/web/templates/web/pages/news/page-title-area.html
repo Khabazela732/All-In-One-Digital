@@ -1,0 +1,30 @@
+{% load static %}
+<style>
+    #page-title-area-news {
+        background-image: url( {% static 'web/assets/img/blog/newsUpdate.jpg' %});
+    }
+    .bold-text {
+        font-weight: bold;
+    }
+    .red-text {
+        color: red;
+      }
+      
+    
+</style>
+<section id="page-title-area-news" class="page-title-area">
+    <img class="right-shape" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+                    <ul class="breadcrumb">
+                        <li><a href="{% url 'home' %}" "class= bold-text">Home /</a></li>
+                        <li class="active bold-text" aria-current="page">Blog</li>
+                    </ul>
+                    <h2 class="page-title" style="color: red;">News Feeds</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

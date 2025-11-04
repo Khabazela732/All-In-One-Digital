@@ -1,0 +1,67 @@
+  	{% load static %}
+	<!-- slide-bar start -->
+      <aside class="slide-bar">
+		<div class="close-mobile-menu">
+			<a href="javascript:void(0);"><i class="fas fa-times"></i></a>
+		</div>
+		<!-- offset-sidebar start -->
+		<div class="offset-sidebar">
+			<div class="offset-widget offset-logo mb-30">
+				<a href="{% url 'home' %}">
+					<img style="width:200px" src="{% static 'web/assets/img/logo/internshipsucess-logo.png' %}" alt="logo">
+				</a>
+			</div>
+			<div class="offset-widget mb-40">
+				<div class="info-widget">
+					<h4 class="offset-title mb-20">About Us</h4>
+					<p class="mb-30">
+						Internship Success is a professional internship recruitment, placement  and management company based in Mbombela, Mpumalanga.
+					</p>
+					<a class="theme_btn theme_btn_bg" href="{% url 'contact-page' %}">Contact Us</a>
+				</div>
+			</div>
+			<div class="offset-widget mb-30 pr-10">
+				<div class="info-widget info-widget2">
+					<h4 class="offset-title mb-20">Contact Info</h4>
+					<p> <i class="fal fa-address-book"></i> 1st Floor, Shell House
+Ferreira St, Mbombela. 1200</p>
+					<p> <i class="fal fa-phone"></i> +27 13 753 3353 </p>
+					<p> <i class="fal fa-envelope-open"></i> info@internshipsuccess.org.za </p>
+				</div>
+			</div>
+		</div>
+		<!-- offset-sidebar end -->
+		<!-- side-mobile-menu start -->
+		<nav class="side-mobile-menu">
+			{% if request.user.is_authenticated %}
+			<p>You are logged in as <strong>{{request.user}}</strong></p>
+			{% if request.user.role == request.user.Role.ADMIN %}
+			<a class="theme_btn border_btn" href="{% url 'admini-home' %}">Portal</a>
+			{% elif request.user.role == request.user.Role.INTERN %}
+			<a class="theme_btn border_btn" href="{% url 'intern-dashboard' %}">Portal</a>
+			{% endif %}
+			<a class="theme_btn quote-btn" href="{% url 'logout' %}">Logout</a>
+			{% else %}
+			<a class="theme_btn quote-btn" href="{% url 'login' %}">Login</a>
+			{% endif %}
+			<hr>
+			<ul id="mobile-menu-active">
+				<li><a href="{% url 'home' %}">Home</a></li>
+				{% if request.user.is_authenticated and request.user.role == request.user.Role.INTERN %}
+				<li>
+					<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Host Vacancies</a>
+				</li>
+				{% endif %}
+				<li>
+					<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Application Post</a>
+				</li>				
+				<li><a href="{% url 'about-page' %}">About Us</a></li>
+				<li><a href="{% url 'services-page' %}">Services</a></li>
+				<li><a href="{% url 'news-page' %}">News & Updates</a></li>
+				<li><a href="{% url 'contact-page' %}">Contact</a></li>
+				<li><a href="https://klcbt.co.za/internship-success/">Member OF KLCBT</a></li>
+			</ul>
+		</nav>
+		<!-- side-mobile-menu end -->
+	</aside>
+	<div class="body-overlay"></div>

@@ -1,0 +1,85 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h3>{{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.registration_number }})</h3>
+    <p>Status: <strong>{{ vehicle.get_status_display }}</strong></p>
+    <p>Fuel Type: {{ vehicle.get_fuel_type_display }}</p>
+
+    {% if vehicle.image %}
+        <img src="{{ vehicle.image.url }}" style="max-width: 400px; border-radius: 10px;">
+    {% endif %}
+
+    <hr>
+
+    <h5>Vehicle Requests</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Requested By</th>
+                <th>Destination</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Requested On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in requests %}
+            <tr>
+                <td>{{ req.staff }}</td>
+                <td>{{ req.destination }}</td>
+                <td>{{ req.company_name }}</td>
+                <td>
+                    {% if not req.is_approved and user.role == "HR" %}
+                        <a href="{% url 'approve-vehicle-request' req.id %}" class="btn btn-sm btn-success">
+                            Approve
+                        </a>
+                    {% else %}
+                        ✅ Approved by {{ req.approved_by.get_full_name }} on {{ req.approved_at|date:"Y-m-d H:i" }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if req.staff.drivers_license %}
+                        <a href="{{ req.staff.drivers_license.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                            View License
+                        </a>
+                    {% else %}
+                        <span class="text-danger">Not Uploaded</span>
+                    {% endif %}
+                </td>
+                <td>{{ req.date_requested }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No requests yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h5 class="mt-4">Vehicle Usage Logs</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Date</th>
+                <th>Open KM</th>
+                <th>Close KM</th>
+                <th>Total KM</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for use in usages %}
+            <tr>
+                <td>{{ use.request.staff.get_full_name }}</td>
+                <td>{{ use.request.date_requested.date }}</td>
+                <td>{{ use.open_odometer }}</td>
+                <td>{{ use.close_odometer|default:"—" }}</td>
+                <td>{{ use.total_km }}</td>
+                <td>{{ use.request.reason }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No usage logs yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,600 @@
+{% extends "hr/global/base.html" %}
+{% load static %}
+{% block content %}
+<header class="mb-3">
+    <a href="#" class="burger-btn d-block d-xl-none">
+        <i class="bi bi-justify fs-3"></i>
+    </a>
+</header>
+<div class="row">
+    <div class="col-12 col-md-6 order-md-1 order-last">
+        <h3>Intern Profile ADMIN</h3>
+        <p class="text-subtitle text-muted">Intern profile information</p>
+    </div>
+    <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item">Account</li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="row gutters">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="account-settings">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="{% static 'profile.png' %}" alt="profile picture">
+                    </div>
+                </div>
+                <hr>
+                <h3 class="mt-3">{{application.name}} {{application.surname}}</h3>
+                <p class="text-small">Qualification : {{application.qualification}}</p>
+                <p class="text-small">Has attended Induction? : 
+                    {% comment %} An intern can only be considered to have attented the induction if they fully attended for 2 days {% endcomment %}
+                    {% if application.applicant.user_enrollments.all.first.day_1 and application.applicant.user_enrollments.all.first.day_2 %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </p>
+                {% if internship_enrollment %}              
+                    {% if internship_enrollment.status == "PLACED" %}
+                        <p class="text-small">Working for: {{internship_enrollment.company}}</p>
+                    {% endif %}
+                    {% if internship_enrollment.status == "TERMINATED" %}
+                        <p class="text-small">Was Working for: {{internship_enrollment.company}}</p>
+                    {% endif %}
+                    <p class="text-small">Contract Signed: {{internship_enrollment.contract}}</p>
+                    <hr>
+                    <div class="form-group">
+                        {% if internship_enrollment.status == "PLACED" %}
+                        <button class="btn btn-danger" onclick="confirmTermination('{{ application.name }}', '{{ internship_enrollment.company.id }}', '{{ internship_enrollment.id }}')">Terminate Contract</button>
+                        <br><br>
+                        <button class="btn btn-danger" onclick="confirmDefault('{{ application.name }}', '{{ internship_enrollment.company.id }}', '{{ internship_enrollment.id }}')">Default Contract</button>
+                        <br><br>
+                        <button class="btn btn-primary" onclick="confirmCompleted('{{ application.name }}', '{{ internship_enrollment.company.id }}', '{{ internship_enrollment.id }}')">Mark Completed</button>
+                        {% endif %}
+                        {% if internship_enrollment.status == "WAITING" %}
+                        {% comment %} Instead of using the enrollment id i have to use the intern ID {% endcomment %}
+                        <button class="btn btn-primary" onclick="placeIntern('{{ application.name }}', {{ internship_enrollment.id }}, {{ intern.id }})">Place Intern</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <hr>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <form action="#" method="get">
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Personal Details</h3>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" value="{{application.name}} " disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Surname</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Your Surname" value="{{application.surname}}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" name="email" id="email" class="form-control" placeholder="Your Email" value="{{application.email}}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" name="phone" id="phone" class="form-control" placeholder="Your Phone" value="{{application.phone_number}}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="national_id" class="form-label">National ID</label>
+                        <input type="text" name="national_id" id="national_id" class="form-control" placeholder="Your National ID" value="{{application.national_id}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday" class="form-label">Age</label>
+                        <input type="number" name="birthday" id="birthday" class="form-control" placeholder="Age"value="{{application.age}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="form-label">Gender</label>
+                        <input type="text" name="Gender" id="Gender" class="form-control" placeholder="Gender"value="{{application.gender}}" disabled>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="form-group">
+                        <label for="residence_place" class="form-label">Residential Address</label>
+                        <input type="text" name="residence_place" id="residence_place" class="form-control" placeholder="Your Residence Place" value="{{application.residental_address}}" disabled>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="residence_place" class="form-label">Postal Address</label>
+                        <input type="text" name="residence_place" id="residence_place" class="form-control" placeholder="Your Residence Place" value="{{application.post_address}}" disabled>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Documentation</h3>
+                        <a role="btn" target="_blank" href="#" class="btn btn-primary btn-sm">View Personal CV</a>
+                        <button type="submit" name="generate_cv" class="btn btn-primary btn-sm">Download Company CV</button>
+                        <a target="_blank" href="#" class="btn btn-primary btn-sm">View Qualifications</a>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="card mt-4">
+    <div class="card-header">
+        <h3>Scheduled Hearings</h3>
+    </div>
+    <div class="card-body">
+        {% if hearings %}
+            <ul class="list-group">
+                {% for hearing in hearings %}
+                    <li class="list-group-item">
+                        <strong>{{ hearing.title }}</strong> 
+                        - <span class="text-muted">Date: {{ hearing.date|date:"Y-m-d H:i" }}</span>
+                        <p>{{ hearing.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hearings scheduled yet.</p>
+        {% endif %}
+        <!-- Button to schedule a new hearing -->
+       <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#hearingModal">Schedule Hearing</button>
+
+<!-- Modal for Scheduling a New Hearing -->
+<div class="modal fade" id="hearingModal" tabindex="-1" aria-labelledby="hearingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'hr_hearing_create' %}">
+                {% csrf_token %}
+                <!-- Hidden field for intern_id -->
+                <input type="hidden" name="intern_id" value="{{ intern.id }}">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hearingModalLabel">Schedule Hearing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="datetime-local" class="form-control" name="date" id="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+                        <hr>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Reports</h3>
+                         {% if reports %}
+                                <ul class="list-group mt-3">
+                                    {% for report in reports %}
+                                    <li class="list-group-item">
+                                        <strong>Reported by:</strong> {{ report.host_employer.get_full_name }}<br>
+                                        <strong>Date:</strong> {{ report.date }}<br>
+                                        <strong>Issue:</strong> {{ report.reason }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <p>No reports have been submitted for this intern.</p>
+                                {% endif %}
+
+                                {% if messages %}
+                                <div class="mt-3">
+                                    {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Leave</h3>
+                         {% if leaves %}
+                                <ul class="list-group mt-3">
+                                    {% for leave in leaves %}
+                                    <li class="list-group-item">
+                                        <strong>Leave Type:</strong> {{ leave.leave_type }}<br>
+                                        <strong>Date:</strong> From {{ leave.start_date }} to {{ leave.end_date }}<br>
+                                        <strong>Issue:</strong> {{ leave.reason }}<br>
+                                        <strong>Status:</strong> {{ leave.status }}<br>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <p>No reports have been submitted for this intern.</p>
+                                {% endif %}
+
+                               
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Induction Enrollment Status</h3>
+                                {% comment %} Intern Progress {% endcomment %}      
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="card">
+                                        {% if not application.applicant.user_enrollments.all.first.day_1 and not application.applicant.user_enrollments.all.first.day_2 %}
+                                        <button class="btn btn-primary" onclick="BypassInductionAttenda('{{application.name}}', '{{application.surname}}', {{application.id}})">Bypass Induction Attendance</button>
+                                        {% endif %}
+                                        <div class="card-header">
+                                            <h4>Induction Progress</h4>
+                                        </div>
+                                        {% if induction_enrollment %}  
+                                        {% include "intern/pages/home/induction_progress_tracking.html" %}
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                    </div>
+                    <hr>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h3 class="mb-2 text-primary">Logbook</h3>
+                                {% comment %} Intern Progress {% endcomment %}      
+                                {% if application.applicant.logbooks %}
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="card"><a class="btn btn-primary" href="{% url 'admin_intern_logbook' intern_id=application.applicant.id %}" >View Logbook</a></div>
+                                    </div>                               
+                                </div>
+                                {% else %}
+                                Intern has no logbook assigned
+                                {% endif %}
+                    </div>
+                </div>      
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                var calendarEl = document.getElementById("calendar");
+                if (calendarEl) {
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: "dayGridMonth",
+                        dateClick: function (info) {
+                            document.getElementById("hearing_date").value = info.dateStr;
+                            $("#hearingModal").modal("show");
+                        },
+                    });
+                    calendar.render();
+                }
+            });
+        function placeIntern(name, enrollment_id, intern_id) {
+            Swal.fire({
+                title: 'Select An Employer',
+                icon: 'info',
+                html: `
+                    By placing ${name} you agree to the following:
+                    <br> - This intern has an agreement with the host employer and internship success <br> - This intern meets most or all the requirements in internship-success's criteria. <br>
+                    <br>
+                    <select id="hostEmployer-select" style='padding:10px; text-align:center; font-weight:bold;' class="form-control">
+                        {% for host_employer in host_employer %}
+                            <option value="{{ host_employer.id }}">{{ host_employer }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="start-date" style='padding:10px; text-align:center; font-weight:bold;' class="form-control">Start Date: <input type="date" id="start-date" name="start-date"></label>
+                    <label for="end-date" style='padding:10px; text-align:center; font-weight:bold;' class="form-control">End Date: <input type="date" id="end-date" name="end-date"></label>
+                    <label for="stipend" style='padding:10px; text-align:center; font-weight:bold;' class="form-control">Stipend: <input type="number" id="stipend" name="stipend" step="0.01"></label>
+                `,
+                confirmButtonText: 'Place intern',
+                confirmButtonColor:"#18ce0f",
+                showCancelButton: true,
+                DenyButtonColor:"red",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const employer_id = document.querySelector('#hostEmployer-select').value;
+                    const startDate = document.querySelector('#start-date').value; // Get the start date value
+                    const endDate = document.querySelector('#end-date').value; // Get the end date value
+                    const stipend = document.querySelector('#stipend').value; // Get stipend value
+                    const url = `/admin/place_intern/${enrollment_id}/${intern_id}/`;
+        
+                    const formData = new FormData();
+                    formData.append('employer_id', employer_id);
+                    formData.append('start_date', startDate); // Include the start date
+                    formData.append('end_date', endDate); // Include the end date
+                    formData.append('stipend', stipend); // Include stipend in form data
+        
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: formData,
+                    }).then((response) => {
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Intern placed successfully',
+                            });
+                            setTimeout(()=>{location.reload()},1000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed to place intern',
+                                text: response.statusText,
+                            });
+                        }
+                    }).catch((error) => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to place intern',
+                            text: error.message,
+                        });
+                    });
+                }
+            });
+        }
+        
+        
+        function confirmTermination(name, companyId, internId) {
+            Swal.fire({
+                title: `You are about to terminate ${name}'s contract`,
+                html: `Please provide a reason for this action to proceed.<br> 
+                    Note: <br> - This intern will no longer be placed <br> 
+                    - This action cannot be reverted.`,
+                icon: 'warning',
+                confirmButtonColor: 'red',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Terminate',
+                showLoaderOnConfirm: true,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please enter a reason');
+                    } else {
+                        const url = `/admin/terminate_internship/${internId}/`;
+                        const formData = new FormData();
+                        formData.append('reason', reason);
+        
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Internship terminated successfully',
+                                });
+                                setTimeout(() => { location.reload() }, 1000);
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to terminate internship',
+                                    text: error.message,
+                                });
+                            });
+                    }
+                }
+            });
+        }
+        function confirmDefault(name, companyId, internId) {
+            Swal.fire({
+                title: `You are about to default ${name}'s contract`,
+                html: `Please provide a reason for this action to proceed.<br> 
+                    Note: <br> - This intern will no longer be placed <br> 
+                    - This action cannot be reverted.`,
+                icon: 'warning',
+                confirmButtonColor: 'red',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Default',
+                showLoaderOnConfirm: true,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please enter a reason');
+                    } else {
+                        const url = `/admin/default_intern/${internId}/`;
+                        const formData = new FormData();
+                        formData.append('reason', reason);
+        
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Internship defaulted successfully',
+                                });
+                                setTimeout(() => { location.reload() }, 1000);
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to defaulted internship',
+                                    text: error.message,
+                                });
+                            });
+                    }
+                }
+            });
+        }
+        function confirmCompleted(name, companyId, internId) {
+            Swal.fire({
+                title: `You are about to mark ${name}'s contract as completed`,
+                html: `Please provide a reason for this action to proceed.<br> 
+                    Note: <br> - This intern will no longer be placed <br> 
+                    - This action cannot be reverted.`,
+                icon: 'warning',
+                confirmButtonColor: 'green',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Completed',
+                showLoaderOnConfirm: true,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please enter a reason');
+                    } else {
+                        const url = `/admin/complet_intern/${internId}/`;
+                        const formData = new FormData();
+                        formData.append('reason', reason);
+        
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Internship completed successfully',
+                                });
+                                setTimeout(() => { location.reload() }, 1000);
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to complete internship',
+                                    text: error.message,
+                                });
+                            });
+                    }
+                }
+            });
+        }
+
+        function BypassInductionAttenda(name, surname, application_id) {
+            Swal.fire({
+                title: `You are about to bypass ${name} ${surname}'s induction attendance`,
+                html: `<h4>Please provide a reason for this action to proceed.</h4>
+                    <p><strong>NOTE:</strong></p>
+                    <ul>
+                        <li>This intern will bypass the induction attendance</li>
+                        <li style="color:red" >This action cannot be reverted</li>
+                    </ul>
+                    `,
+                icon: 'warning',
+         
+                input: 'textarea',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Bypass Attendance',
+                showLoaderOnConfirm: true,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please enter a reason');
+                    } else {
+                        const url = `/admin/bypass-induction/${application_id}/`;
+                        const formData = new FormData();
+                        formData.append('reason', reason);
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Induction attendance bypassed successfully',
+                                });
+                                setTimeout(() => { location.reload() }, 1000);
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to terminate internship',
+                                    text: error.message,
+                                });
+                            });
+                    }
+                }
+            });
+        }
+        
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
+
+{% endblock content %}

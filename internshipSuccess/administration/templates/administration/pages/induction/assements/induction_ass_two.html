@@ -1,0 +1,73 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+
+<div class="page-heading mb-4">
+    <h2 class="fw-bold text-primary">📋 Induction Assessment Two</h2>
+    <p class="text-muted">Manage induction posts and track submitted assessments easily.</p>
+</div>
+
+<div class="page-content">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center" 
+             style="background: linear-gradient(135deg, #3498db, #2ecc71);">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-journal-text me-2"></i> Induction Posts
+            </h5>
+            <button onclick="CreateInductionPost()" class="btn btn-light btn-sm fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> New Post
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover table-striped" id="induction-posts">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for induction in inductions %}
+                        <tr>
+                            <td><span class="badge bg-primary">{{ induction.id }}</span></td>
+                            <td class="fw-semibold">{{ induction.title }}</td>
+                            <td><i class="bi bi-calendar-event me-1 text-success"></i> {{ induction.start_date }}</td>
+                            <td><i class="bi bi-calendar-x me-1 text-danger"></i> {{ induction.end_date }}</td>
+                            <td>
+                                <a href="{% url 'assesment2' post_id=induction.id %}" 
+                                   class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-eye"></i> View Submissions
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                                No induction posts available.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function CreateInductionPost() {
+    var url = '{% url "induction-create" %}';
+    var windowName = 'Popup';
+    var width = 500, height = 700;
+    var left = (window.innerWidth - width) / 2;
+    var top = (window.innerHeight - height) / 2;
+    var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+    window.open(url, windowName, features);
+}
+</script>
+
+{% endblock content %}

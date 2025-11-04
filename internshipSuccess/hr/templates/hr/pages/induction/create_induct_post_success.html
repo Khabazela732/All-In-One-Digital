@@ -1,0 +1,8 @@
+You Have Successfully created a new Induction Application
+<button onclick="ReloadInductionApplicationPostPage(`{% url "induction" %}`)">Close Window</button>
+<script>
+    const ReloadInductionApplicationPostPage = (url) => {
+        window.location.href = url;
+        window.close();
+    }
+</script>

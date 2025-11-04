@@ -1,0 +1,47 @@
+{% load static %}
+
+<!--team-masonry-area start-->
+<section class="team-masonry-area pt-95 pb-90 pt-md-60 pb-md-30 pt-xs-60 pb-xs-30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 text-center">
+                <div class="portfolio-menu mb-40">
+                    {% for department_name in staff_by_department.keys %}
+                        {# replace spaces with dashes for CSS class #}
+                        <button class="gf_btn" data-filter=".{{ department_name|cut:" " }}">{{ department_name }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="grid row align-items-center">
+            {% for department_name, staff_list in staff_by_department.items %}
+                {% for staff in staff_list %}
+                <div class="col-lg-4 col-md-6 grid-item {{ department_name|cut:" " }}">
+                    <div class="team-wrapper mb-30">
+                        <div class="team-thumb">
+                            {% if staff.photo %}
+                                <a href="#"><img class="img-fluid" src="{{ staff.photo.url }}" alt="{{ staff.full_name }}"></a>
+                            {% else %}
+                                <a href="#"><img class="img-fluid" src="{% static 'web/assets/img/team/default.png' %}" alt="{{ staff.full_name }}"></a>
+                            {% endif %}
+                        </div>
+                        <div class="team-content">
+                            {% if staff.department %}
+                                <h6>{{ staff.department.name }}</h6>
+                            {% else %}
+                                <h6>Team</h6>
+                            {% endif %}
+                            <h3><a href="#">{{ staff.full_name }}</a></h3>
+                            {% if staff.role %}
+                                <p>{{ staff.role }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--team-masonry-area end-->

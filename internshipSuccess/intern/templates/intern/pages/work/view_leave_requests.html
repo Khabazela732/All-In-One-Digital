@@ -1,0 +1,74 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Requests</title>
+    <link rel="stylesheet" href="{% static 'path/to/bootstrap.min.css' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .leave-requests-container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title h1 {
+            font-size: 2.5rem;
+            color: #343a40;
+        }
+        .leave-list {
+            list-style: none;
+            padding: 0;
+        }
+        .leave-list li {
+            background-color: #e9ecef;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .leave-list li span {
+            font-weight: bold;
+        }
+        .no-requests {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 leave-requests-container">
+                <div class="title">
+                    <h1>My Leave Requests</h1>
+                </div>
+                <ul class="leave-list">
+                    {% for request in leave_requests %}
+                        <li>
+                            <span>{{ request.leave_type }}</span> from <span>{{ request.start_date }}</span> to <span>{{ request.end_date }}</span> - 
+                            Status: <span>{{ request.status }}</span>
+                        </li>
+                    {% empty %}
+                        <li class="no-requests">No leave requests found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'path/to/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+{% endblock content %}

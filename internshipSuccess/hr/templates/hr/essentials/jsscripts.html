@@ -1,0 +1,94 @@
+{% load static %}
+<script src="{% static 'administration/static/js/components/dark.js' %}"></script>
+<script src="{% static 'administration/extensions/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'administration/compiled/js/app.js' %}"></script>
+<script src="{% static 'administration/compiled/js/app.js' %}"></script>
+<script src="{% static 'administration/extensions/apexcharts/apexcharts.min.js' %} "></script>
+<script src="{% static 'administration/static/js/pages/dashboard.js' %}"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{%static 'administration/extensions/quill/quill.min.js'%}"></script>
+<script src="{%static 'administration/static/js/pages/quill.js'%}"></script>
+{% comment %} Data Tables  {% endcomment %}
+
+{% comment %} Data Tables  {% endcomment %}
+<script>
+    // When document is ready convert to datatable $(document).ready(function () { $('#example').DataTable(); });
+    $(document).ready(function () { $('#induction-posts').DataTable()})
+</script>
+{% comment %} Dashboard Charts  {% endcomment %}
+{% comment %}  Charts {% endcomment %}
+<script>
+    const applicationsPerMonthBar = document.getElementById('bar-chart-monthly-display').getContext('2d')
+    const genderPercentage = document.getElementById('gender-percentage-dounut').getContext('2d')
+
+    console.log(genderPercentage)
+    
+    const applicationReceivedBarChart = new Chart(
+        applicationsPerMonthBar, 
+        {
+            type:'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [
+                    {
+                        label: `Applications Received in ${currentYear}`,
+                        data: applicationsPerMonthData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)', // Red
+                            'rgba(54, 162, 235, 0.2)', // Blue
+                            'rgba(255, 206, 86, 0.2)', // Yellow
+                            'rgba(75, 192, 192, 0.2)', // Green
+                            'rgba(153, 102, 255, 0.2)', // Purple
+                            'rgba(255, 159, 64, 0.2)', // Orange
+                            'rgba(255, 99, 132, 0.2)', // Red
+                            'rgba(54, 162, 235, 0.2)', // Blue
+                            'rgba(255, 206, 86, 0.2)', // Yellow
+                            'rgba(75, 192, 192, 0.2)', // Green
+                            'rgba(153, 102, 255, 0.2)', // Purple
+                            'rgba(255, 159, 64, 0.2)', // Orange
+                            'rgba(255, 99, 132, 0.2)', // Red
+                            'rgba(54, 162, 235, 0.2)' // Blue
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)', // Red border
+                            'rgba(54, 162, 235, 1)', // Blue border
+                            'rgba(255, 206, 86, 1)', // Yellow border
+                            'rgba(75, 192, 192, 1)', // Green border
+                            'rgba(153, 102, 255, 1)', // Purple border
+                            'rgba(255, 159, 64, 1)', // Orange border
+                            'rgba(255, 99, 132, 1)', // Red border
+                            'rgba(54, 162, 235, 1)', // Blue border
+                            'rgba(255, 206, 86, 1)', // Yellow border
+                            'rgba(75, 192, 192, 1)', // Green border
+                            'rgba(153, 102, 255, 1)', // Purple border
+                            'rgba(255, 159, 64, 1)', // Orange border
+                            'rgba(255, 99, 132, 1)', // Red border
+                            'rgba(54, 162, 235, 1)' // Blue border
+                        ],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options:{}
+        }
+    );
+    let genderPercentageDougnut = new Chart(
+        genderPercentage, 
+        {
+            type:'doughnut',
+            data:{
+                labels: ['Male', 'Female', 'Unspecified'],
+                datasets: [
+                    {
+                        labels: ["Male", "Female", "Unspecified"],
+                        data : genderData,
+                        backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(201, 203, 207)"],
+                        hoverOffset: 4
+                    }
+                ]
+            },
+            options:{}
+        }
+    );
+</script>

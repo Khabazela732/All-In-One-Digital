@@ -1,0 +1,21 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+
+{% block content %}
+    <main>
+        <section class="coming-soon" style="text-align: center; padding: 50px 0;">
+            <h2 style="font-size: 36px; color: #333;">Coming Soon</h2>
+            <p style="font-size: 18px; color: #666;">
+                We're working hard to bring you new and exciting features. Stay tuned for updates!
+            </p>
+        </section>
+     
+        <!--footer-area start-->
+        {% include "web/essentials/footer.html" %}
+        <!--footer-area end-->
+    </main>
+{% endblock content %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/assets/css/coming-soon.css' %}">
+{% endblock extra_css %}

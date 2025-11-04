@@ -1,0 +1,62 @@
+{% extends "global/base.html" %}
+{% block content %}   
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                {{ company.company_name }}
+            </h5>
+            <p>{{ company.description }}</p>
+            <p>Location: {{ company.location }}</p>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        Log Books for {{ company.company_name }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <script>
+               
+                    </script>
+                    {% if logbooks %}
+                
+                    <div class="table-responsive datatable-minimal">
+                        <table class="table" id="induction-posts">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Number Of Interns</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for logbook in logbooks %}
+                                
+                                {% comment %} {% if logbook.intern == None and logbook.num_interns > 0 %} {% endcomment %}
+                            <tr>
+                                <td>{{ logbook.name }}</td>
+                                <td> {{ logbook.num_interns }}</td>
+                                <td>
+                                    <a class="btn btn-info btn-sm" href="{% url 'host_emp_intern_logbook_preview' logbook_template_id=logbook.id %}">View</a>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteDepartment('{{ department.id }}')">Delete</button>
+                                </td>  
+                            </tr>
+                            {% comment %} {% endif %} {% endcomment %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

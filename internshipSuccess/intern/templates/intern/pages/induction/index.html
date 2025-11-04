@@ -1,0 +1,245 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- If your base template already sets the viewport meta, you can remove this next line from the base or keep it there -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<style>
+    body {
+        background: #f5f7fa;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Uniform Card Styles (no fixed height; allow content to flow) */
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform .2s ease, box-shadow .2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    /* Brand button (use where you want the mint look without breaking Bootstrap variants) */
+    .btn-brand {
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all .2s ease-in-out;
+        background-color: #1abc9c;
+        color: #fff;
+        border: none;
+    }
+    .btn-brand:hover {
+        transform: scale(1.05);
+        background-color: #16a085;
+        color: #fff;
+    }
+
+    /* Card Icons */
+    .card-icon {
+        font-size: 50px;
+        color: #1abc9c;
+        margin-bottom: 10px;
+    }
+
+    /* Assignment Container */
+    .assignment-container {
+        background: #fff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .assignment-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .assignment-tab {
+        padding: 10px 18px;
+        cursor: pointer;
+        font-weight: 500;
+        color: #495057;
+        border-bottom: 2px solid transparent;
+        transition: 0.2s;
+        margin: 0 5px;
+        user-select: none;
+    }
+
+    .assignment-tab.active {
+        color: #1abc9c;
+        border-bottom: 2px solid #1abc9c;
+    }
+
+    .assignment-content {
+        display: none;
+        padding: 15px 0;
+    }
+
+    .assignment-content.active-assignment {
+        display: block;
+    }
+
+    ul.list-unstyled li i {
+        margin-right: 8px;
+        font-size: 16px;
+        color: #1abc9c;
+    }
+
+    /* Card Header */
+    .card-header {
+        background-color: #1abc9c;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        border-top-left-radius: 12px !important;
+        border-top-right-radius: 12px !important;
+    }
+
+    /* Card Body Centering */
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Mobile improvements: stack action buttons */
+    @media (max-width: 576px) {
+        .ack-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px;
+        }
+        .ack-row .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- Attendance Section -->
+<section class="section mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-people-fill fs-5 me-2"></i>
+                    <h5 class="card-title mb-0">Induction Attendance</h5>
+                </div>
+                <div class="card-body">
+                    {% if application.status == 'ACKNOWLEDGED' %}
+                        <div class="text-center">
+                            <i class="bi bi-check2-circle card-icon"></i>
+                            <h5>{{ Assesment.title }}</h5>
+                            <a href="{% url 'mark_attendance' post_id=post_id %}" class="btn btn-success mt-2">
+                                <i class="bi bi-pencil"></i> Mark Attendance
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="w-100">
+                            <div class="text-center">
+                                <i class="bi bi-envelope-paper-heart card-icon"></i>
+                            </div>
+                            <p class="text-muted mb-2 text-center">
+                                Dear <b>{{ application.name }} {{ application.surname }}</b>, you are invited to the induction programme:
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-building"></i> Venue: Internship Success HQ (Nelspruit)</li>
+                                <li><i class="bi bi-calendar2-event"></i> Date: {{ induction.start_date }} - {{ induction.end_date }}</li>
+                                <li><i class="bi bi-clock-history"></i> Time: 07:00 - 17:00</li>
+                                <li><i class="bi bi-signpost"></i> Address: Dos Santos Shell, Cnr Ferreira and Van Der Merwe</li>
+                            </ul>
+                            <form method="post" action="{% url 'acknowledge_induction' application.id %}">
+                                {% csrf_token %}
+                                <div class="d-flex justify-content-around mt-3 ack-row">
+                                    <button type="submit" name="acknowledge_induction" class="btn btn-primary">
+                                        <i class="bi bi-check-lg"></i> Accept
+                                    </button>
+                                    <button type="submit" name="reject" class="btn btn-danger">
+                                        <i class="bi bi-x-lg"></i> Reject
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Consent Form Section -->
+<section class="section mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="card text-center">
+                <div class="card-header bg-info text-white">
+                    <i class="bi bi-journal-check card-icon"></i> Consent Form
+                </div>
+                <div class="card-body">
+                    <h6>{{ Assesment.title }}</h6>
+                    <a href="{% url 'signcosentform' %}" class="btn btn-info mt-2">
+                        <i class="bi bi-pen-fill"></i> Sign Form
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Assignments Section -->
+<section class="section mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-12">
+            <div class="assignment-container">
+                <h5><i class="bi bi-journal-text"></i> Assignments</h5>
+                <div class="assignment-tabs">
+                    <div class="assignment-tab active" onclick="showAssignment('assignment1', event)">
+                        <i class="bi bi-file-earmark-text-fill"></i> Assignment 1
+                    </div>
+                    <div class="assignment-tab" onclick="showAssignment('assignment2', event)">
+                        <i class="bi bi-file-earmark-text"></i> Assignment 2
+                    </div>
+                </div>
+
+                <div id="assignment1" class="assignment-content active-assignment">
+                    <h6><i class="bi bi-pencil-square"></i> Assignment One</h6>
+                    <a href="{% url 'write_assignment' %}" class="btn btn-outline-primary mt-2">
+                        <i class="bi bi-play-btn-fill"></i> View Assessment Submitted
+                    </a>
+                </div>
+
+                <div id="assignment2" class="assignment-content">
+                    <h6><i class="bi bi-pencil-square"></i> Assignment Two</h6>
+                    <a href="{% url 'write_assignment2' %}" class="btn btn-outline-success mt-2">
+                        <i class="bi bi-play-btn-fill"></i> View Assessment Submitted
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showAssignment(tab, event) {
+        if (event) event.preventDefault();
+        document.querySelectorAll('.assignment-content').forEach(el => el.classList.remove('active-assignment'));
+        document.querySelectorAll('.assignment-tab').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById(tab);
+        if (target) target.classList.add('active-assignment');
+        if (event && event.currentTarget) event.currentTarget.classList.add('active');
+    }
+</script>
+{% endblock %}

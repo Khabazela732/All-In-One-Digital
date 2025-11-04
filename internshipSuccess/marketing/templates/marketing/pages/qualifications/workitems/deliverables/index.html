@@ -1,0 +1,108 @@
+{% extends "administration/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Work Item - {{ workitem.name }}</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="{% url 'qualifications' %}">Work Item</a>
+                <p class="text-subtitle text-muted">{{ workitem.name }}</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Qualification</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ qualification.code }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ workitem.qualification.id }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    {{ workitem.name }}
+                </h5>
+            </div>
+            <div class="card-body">
+                {{ workitem.description }} 
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    Deliverables
+                </h5>
+            </div>
+            <div class="card-header">
+                <button class="btn btn-primary" id="addDeliverableBtn" onclick="AddDeliverable()">Add Deliverable</button>
+            </div>
+            <div class="card" style="display:none" id="addDeliverable_form">
+                <div class="card-header">
+                  <h5 class="card-title">Add Deliverable</h5>
+                </div>
+                <div class="card-body">
+                  <form method="post">
+                    {% csrf_token %} {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Add</button>
+                  </form>
+                </div>
+              </div>
+
+            <div class="card-body">
+                <div class="table-responsive datatable-minimal" id="deliverable_table">
+                    <table class="table" id="induction-posts">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NAME</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for deliverable in deliverables %}
+                        <tr>
+                            <td>{{ deliverable.id }}</td>
+                            <td><a href="#">{{ deliverable.name }}</a></td>
+                            {% comment %} <td><a href="{% url 'induction-application-posts' induction.id %}">View Applications</a></td> {% endcomment %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+<script>   
+    const deliverableTable = document.getElementById("deliverable_table")
+    const addDeliverableForm = document.getElementById("addDeliverable_form")
+    const addDeliverableBtn = document.getElementById("addDeliverableBtn")
+    
+    function AddDeliverable() {
+        if(addDeliverableForm.style.display == 'none'){
+            addDeliverableForm.style.display = "block"
+            deliverableTable.style.display = "none"
+            addDeliverableBtn.innerHTML = "Cancel"
+        } else {
+            addDeliverableForm.style.display = "none"
+            deliverableTable.style.display = "block"
+            addDeliverableBtn.innerHTML = "Add Deliverable"
+        }
+    }
+      
+</script>
+{% endblock content %}

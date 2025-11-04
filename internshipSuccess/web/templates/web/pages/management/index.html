@@ -1,0 +1,57 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block title %}| How do we manage our Interns {% endblock title %}
+{% block content %}
+   
+    <main>
+        
+            {% include "web/pages/management/page-title-area.html" %}
+
+			{% include "web/pages/management/management.html" %}
+
+    </main>
+     
+
+
+        <!--footer-area start-->
+        {% include "web/essentials/footer.html" %}
+        <!--footer-area end-->
+    </main>
+{% endblock content %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/assets/css/coming-soon.css' %}">
+{% endblock extra_css %}
+
+<!--page-title-area start-->
+<!-- <section class="page-title-area" style="background-image: url(static/web/assets/img/page-title/bg-1.webp);">
+    <img class="right-shape" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home /</a></li>
+                        <li class="active" aria-current="page">Internship Management</li>
+                    </ul>
+                    <h2 class="page-title">Internship Management</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+        
+		<!-- <section class="coming-soon" style="text-align: center; padding: 50px 0;">
+            <h2 style="font-size: 36px; color: #333;">Internship Management. </h2><br><br>
+            <p style="font-size: 18px; color: #666;">
+                 
+                Effective internship management is at the core of our program at Internship Success.<br> 
+                We support interns and host employers throughout the internship experience, from initial induction to final placement.<br> 
+                Our Internship Advantage Induction equips interns with essential soft skills and introduces them to workplace culture, preparing them for success.<br>
+                During the internship, we offer ongoing monitoring, mentoring, and support to ensure the intern and the employer achieve their goals.<br> 
+                Our structured program includes regular check-ins and feedback sessions to address issues and maximize the learning experience.<br> 
+                We are committed to the long-term success of our interns, providing additional guidance and resources to help them transition smoothly into permanent employment or entrepreneurship.<br>
+
+            </p> -->

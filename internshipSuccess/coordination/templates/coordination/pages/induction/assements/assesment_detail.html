@@ -1,0 +1,44 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{ assesment.title }}</title>
+</head>
+<body>
+    <h1>{{ assesment.title }}</h1>
+    <p>Description: {{ assesment.description }}</p>
+    
+    <h2>Questions</h2>
+    <ul>
+        {% for question in questions %}
+        <section class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><li>{{ question.text }}</li></h4>
+                </div>
+            {% if question.question_type == 'multiple_choice' %}
+                {% if not question.choice_set.all %}
+                    <li><a href="{% url 'add_choice' question.pk %}">Add Choice</a></li>
+                {% endif %}
+                <ul>
+                    {% for choice in question.choice_set.all %}
+                    <div class="card-body">
+                        <li>{{ choice.text }}</li>
+                    </div>
+                        
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        
+    </div>
+        {% endfor %}
+    </ul>
+</section>
+<div class="buttons">
+    <a href="{% url 'add_question' assesment.pk %}" class="btn btn-primary rounded-pill">Add Question</a>
+    <a href="{% url 'assesment_users' assesment_id=assesment.id %}" class="btn btn-primary rounded-pill">List Of Interns who wrote the assment</a>
+</div>
+</body>
+{% endblock %}
+        
+    

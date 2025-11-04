@@ -1,0 +1,8 @@
+from django.contrib import admin
+from .models import Campaign, SuccessStory, ConsentForm, Magazine
+
+# Register your models here.
+admin.site.register(Campaign)
+admin.site.register(SuccessStory)
+admin.site.register(ConsentForm)
+admin.site.register(Magazine)

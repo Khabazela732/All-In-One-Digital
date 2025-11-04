@@ -1,0 +1,20 @@
+{% extends "global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Report Submitted!</h4>
+        <p>Thank you for reporting this issue. We will review the report and take appropriate action.</p>
+        <hr>
+        {% comment %} <a href="{% url 'intern_profile' intern_id=intern.intern.id  %}" class="btn btn-primary">Back to Profile</a> {% endcomment %}
+    </div>
+</div>
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

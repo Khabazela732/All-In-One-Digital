@@ -1,0 +1,18 @@
+{% extends "mar/global/base.html" %}
+{% block content %}
+<h2>User Activity Tracking</h2>
+<table>
+    <tr>
+        <th>User</th>
+        <th>Page Visited</th>
+        <th>Timestamp</th>
+    </tr>
+    {% for activity in activities %}
+    <tr>
+        <td>{{ activity.user }}</td>
+        <td>{{ activity.page }}</td>
+        <td>{{ activity.timestamp }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

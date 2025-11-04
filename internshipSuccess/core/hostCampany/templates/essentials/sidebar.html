@@ -1,0 +1,110 @@
+{% load static %}
+<div id="sidebar">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header position-relative">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a style="padding:15px; background-color: white;border-radius: 5px;" href="{% url "admini-home" %}"> <img src="{% static 'administration/compiled/svg/correct Logo Internship Success Benefit.png' %}" 
+                        alt="Logo" 
+                        class="img-fluid" 
+                        style="width: 400px; height: auto;"></a>
+                </div>
+                <div class="sidebar-toggler  x" >
+                    <a href="#" id="sidebar-xbtn" class="sidebar-hide d-xl-none d-block"
+                    ><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "host-employer-home" %}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "shift_list" %}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Shifts</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "rotation-list" %}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Rotation Report</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "department_list" %}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Departments</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "companies" %}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Companies</span>
+                    </a>
+                </li>
+
+            <li
+                class="sidebar-item active has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-badge-fill"></i>
+                    <span>Our Interns</span>
+                </a>
+                
+                <ul class="submenu ">
+                    
+                    <li class="submenu-item  active">
+                        <a href="{% url 'active-interns' %}" class="submenu-link">Active Interns</a>
+                    </li>
+            
+                    
+                    <li class="submenu-item  active">
+                        <a href="#" class="submenu-link">Terminated Interns</a>
+                        
+                    </li>
+                    <li class="submenu-item  active">
+                        <a href="#" class="submenu-link">Completed Interns</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
+            <li
+            class="sidebar-item active has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-person-badge-fill"></i>
+                <span>Internship Activities</span>
+            </a>
+            
+            <ul class="submenu ">
+                
+                <li class="submenu-item  active">
+                    <a href="{% url 'attendance_list' %}" class="submenu-link">Work attendance</a>
+                </li>           
+            </ul>
+        </li>  
+                {% comment %} Logout BTN {% endcomment %}
+                <li
+                    class="sidebar-item">
+                    <a href="{% url "logout" %}" class='btn btn-danger'>
+                        <i class="bi bi-people"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</div>

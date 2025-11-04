@@ -1,0 +1,182 @@
+{% extends "mar/global/base.html" %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+<style>
+    .blue-border {
+        border: 2px solid #435ebe;
+        margin-bottom: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .blue-border:hover {
+        transform: scale(1.05);
+    }
+
+    .fontawesome-icons {
+        text-align: center;
+    }
+
+    .fontawesome-icons img {
+        height: 150px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .fontawesome-icons .card-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #drop-image.border-primary {
+        border-color: #0d6efd !important;
+        background-color: #f0f9ff;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Success Stories</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'marketing-dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Success Stories</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <!-- List of Success Stories -->
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Published Stories</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if stories %}
+                        <div class="row fontawesome-icons">
+                            {% for story in stories %}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="blue-border">
+                                    {% if story.image %}
+                                    <img src="{{ story.image.url }}" alt="Cover" />
+                                    {% else %}
+                                    <img src="{% static 'default-cover.jpg' %}" alt="No Image" />
+                                    {% endif %}
+                                    <h5 class="card-title">{{ story.title }}</h5>
+                                    <p>{{ story.content|truncatechars:50 }}</p>
+                                    <p><small>Published: {{ story.created|date:"Y-m-d" }}</small></p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p>No success stories have been posted yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload New Success Story -->
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title mb-0">✨ Share Success Story</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                {{ form.title|add_class:"form-control" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content</label>
+                                {{ form.content|add_class:"form-control" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Image</label>
+                                <div id="drop-image" class="border border-2 border-secondary rounded text-center p-4">
+                                    <p class="mb-2">🖼️ Drag & drop an image here</p>
+                                    <p class="text-muted">or click to browse</p>
+                                    {{ form.image|add_class:"form-control d-none" }}
+                                    <input type="file" name="image" id="imageFileElem" accept="image/*" class="form-control" hidden>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('imageFileElem').click()">Choose Image</button>
+                                    <p id="imageFileName" class="mt-2 text-success fw-bold"></p>
+                                    <div id="imagePreview" class="mt-2"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success px-4">📤 Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    const dropImage = document.getElementById('drop-image');
+    const imageInput = document.getElementById('imageFileElem');
+    const imageFileName = document.getElementById('imageFileName');
+    const imagePreview = document.getElementById('imagePreview');
+
+    dropImage.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropImage.classList.add('border-primary');
+    });
+
+    dropImage.addEventListener('dragleave', () => {
+        dropImage.classList.remove('border-primary');
+    });
+
+    dropImage.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropImage.classList.remove('border-primary');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+            imageInput.files = e.dataTransfer.files;
+            imageFileName.textContent = `✔️ ${file.name}`;
+            previewImage(file);
+        } else {
+            imageFileName.textContent = "";
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File',
+                text: 'Please upload a valid image.'
+            });
+        }
+    });
+
+    imageInput.addEventListener('change', () => {
+        if (imageInput.files.length > 0) {
+            imageFileName.textContent = `✔️ ${imageInput.files[0].name}`;
+            previewImage(imageInput.files[0]);
+        }
+    });
+
+    function previewImage(file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imagePreview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-height: 150px;" />`;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 5000px; /* Keep it centered and responsive */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            Mark Attendance for {{ post.title }}
+        </div>
+        <div class="card-body">
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="passcode" class="form-label">Passcode:</label>
+                    <input type="password" id="passcode" name="passcode"
+                        class="form-control" placeholder="Enter passcode">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Prefill passcode from URL if available
+        const urlParams = new URLSearchParams(window.location.search);
+        const passcode = urlParams.get('passcode');
+        if (passcode) {
+            document.getElementById("passcode").value = passcode;
+        }
+    </script>
+</body>
+{% endblock content %}

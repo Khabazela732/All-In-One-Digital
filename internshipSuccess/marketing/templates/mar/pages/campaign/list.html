@@ -1,0 +1,166 @@
+{% extends "mar/global/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+    .blue-border {
+        border: 2px solid #435ebe;
+        margin-bottom: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    .blue-border:hover {
+        transform: scale(1.05);
+    }
+    .fontawesome-icons img {
+        height: 150px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .fontawesome-icons .card-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    #drop-image.border-primary {
+        border-color: #0d6efd !important;
+        background-color: #eaf5ff;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-6"><h3>Campaigns</h3></div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <!-- Campaign List -->
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">Campaign Posts</h4></div>
+                    <div class="card-body">
+                        {% if campaigns %}
+                        <div class="row fontawesome-icons">
+                            {% for campaign in campaigns %}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="blue-border">
+                                    {% if campaign.image %}
+                                    <img src="{{ campaign.image.url }}" alt="Campaign Image" />
+                                    {% else %}
+                                    <img src="{% static 'default-campaign.jpg' %}" alt="Default" />
+                                    {% endif %}
+                                    <h5 class="card-title">{{ campaign.name }}</h5>
+                                    <p>{{ campaign.description|truncatechars:60 }}</p>
+                                    <p><small>{{ campaign.start_date }} → {{ campaign.end_date }}</small></p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p>No campaigns found. Add one using the form.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Campaign -->
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title mb-0">📣 Add New Campaign</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="campaignForm">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Campaign Name</label>
+                                {{ form.name|add_class:"form-control" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                {{ form.description|add_class:"form-control" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Date</label>
+                                {{ form.start_date|add_class:"form-control" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">End Date</label>
+                                {{ form.end_date|add_class:"form-control" }}
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="mb-3">
+                                <label class="form-label">Campaign Image</label>
+                                <div id="drop-image" class="border border-2 border-secondary rounded text-center p-4">
+                                    <p class="mb-2">🖼️ Drag & drop image here</p>
+                                    <p class="text-muted">or click to browse</p>
+                                    {{ form.image|add_class:"form-control d-none" }}
+                                    <input type="file" name="image" id="imageFileElem" accept="image/*" hidden>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('imageFileElem').click()">Choose File</button>
+                                    <p id="imageFileName" class="mt-2 text-success fw-bold"></p>
+                                    <div id="imagePreview" class="mt-2"></div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success">📤 Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<script>
+    const dropArea = document.getElementById('drop-image');
+    const input = document.getElementById('imageFileElem');
+    const fileName = document.getElementById('imageFileName');
+    const preview = document.getElementById('imagePreview');
+
+    dropArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        dropArea.classList.add('border-primary');
+    });
+    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('border-primary'));
+    dropArea.addEventListener('drop', e => {
+        e.preventDefault();
+        dropArea.classList.remove('border-primary');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+            input.files = e.dataTransfer.files;
+            fileName.textContent = `✔️ ${file.name}`;
+            showImagePreview(file);
+        } else {
+            fileName.textContent = "";
+            Swal.fire("Invalid File", "Only images allowed.", "error");
+        }
+    });
+
+    input.addEventListener('change', () => {
+        if (input.files.length > 0) {
+            fileName.textContent = `✔️ ${input.files[0].name}`;
+            showImagePreview(input.files[0]);
+        }
+    });
+
+    function showImagePreview(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            preview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-height: 150px;" />`;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+{% endblock content %}

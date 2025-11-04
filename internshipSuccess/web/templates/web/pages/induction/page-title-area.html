@@ -1,0 +1,26 @@
+{% load static %}
+<style>
+    #page-title-area-induction {
+        background-image: url({% static 'web/assets/img/about/about-internship-success-01.webp' %});
+    }
+    .bold-text {
+        font-weight: bold;
+    }
+    
+</style>
+<section id="page-title-area-induction" class="page-title-area" style="">
+    <img class="right-shape" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+                    <ul class="breadcrumb">
+                        <li><a href="{% url 'home' %}" class="bold-text">Home /</a></li>
+                        <li class="active bold-text" aria-current="page">Induction Application Post</li>
+                    </ul>
+                    <h2 class="page-title">Your Career journey starts here, now.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

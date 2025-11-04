@@ -1,0 +1,330 @@
+{% extends "coordination/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Logbook Preview</h3>
+</div> 
+
+<script src="assets/static/js/initTheme.js"></script>
+
+    <!-- Bordered table start -->
+    <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Log Book Template</h4>
+                    </div>
+                        <div class="card-body">
+                            <p class="card-text">STATEMENT OF WORK EXPERIENCE/LOGBOOK 
+                            </p>
+                            <button class="btn btn-primary">Print Logbook Template</button><br><br>
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name: 
+                                                </th>
+                                            <th>{{logbook_template.name}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-bold-500">Company:</td>
+                                            <td>{{logbook_template.company.company_name}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Qualification:</td>
+                                            <td>{{logbook_template.qualification}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Total Credits:</td>
+                                            <td>{{total_credits}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Required Credits:</td>
+                                            <td>{{minimum_credits_required}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Percentage:</td>
+                                            <td>{{percentage_pass}}%</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Interns:</td>
+                                            <td>
+                                                0
+                                            </td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500"></td>
+                                            <td>
+                                                <span><button class="btn btn-primary">Distribute Logbook</button></span>
+                                            </td>                                       
+                                        </tr>                                 
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bordered table end -->
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">           
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Learner Details 
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name & Surname:  
+                                            </th>
+                                        <th>
+                                            </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-bold-500">ID Number:  </td>
+                                        <td> N/A
+                                            </td>
+                                        
+                                    </tr>
+                                    
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Employer Details 
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name: 
+                                            </th>
+                                        <th>
+                                            N/A
+                                            </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr>
+                                        <td class="text-bold-500">Address:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Supervisor Name:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Work Telephone:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">E-Mail: 	 	  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Management Assistant Compulsory subjects
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Office Practice  
+                                            </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-bold-500">Information Processing   </td>
+                                        
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Additional: </td>
+                                       
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Workplace Competencies  </td>
+                                        
+                                        
+                                    </tr>
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+    <!-- Bordered table start -->
+    <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Duties 
+                            </p>
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-primary">CODE 
+                                                </th>
+                                            <th class="table-primary">NAME
+                                                </th>
+                                            <th class="table-primary">POINTS
+                                                </th>
+                                            <th class="table-primary">STATUS
+                                                </th>
+                                            <th class="table-primary">
+                                                APPROVAL
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for work_item in logbook_template.qualification.workitems.all %}                                                    
+                                        <thead>
+                                            <tr>
+                                                <th class="table-danger"> 
+                                                    </th>
+                                                <th class="table-danger">WorkItem: {{ work_item.name }}
+                                                    </th>
+                                                <th class="table-danger">
+                                                    </th>
+                                                <th class="table-danger">
+                                                    </th>
+                                                <th class="table-danger">              
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                
+                                            {% for logbook_deliverable in logbook_template.deliverables.all %}
+                                            {% if logbook_deliverable.deliverable.work_item == work_item %}
+                                            <tr>
+                                            <td class="text-bold-500">DE{{logbook_deliverable.id}}</td>
+                                            <td>{{logbook_deliverable.deliverable.name}}</td>
+                                            <td>{{deliverable_pts}}</td>
+                                            {% endif %}
+                                            </tr>
+                                            {% empty %}
+                                            <td class="text-bold-500"></td>
+                                            <td colspan="2">No deliverables for this work item.</td>
+                                            <td></td>
+                                            <td></td>
+                                            {% endfor %}
+                                        </tbody>
+                                        {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bordered table end -->
+
+
+
+
+
+
+
+
+
+
+
+<!--<section class="section">
+    {% comment %} For this section You need to Show a dropdown of all available qualifications {% endcomment %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                
+            </h5>
+            <h6>Select the qualification you want for this logbook.</h6>
+        </div>
+    </div>
+</section>
+{% endblock content %} -->
+

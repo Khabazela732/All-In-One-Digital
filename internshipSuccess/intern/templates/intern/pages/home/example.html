@@ -1,0 +1,29 @@
+<form method="post">
+    {% csrf_token %}
+    {% for question in questions %}
+    <div class="question">
+        <section class="section">
+            <div class="card">
+                <div class="card-body">
+                    <p>{{ question.text }}</p>
+                    {% if question.question_type == 'multiple_choice' %}
+                    <ul>
+                        {% for choice in question.choice_set.all %}
+                        <li>
+                            <label>
+                                <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                                {{ choice.text }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% elif question.question_type == 'essay' %}
+                    <textarea name="question_{{ question.id }}" rows="5" cols="50"></textarea>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary rounded-pill">Submit</button>
+</form>

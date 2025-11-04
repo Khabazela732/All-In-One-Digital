@@ -1,0 +1,102 @@
+{% extends "hr/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Host Employer: {{ host_employer.company_name }}</h3>
+</div> 
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+             Interns placed at {{ host_employer.company_name }} 
+            </h5>
+        </div>
+        <script>
+
+        
+        function CreateInductionPost() {
+            // Specify URL and window properties
+            var url = '{% url "induction-create" %}'; // URL of the content to be loaded in the popup
+            var windowName = 'Popup'; // Name of the popup window
+            var width = 500; // Width of the popup window
+            var height = 700; // Height of the popup window
+            var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+            var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+            var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+          
+            // Open the popup window
+            var popup = window.open(url, windowName, features);
+          }
+          
+      </script>
+        <div class="card-body">
+            <div class="table-responsive datatable-minimal">
+                <table class="table" id="induction-posts">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Nationl ID (RSA)</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for intern, application in interns %}
+                    <tr>
+                        <td>{{ application.id }}</td>
+                        <td>{{ application.name }}</td>
+                        <td>{{ application.surname }}</td>
+                        <td>{{ application.national_id }}</td>
+                        <td>{{ application.phone_number }}</td>
+                        <td>{{ application.email }}</td>
+                        <td>{{ application.age }}</td>
+                        <td>{{ application.status }}</td>
+                        <!-- <td><a href="#">More Information</a></td> -->
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="ViewInductionApplication(this)" data-url="{% url 'intern_profile' intern_id=intern.intern.id id=application.id %}">More Information</button>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <script>
+                    function ViewInductionApplication(button) {
+
+                    // Specify URL and window properties
+                    var url = button.getAttribute('data-url');
+                    var windowName = 'Popup'; // Name of the popup window
+                    var width = 1000; // Width of the popup window
+                    var height = 800; // Height of the popup window
+                    var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+                    var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+                    var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+                    // Open the popup window
+                    var popup = window.open(url, windowName, features);
+        }
+                </script>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="section">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Company Location</h5>
+                </div>
+                <div class="card-body">
+                    <div class="googlemaps">
+                        <iframe src="" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

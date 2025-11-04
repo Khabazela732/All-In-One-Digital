@@ -1,0 +1,25 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<h1>{{ title }} - {{ current_month }}</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Total Invoiced (R)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.company_name }}</td>
+            <td>{{ company.total_invoiced|floatformat:2|default:"0.00" }}</td>
+            <td><a href="{% url 'monthly_invoice_list' company.id %}">View Invoices</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No invoices for {{ current_month }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'generate_invoices' %}" class="btn btn-primary">Generate Invoices</a>
+{% endblock %}

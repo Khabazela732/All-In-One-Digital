@@ -1,0 +1,490 @@
+{% comment %} <div class="card" style="width: 18rem;">
+    <div class="card-body">
+       <h5 class="card-title">{{ induction_post.title }}</h5>
+       <p class="card-text">{{ induction_post.description }}</p>
+       <p class="card-text"><small class="text-muted">Start Date: {{ induction_post.start_date }}</small></p>
+       <p class="card-text"><small class="text-muted">End Date: {{ induction_post.end_date }}</small></p>
+       <p class="card-text"><small class="text-muted">Location: {{ induction_post.location }}</small></p>
+       <a role="button" href="{% url 'induction-application' induction_post.id %}">Apply</a>
+    </div>
+   </div> {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>InternShip Success - Induction Application Post</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="manifest" href="site.webmanifest" />
+	<link rel="shortcut icon" type="image/x-icon" href="https://internship.org.za/assets/img/favicon.png" />
+	<!-- Place favicon.ico in the root directory -->
+
+
+	<link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/owl.carousel.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/animate.css' %} " />
+	<link rel="stylesheet" href="{% static 'web/css/magnific-popup.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/all.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/gt-font.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/metisMenu.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/nice-select.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/spacing.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/main.css' %}" /> 
+
+   <style>
+      p{
+          font-family: sans-serif;
+      }
+      h1{font-family: sans-serif;}
+      h2{font-family: sans-serif;}
+      h3{font-family: sans-serif;}
+      h4{font-family: sans-serif;}
+      h5{font-family: sans-serif;}
+      h6{font-family: sans-serif;}
+      a{font-family: sans-serif;}
+      
+  </style>
+</head>
+
+<body>
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+	<!-- Add your site or application content here -->
+	<!-- preloader -->
+	<div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- preloader end  -->
+<!-- header-area start -->
+<header>
+	<div class="header-top heding-bg">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-6 col-6">
+					<div class="left-cta">
+						<span><i class="fal fa-envelope"></i> admin@internship.org.za</span>
+						<span><i class="fal fa-phone"></i> +27 13 753 3353</span>
+					</div>
+				</div>
+				<div class="col-md-6 col-6 text-end">
+					<div class="right-language">
+						<div class="dropdown">
+							<a  href="#">
+								 <i class="fal "></i>
+							</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bottom-border-line"></div>
+		<div class="container d-none d-md-block">
+			<div class="row pt-25">
+				<div class="col-xl-4 col-lg-3 d-none d-lg-inline-block">
+					<div class="logo-area">
+						<a class="head-logo-1" href="index.html"><img src="https://internship.org.za/assets/img/logo/internship-success-logo-01.png"
+								alt="Internship Success"></a>
+					</div>
+				</div>
+				<div class="col-xl-8 col-lg-9">
+					<ul class="right-query mb-0">
+						<li>
+							<div class="icon"><i class="fal fa-map-marker-alt"></i></div>
+							<div class="query-list">
+								<span>1st Floor, Shell House</span>
+								<span>Ferreira St, Mbombela. 1200
+									</span>
+							</div>
+						</li>
+						<li>
+							<div class="icon"><i class="fal fa-clock"></i></div>
+							<div class="query-list">
+								<span>Mon - Fri 8.00 - 16.00</span>
+								<span>Sun - Sat: Closed</span>
+							</div>
+						</li>
+						<li>
+							<a class="theme_btn quote-btn" href="#">Login</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="heding-bg-1" id="hideshow-sticky-menu">
+		<div class="main-header-area">
+			<div class="container">
+				<div class="white-bg row align-items-center gx-0">
+					<div class="col-lg-10 col-6 text-start">
+						<div class="logo-area d-lg-none d-md-block">
+							<a href="index.html"><img src="https://internship.org.za/assets/img/logo/internship-success-logo-01.png" alt="Internship Success"></a>
+						</div>
+						<nav id="topheader" class="navbar navbar-expand-lg justify-content-start py-0">
+							<div class="nav-container">
+								<div class="collapse navbar-collapse" id="navbarSupportedContent">
+									<ul class="navbar-nav list-style-none">
+										<li class="nav-item">
+											<a class="nav-link" href="index.html">Home</a>
+										</li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#"
+												id="navbarDropdow2" role="button" data-bs-toggle="dropdown"
+												aria-expanded="false">Our Company<i
+													class="fal fa-chevron-down"></i></a>
+											<ul class="dropdown-menu">
+												<li>
+													<a class="dropdown-item" href="about.html">Application Post</a>
+												</li>
+												<li>
+													<a class="dropdown-item" href="team.html">Our Team</a>
+												</li>
+											</ul>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="our-services.html">Services</a>
+										</li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
+												role="button" data-bs-toggle="dropdown" aria-expanded="false">Recruitment
+												<i class="fal fa-chevron-down"></i></a>
+											<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+												<li>
+													<a class="dropdown-item" href="career.html">Vacancies</a>
+												</li>
+												<li>
+													<a class="dropdown-item" href="faq.html">FAQs</a>
+												</li>
+												
+											</ul>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="blog.html">News & Updates</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="contact.html">Contact</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+					</div>
+					<div class="col-lg-2 col-6">
+						<ul class="right-nav mb-0 d-flex align-items-center justify-content-end">
+							<li class="search-area">
+								<a class="search_input nav-search search-trigger header-2-icon" href="#">
+									<i class="fal fa-search"></i></a>
+							</li>
+							<li>
+								<div class="hamburger-menu">
+									<a href="javascript:void(0);">
+										<img src="https://internship.org.za/assets/img/icon/eclips.png" alt="Eclips">
+									</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.theme-main-menu -->
+	</div>
+</header>
+<!-- header-area end -->
+
+<!-- slide-bar start -->
+<aside class="slide-bar">
+	<div class="close-mobile-menu">
+		<a href="javascript:void(0);"><i class="fas fa-times"></i></a>
+	</div>
+	<!-- offset-sidebar start -->
+	<div class="offset-sidebar">
+		<div class="offset-widget offset-logo mb-30">
+			<a href="index.html">
+				<img src="https://internship.org.za/assets/img/logo/internship-success-logo-1.png" alt="logo">
+			</a>
+		</div>
+		<div class="offset-widget mb-40">
+			<div class="info-widget">
+				<h4 class="offset-title mb-20">Application Posts</h4>
+				<p class="mb-30">
+					Get a chance to go for induction and get job placement
+				</p>
+				<a class="theme_btn theme_btn_bg" href="contact.html">Contact Us</a>
+			</div>
+		</div>
+		<div class="offset-widget mb-30 pr-10">
+			<div class="info-widget info-widget2">
+				<h4 class="offset-title mb-20">Contact Info</h4>
+				<p> <i class="fal fa-address-book"></i> 1st Floor, Shell House
+Ferreira St, Mbombela. 1200</p>
+				<p> <i class="fal fa-phone"></i> +27 13 753 3353 </p>
+				<p> <i class="fal fa-envelope-open"></i> info@internshipsuccess.org.za </p>
+			</div>
+		</div>
+	</div>
+	<!-- offset-sidebar end -->
+	<!-- side-mobile-menu start -->
+	<nav class="side-mobile-menu">
+		<ul id="mobile-menu-active">
+			<li>
+				<a href="index.html">Home</a>
+				
+			</li>
+			<li class="has-dropdown">
+				<a href="#">Our Company</a>
+				<ul class="sub-menu">
+					<li><a href="about.html">Application Post</a></li>
+					<li><a href="team.html">Our Team</a></li>
+				</ul>
+			</li>
+			<li><a href="our-services.html">Our Services</a></li>
+			
+			<li>
+				<a href="blog.html">News & Updates</a>
+				
+			</li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+	</nav>
+	<!-- side-mobile-menu end -->
+	</aside>
+	<div class="body-overlay"></div>
+	<!-- slide-bar end -->
+
+	<main>
+		<!--page-title-area start-->
+		<section class="page-title-area" style="background-image: url(https://internship.org.za/assets/img/about/about-internship-success-01.webp);">
+			<img class="right-shape" src="https://internship.org.za/assets/img/cta/dot-shape-1.png" alt="Dot Pattern">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+							<ul class="breadcrumb">
+								<li><a href="index.html">Home /</a></li>
+								<li class="active" aria-current="page">Application Post</li>
+							</ul>
+							<h2 class="page-title">Application Post</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--page-title-area end-->
+		<!--about-us-area start-->
+		<section class="about-us-area about-us-2 pt-120 pb-90 pt-md-60 pb-md-10 pb-xs-10 pt-xs-60">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6">
+						<div class="about-img-wrapper pos-rel mb-30">
+							<img class="shape-square" src="https://internship.org.za/assets/img/shape/square-1.png" alt="Shape">
+                     <iframe width="600" height="600" src="https://www.youtube.com/embed/0EMUvcK7sVM" title="Internship Success Interview With Tendo Letticia Khoz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </iframe>
+                     
+							{% comment %} <a href="https://youtu.be/0EMUvcK7sVM"><img class="img-fluid" src="https://internship.org.za/assets/img/about/about-us.jpg" alt="About Internship Success in Nelspruit"></a> {% endcomment %}
+						</div>
+					</div>
+					<div class="col-lg-6 mb-30">
+
+						{% if induction_post %}
+						<div class="about-content-wrapper3 pt-20 pl-60">
+							<div class="section-title">
+								<h6 class="semi-title mb-10">Looking for Graduates with the following Qualifications</h6>
+								<h2 class="sect-title">{{ induction_post.title }}</h2>
+								<p>{{ induction_post.description }}</p><br>			
+								<p><strong>Requirements:</strong></p><br>			
+								{{ induction_post.requirements }}
+								<br>
+								<br>
+								<p class="card-text"><small class="text-muted">Start Date: {{ induction_post.start_date }}</small></p>					
+								<p class="card-text"><small class="text-muted">End Date: {{ induction_post.end_date }}</small></p>
+								<br>
+								<p><strong>Qualifying graduates should submit the following documents:</strong></p><br>	
+								<ul>
+								<li>Detailed Curriculum Vitae</li>                         
+								<li>Certified ID copy and Qualifications</li>  
+									<li>Age: 18-35
+									</li>
+								</ul>
+								<p class="card-text"><strong>NB: CLOSING DATE: 20 March 2024 (Wednesday 12PM)</strong><i></i></p>
+								<br>
+								<a class="theme_btn quote-btn" role="button" href="{% url 'induction-application' induction_post.id %}">Apply</a>
+                     	</div>
+						{% else %}
+						<div class="about-content-wrapper3 pt-20 pl-60">
+							<div class="section-title">
+								<h2 class="sect-title">Opps! Applications are closed</h2>
+								<h6 class="semi-title mb-10">If You have previously submitted your application You can Check the Status</h6>
+								<a class="theme_btn quote-btn" role="button" href="">Check Application Status</a>
+                     	</div>
+						{% endif %}
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--about-us-area end-->
+	
+		<!--cta-area start-->
+		<section class="cta-area cta-full cta-full2">
+			<img class="shape-one" src="https://internship.org.za/assets/img/cta/dot-shape-1.png" alt="Shape">
+			<div class="cta-bg">
+				<div class="container">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-xxl-6 col-xl-8 col-lg-8 col-md-12">
+							<div class="cta-wrapper">
+								<h6 class="semi-title text-white mb-10">Creating Employable Graduates</h6>
+								<h2 class="sect-title text-white">We Bridging The Skills Gap, One Intern at A Time</h2>
+								<ul class="btn-list d-md-flex align-items-center justify-content-center mt-50">
+									<li><a class="theme_btn mr-30 mr-xs-0" href="contact.html">Contact Us</a>
+									</li>
+									<li><a class="theme_btn border_btn" href="about.html">View Success Strories</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--cta-area end-->
+
+	</main>
+	<!--footer-area start-->
+	<footer class="heding-bg footer-area pt-100">
+		<div class="container">
+			<div class="row mb-15">
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".1s">
+					<div class="footer__widget mb-30">
+						<h6 class="widget-title text-white pb-20 mb-35">About Internship Success</h6>
+						<p>Internship Success is a professional internship placement and management company which seeks to see all graduates benefit from a well-structured internship program.
+						</p>
+						<div class="footer__social mt-30">
+							<a href="https://www.facebook.com/profile.php?id=100091806840414"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://www.instagram.com/internship_success"><i class="fab fa-instagram"></i></a>
+							<a href="https://www.youtube.com/@internshipsuccess001"><i class="fab fa-youtube"></i></a>
+							<a href="#"><i class="fab fa-linkedin-in"></i></a>							
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".3s">
+					<div class="border-theme footer__widget mb-30 pl-135 pl-md-0 pl-xs-0">
+						<h6 class="widget-title text-white pb-20 mb-35">Main Menu</h6>
+						<ul class="fot-list">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">Application Post</a></li>
+							<li><a href="our-services.html">Key Services</a></li>
+							<li><a href="https://www.youtube.com/@internshipsuccess001">Success Stories</a></li>
+							<li><a href="contact.html">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".5s">
+					<div class="footer__widget mb-25 pl-25 pl-md-0 pl-xs-0">
+						<h6 class="widget-title text-white pb-20 mb-35">Get In Touch</h6>
+						<ul class="fot-list fot-list-1">
+							<li><a href="#"> +27 13 753 3353</a></li>
+							<li><a href="#">admin@internship.org.za</a></li>
+							<li><a href="#">Mon - Fri:08h00 - 16h00</a>
+							</li>
+							<li>
+								<a href="#">1st Floor, Shell House
+									Ferreira St, Mbombela. 1200 </a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp2 animated" data-wow-delay=".7s">
+					<div class="footer__widget mb-30">
+						<h6 class="widget-title text-white pb-20 mb-35">Subscribe Now</h6>
+						<form class="subscribe-form" action="#">
+							<div class="input-box mb-10">
+								<input type="text" placeholder="Your name">
+							</div>
+							<div class="input-box mail-input mb-10">
+								<input type="text" placeholder="Enter email address">
+							</div>
+
+							<button class="theme_btn subscribe-btn">Subscribe Now <i
+									class="fal fa-long-arrow-right"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copy-right-border">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 col-md-6">
+						<div class="copyright text-center text-md-start">
+							<p style="color: #fff;">Copyright &#169;2023 | Designed at <a style="color: grey;"  href="https://travelmysa.co.za">Travel My SA</a></p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 text-center text-md-end">
+						<ul class="footer-nav">
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="faq.html">FAQ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="#">Terms & Conditions</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="#">Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--footer-area end-->
+	<!-- Fullscreen search -->
+	<div class="search-wrap">
+		<div class="search-inner">
+			<i class="fas fa-times search-close" id="search-close"></i>
+			<div class="search-cell">
+				<form method="get">
+					<div class="search-field-holder">
+						<input type="search" class="main-search-input" placeholder="Search Your Keyword...">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end fullscreen search -->
+
+	<!-- JS here -->
+
+	<!-- JS here -->
+	<script src="{% static 'web/js/modernizr-3.5.0.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery-2.2.4.min.js' %}"></script>
+	<script src="{% static 'web/js/popper.min.js' %}"></script>
+	<script src="{% static 'web/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'web/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'web/js/metisMenu.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.nice-select.js' %}"></script>
+	<script src="{% static 'web/js/wow.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'web/js/waypoints.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'web/js/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'web/js/imagesloaded.pkgd.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'web/js/plugins.js' %}"></script>
+	<script src="{% static 'web/js/main.js' %}"></script>
+</body>
+
+</html>

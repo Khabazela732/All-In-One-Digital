@@ -1,0 +1,50 @@
+{% load static %}
+<style>
+.magazine-cover {
+    max-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    border-radius: 10px;
+}
+</style>
+<div class="about-img-wrapper pos-rel mb-30">
+    <!-- Button to toggle slideshow -->
+    <div class="text-center mb-3">
+        <button class="btn btn-primary" onclick="toggleSlideshow()">📖 View Magazines</button>
+    </div>
+
+    <!-- Magazine Slideshow -->
+    <div id="magazineSlideshow" class="carousel slide d-none" data-bs-interval="false">
+        <div class="carousel-inner">
+            {% for magazine in magazines %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                {% if magazine.cover_image %}
+                <img src="{{ magazine.cover_image.url }}" class="d-block w-100 rounded magazine-cover" alt="{{ magazine.title }}">
+                {% else %}
+                <img src="{% static 'default-magazine-cover.jpg' %}" class="d-block w-100 rounded magazine-cover" alt="No Cover">
+                {% endif %}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ magazine.title }}</h5>
+                    <p>{{ magazine.issue_date }}</p>
+                    <a href="{{ magazine.pdf.url }}" target="_blank" class="btn btn-sm btn-light">📄 View PDF</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Manual Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#magazineSlideshow" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#magazineSlideshow" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+<script>
+    function toggleSlideshow() {
+        const slideshow = document.getElementById('magazineSlideshow');
+        slideshow.classList.toggle('d-none');
+    }
+</script>

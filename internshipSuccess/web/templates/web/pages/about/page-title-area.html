@@ -1,0 +1,22 @@
+{% load static %}
+<style>
+    #page-title-area-id {
+        background-image: url({% static 'web/assets/img/about/about-internship-success-01.webp' %});
+    }
+</style>
+<section id='page-title-area-id' class="page-title-area">
+    <img class="right-shape" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+                    <ul class="breadcrumb">
+                        <li><a href="{% url 'home' %}">Home /</a></li>
+                        <li class="active" aria-current="page">About Us</li>
+                    </ul>
+                    <h2 class="page-title">About us</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

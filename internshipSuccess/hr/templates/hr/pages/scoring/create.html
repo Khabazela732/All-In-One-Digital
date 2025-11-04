@@ -1,0 +1,164 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<style>
+    table, th, td { border: 1px solid #ddd; border-collapse: collapse; padding: 6px; }
+    th { background-color: #f2f2f2; }
+    td { text-align: center; }
+    .category-row { background-color: #435ebe; color: white; text-align: left; }
+    .summary-table { margin-top: 30px; }
+</style>
+
+<h3>Staff Scoring: {{ staff.full_name }} ({{staff.department}})</h3>
+
+<form method="post" id="scoring-form">
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>AREAS OF ASSESSMENT</th>
+                <th>FULLY ACHIEVED (4)</th>
+                <th>TO A GREATER DEGREE (3)</th>
+                <th>TO AN ACCEPTED DEGREE (2)</th>
+                <th>TO A LESSER DEGREE (1)</th>
+                <th>NOT AT ALL (0)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr class="category-row">
+                <td colspan="6">{{ category.name }}</td>
+            </tr>
+            {% for task in category.tasks.all %}
+            <tr>
+                <td>{{ task.description }}</td>
+                {% for score in scores %}
+                <td>
+                    <input type="radio" name="task_{{ task.id }}" value="{{ score }}"
+                        onclick="saveScore('{{ task.id }}', '{{ score }}')">
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Calculation Table -->
+    <table class="summary-table">
+        <tr>
+                <th>AREAS OF ASSESSMENT</th>
+                <th>FULLY ACHIEVED (4)</th>
+                <th>TO A GREATER DEGREE (3)</th>
+                <th>TO AN ACCEPTED DEGREE (2)</th>
+                <th>TO A LESSER DEGREE (1)</th>
+                <th>NOT AT ALL (0)</th>
+        </tr>
+        <tr>
+            <th>Points scored</th>
+            <td id="count-4">0</td>
+            <td id="count-3">0</td>
+            <td id="count-2">0</td>
+            <td id="count-1">0</td>
+            <td id="count-0">0</td>
+        </tr>
+        <tr>
+            <th>Multiply by</th>
+            <td>4</td>
+            <td>3</td>
+            <td>2</td>
+            <td>1</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th>Sub-Total</th>
+            <td id="subtotal-4">0</td>
+            <td id="subtotal-3">0</td>
+            <td id="subtotal-2">0</td>
+            <td id="subtotal-1">0</td>
+            <td id="subtotal-0">0</td>
+        </tr>
+        <tr>
+            <th colspan="5">Total</th>
+            <td id="total-points">0</td>
+        </tr>
+        <tr>
+            <th colspan="5">Total %</th>
+            <td id="total-percent">0%</td>
+        </tr>
+    </table>
+
+    <h4 class="mt-3">Performance Category: <span id="performance-category">-</span></h4>
+
+    <button type="submit" class="btn btn-success mt-3">Submit Final Scoring</button>
+    <button type="button" class="btn btn-warning mt-2" onclick="resetScoring()">Reset Scoring</button>
+</form>
+
+<script>
+    const scores = [4,3,2,1,0];
+
+    document.addEventListener("DOMContentLoaded", function() {
+        loadScores();
+        calculate();
+    });
+
+    function saveScore(taskId, value) {
+        let data = JSON.parse(localStorage.getItem("scoring_{{ staff.id }}")) || {};
+        data[taskId] = value;
+        localStorage.setItem("scoring_{{ staff.id }}", JSON.stringify(data));
+        calculate();
+    }
+
+    function loadScores() {
+        let data = JSON.parse(localStorage.getItem("scoring_{{ staff.id }}")) || {};
+        for (let taskId in data) {
+            let val = data[taskId];
+            let input = document.querySelector(`input[name="task_${taskId}"][value="${val}"]`);
+            if (input) input.checked = true;
+        }
+    }
+
+    function calculate() {
+        let data = JSON.parse(localStorage.getItem("scoring_{{ staff.id }}")) || {};
+        let count = {4:0,3:0,2:0,1:0,0:0};
+
+        for (let taskId in data) {
+            count[data[taskId]] = (count[data[taskId]] || 0) + 1;
+        }
+
+        let total = 0, maxPossible = 0;
+        scores.forEach(score => {
+            document.getElementById(`count-${score}`).innerText = count[score] || 0;
+            let sub = (count[score] || 0) * score;
+            document.getElementById(`subtotal-${score}`).innerText = sub;
+            total += sub;
+            maxPossible += (count[score] || 0) * 4;
+        });
+
+        let percent = maxPossible ? ((total / maxPossible) * 100).toFixed(2) : 0;
+        document.getElementById("total-points").innerText = total;
+        document.getElementById("total-percent").innerText = percent + "%";
+
+        let category = "-";
+        if (percent >= 90) category = "A (Superior)";
+        else if (percent >= 75) category = "B (Excellent)";
+        else if (percent >= 60) category = "C (Average)";
+        else if (percent >= 50) category = "D (Below Average)";
+        else category = "F (Poor)";
+        document.getElementById("performance-category").innerText = category;
+    }
+
+    document.getElementById("scoring-form").addEventListener("submit", function() {
+        localStorage.removeItem("scoring_{{ staff.id }}");
+    });
+    function resetScoring() {
+        if (confirm("Are you sure you want to reset all scoring? This will clear all selected scores.")) {
+            localStorage.removeItem("scoring_{{ staff.id }}");
+            // Uncheck all inputs
+            document.querySelectorAll("input[type=radio]").forEach(el => el.checked = false);
+            // Reset calculation
+            calculate();
+        }
+    }
+
+</script>
+{% endblock %}

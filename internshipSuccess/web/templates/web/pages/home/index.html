@@ -1,0 +1,40 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block title %}| Home {% endblock title %}
+{% block content %}
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+	<!-- Add your site or application content here -->
+	<main>
+		<!--slider-area start-->
+		{% include "web/pages/home/slider-area.html" %}
+		<!--slider-area end-->
+		<!--feature-area start-->
+		{% include "web/pages/home/feature-area.html" %}
+		<!--feature-area end-->
+		<!--about-us-area start-->
+		{% include "web/pages/home/about-us.html" %}
+		<!--about-us-area end-->
+		<!--services-area start-->
+		{% include "web/pages/home/services-area.html" %}
+		<!--services-area end-->
+		<!--faq-area start-->
+		{% include "web/pages/home/faq-area.html" %}
+		<!--faq-area end-->
+		<!--portfolio-area start-->
+		{% include "web/pages/home/portfolio-area.html" %}
+		<!--portfolio-area end-->
+		<!--brand-area start-->
+		{% include "web/pages/home/brand-area.html" %}
+		<!--brand-area end-->
+	</main>
+	<!--footer-area start-->
+	{% include "web/essentials/footer.html" %}
+	<!--footer-area end-->
+
+{% endblock content %}

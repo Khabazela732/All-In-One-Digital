@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>You Have a Scheduled Hearing</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{ fullname }},</p>
+            <p>You have been invited to a hearing:</p>
+            <ul>
+                <li><strong>Title:</strong> {{ title }}</li>
+                <li><strong>Date:</strong> {{ date }}</li>
+                <li><strong>Description:</strong> {{ description }}</li>
+            </ul>
+            <p>Please attend on the specified date and time.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; Internship Success</p>
+        </div>
+    </div>
+</body>
+</html>

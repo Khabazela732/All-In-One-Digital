@@ -1,0 +1,376 @@
+//faq-area
+.faq-content-wrapper {
+    @media #{$lg} {
+        padding-right: 0;
+    }
+
+    @media #{$md} {
+        padding-right: 0;
+    }
+
+    @media #{$xs} {
+        padding-right: 0;
+    }
+
+    .sect-title {
+        @media #{$lg} {
+            padding-right: 0;
+        }
+
+        @media #{$md} {
+            padding-right: 0;
+        }
+
+        @media #{$xs} {
+            padding-right: 0;
+        }
+    }
+}
+
+.faq-que-list {
+    .accordion-button:not(.collapsed) {
+        color: unset;
+        background-color: unset;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0);
+    }
+
+    .accordion-item {
+        margin-bottom: 15px;
+        border: 0;
+
+        &:first-of-type {
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            -ms-border-radius: 0;
+            -o-border-radius: 0;
+            border: 0;
+        }
+
+        &:first-of-type .accordion-button {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .accordion-button {
+            color: $heding;
+            font-family: $gt-font;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+            border: 0;
+            background-color: transparent;
+            border-radius: 0;
+            padding: 20px 30px;
+            padding-bottom: 0;
+            position: relative;
+            box-shadow: 0;
+
+            span {
+                color: $theme-color;
+                margin-right: 14px;
+            }
+
+            &::before {
+                content: "\f068";
+                position: absolute;
+                font-family: "Font awesome 5 Pro";
+                font-size: 16px;
+                font-weight: 300;
+                color: #083d59;
+                right: 30px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+            }
+
+            &::after {
+                display: none;
+            }
+
+            &:focus {
+                z-index: 3;
+                border-color: transparent;
+                outline: 0;
+                box-shadow: none;
+                border: 0;
+            }
+
+            @media #{$xs} {
+                padding: 26px 10px;
+                font-size: 14px;
+
+                &::before {
+                    right: 15px;
+                    font-size: 14px;
+                }
+
+                span {
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .accordion-button:not(.collapsed) {
+            box-shadow: 0;
+        }
+
+        .collapsed {
+            color: $heding;
+            background-color: #f8f6f6;
+            padding-bottom: 24px;
+            padding-top: 20px;
+
+            &::before {
+                content: "\f067";
+            }
+        }
+
+        .accordion-body {
+            padding: 18px 30px 24px 30px;
+            background-color: $white;
+            box-shadow: 0px 16px 32px 0px rgba(0, 0, 0, 0.04);
+            line-height: 24px;
+
+            @media #{$md} {
+                padding: 15px 0 5px;
+
+                p {
+                    line-height: 1.5;
+                }
+            }
+
+            @media #{$xs} {
+                padding: 18px 10px 20px 10px;
+            }
+        }
+    }
+}
+
+.faq-img-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.dodle-1 {
+    border-radius: 50%;
+    background-color: #ffa84b;
+    position: absolute;
+    left: 37%;
+    top: 63px;
+    width: 6px;
+    height: 6px;
+    z-index: 9;
+}
+
+.img-one {
+    position: absolute;
+    z-index: 1;
+
+    &.one {
+        border-radius: 50%;
+        left: 66px;
+        top: 71px;
+        border-radius: 50%;
+        animation: scale-up-one infinite 3s alternate-reverse;
+        -webkit-animation: scale-up-one infinite 3s alternate-reverse;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+
+    &.two {
+        border-radius: 50%;
+        left: 173px;
+        bottom: 112px;
+        border-radius: 50%;
+        animation: scale-up-one infinite 5s alternate-reverse;
+        -webkit-animation: scale-up-one infinite 5s alternate-reverse;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+
+    &.three {
+        right: 90px;
+        top: 64px;
+        animation: float-bob-y infinite 3s linear;
+        -webkit-animation: float-bob-y infinite 3s linear;
+
+        @media #{$lg} {
+            max-width: 70%;
+        }
+
+        @media #{$xs} {
+            max-width: 50%;
+        }
+    }
+}
+
+//faq-que2
+.faq-content-wrapper2 {
+    @media #{$xs} {
+        padding-right: 0;
+    }
+
+    .semi-title2 {
+        &::after {
+            display: none;
+        }
+    }
+
+    .faq-que-list {
+        .accordion-item {
+            box-shadow: 0;
+            margin-bottom: 0;
+
+            &:first-of-type {
+                .collapsed {
+                    border-top: 1px solid rgb(239, 239, 239);
+                }
+            }
+
+            .accordion-button {
+                color: $heding3;
+                font-size: 20px;
+                border: 0;
+                padding-left: 0;
+                padding-bottom: 26px;
+                padding-top: 24px;
+
+                @media #{$lg} {
+                    font-size: 17px;
+                }
+
+                @media #{$xs} {
+                    font-size: 15px;
+                }
+
+                &::before {
+                    color: $theme-color2;
+                    right: 0;
+                }
+
+                span {
+                    color: #dbdbdb;
+                    margin-right: 5px;
+                }
+            }
+
+            .collapsed {
+                color: $heding3;
+                background: transparent;
+                border-bottom: 1px solid rgb(239, 239, 239);
+
+                &::before {
+                    color: #dbdbdb;
+                }
+
+                span {
+                    color: #dbdbdb;
+                }
+            }
+
+            .accordion-body {
+                padding-top: 0;
+                box-shadow: 0;
+                border-bottom: 1px solid rgb(239, 239, 239);
+            }
+        }
+    }
+}
+
+//faq-wrap3
+.faq-wrap3 {
+    .faq-que-list .accordion-item .accordion-button {
+        color: $heding;
+
+        &::before {
+            color: $theme-color;
+        }
+
+        span {
+            color: $theme-color;
+        }
+
+        &.collapsed {
+            color: $heding;
+
+            &::before {
+                color: #dbdbdb;
+            }
+
+            span {
+                color: #dbdbdb;
+            }
+        }
+    }
+}
+
+.faq-que-list4 {
+    .accordion-item {
+        .accordion-button {
+            background: $white;
+
+            &::before {
+                color: #dbdbdb;
+            }
+
+            span {
+                color: #dbdbdb;
+            }
+
+            &.collapsed {
+                &::before {
+                    color: #dbdbdb;
+                }
+
+                span {
+                    color: #dbdbdb;
+                }
+            }
+        }
+    }
+}
+
+.faq-area {
+    &.home-6 {
+        background-color: #ffff;
+        background-image: url(../img/home-6/fag-bg.jpg);
+        background-repeat: no-repeat;
+        margin-bottom: 50px;
+        @media(max-width:991px){
+            background-image: none;
+            margin: 0;
+        }
+
+        .container {
+            .faq-content-wrapper {
+                .section-title {
+                    h2 {
+                        color: #3E4494 !important;
+                    }
+                }
+
+                .faq-que-list {
+                    .accordion {
+                        .accordion-item {
+                            .accordion-button {
+                                color: #3E4494;
+                                span{
+                                    color: #00000045 !important;
+                                }
+                                &.collapsed {
+                                    color: #3E4494;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

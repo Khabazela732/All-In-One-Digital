@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Internship Advantage Induction</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <header class="mb-4">
+        <img src="{% static 'administration/compiled/svg/logo.png' %}" alt="Logo" height="110" width="300" style="left: auto;">
+    </header>
+
+    <h3 style="text-align: end;"><b>Internship Advantage Induction<br>Self-examination Assignment<br>(Pre — Intervention)</b></h3>
+    <br><br>
+
+    <h3 style="text-align: center;">Self-examine your life and create an essay that includes, but is not limited to the following:</h3>
+    <br><br>
+
+    <div class="container mt-3">
+        <hr />
+        <form method="post" action="#">
+            {% csrf_token %}
+            
+            <label for="Name">Name:</label>
+            <span id="Name"><b>{{ application.name }}</b></span><br><br>
+
+            <label for="Surname">Surname:</label>
+            <span id="Surname">{{ application.surname }}</span><br><br>
+
+            <label for="ID No">ID No:</label>
+            <span id="ID_No">{{ application.national_id }}</span><br><br>
+
+            <label for="College Name">College Name:</label>
+            <span id="College_Name">{{ application.college_name }}</span><br><br>
+
+            <label for="Qualification">Qualification Completed:</label>
+            <span id="Qualification">{{ application.qualification }}</span><br><br>
+
+            <label for="Date">Date Completed:</label>
+            <span id="date">{{ questionnaire.qualification_completion_date }}</span>
+            <br><br><hr>
+
+            <div class="mb-3">
+                <p class="text-danger"><b>1. Who are you?</b></p>
+                <p>(Background information on you, people, relationships, events that make you who you are.)</p>
+                <p>1.1 In your personal life, your family and social life.</p>
+                <p>1.2 In your professional life or work environment.</p>
+            </div>
+
+            <div class="mb-3">
+                <p class="text-danger"><b>2. Where do you want to go and what is your dream?</b></p>
+                <p>(Where do you see yourself? Who do you want to be?)</p>
+                <p>2.1 In your personal life, your family and social life.</p>
+                <p>2.2 In your professional life or work environment.</p>
+            </div>
+
+            <div class="mb-3">
+                <p class="text-danger"><b>3. How do you plan on getting there?</b></p>
+                <p>(What do you need to do to get to your dream?)</p>
+                <p>3.1 In your personal life, your family and social life.</p>
+                <p>3.2 In your professional life or work environment.</p>
+            </div>
+
+            <div class="mb-3">
+                <label for="dream_personal" class="form-label">Answer:</label>
+                <textarea id="answer" name="answer" rows="2" required readonly>{{ questionnaire.answer }}</textarea>
+            </div>
+            <hr>
+
+            <p style="color: red;"><b>4. Questionnaire</b></p><br>
+
+            <label>4.1 Have you attended an Internship Success Induction Before?</label><br>
+            <textarea readonly>{% if questionnaire.internship_success_before %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.2 Have you done an Internship Success Internship Before?</label><br>
+            <textarea readonly>{% if questionnaire.internship_before %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.3 Are you Pregnant?</label><br>
+            <textarea readonly>{% if questionnaire.pregnant %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.4 If you are Pregnant, how far along are you?</label><br>
+            <label>Weeks:</label><textarea readonly>{{ questionnaire.pregnancy_weeks }}</textarea><br>
+            <label>Months:</label><textarea readonly></textarea><br><br>
+
+            <label>4.5 Do you have a criminal record?</label><br>
+            <textarea readonly>{% if questionnaire.criminal_record %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.6 Have you completed your qualification?</label><br>
+            <textarea readonly>{% if questionnaire.qualification_completed %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.7 When did you complete your qualification?</label><br>
+            <textarea readonly>{{ questionnaire.qualification_completion_date }}</textarea><br><br>
+
+            <label>4.8 Do you qualify for a stipend from Ehlanzeni Tvet College?</label><br>
+            <textarea readonly>{% if questionnaire.stipend_eligibility %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.9 Are you willing to relocate to Nelspruit?</label><br>
+            <textarea readonly>{% if questionnaire.willing_to_relocate_nelspruit %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>Barberton?</label><br>
+            <textarea readonly>{% if questionnaire.willing_to_relocate_barberton %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>4.10 Will you work shifts or retail hours?</label><br>
+            <textarea readonly>{% if questionnaire.willing_to_work_shifts %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <p>5. I accept that any assignments, presentations, videos, and photographs during recruitment, induction, or internship can be used for training and marketing purposes. I acknowledge that my answers are true and correct, understanding that under Recruitment Law, criminal consequences will apply if dishonesty is involved.</p>
+            <textarea readonly>{% if questionnaire.acceptance_statement %}Yes{% else %}No{% endif %}</textarea><br><br>
+
+            <label>Date Signed:</label><hr><textarea readonly>{{ questionnaire.signature_date }}</textarea><br>
+            <label>Where:</label><hr><textarea readonly>{{ questionnaire.signature_place }}</textarea><br>
+            <label>Signature:</label><hr><textarea readonly>{{ questionnaire.signature }}</textarea><br><br>
+
+            <label>Witness Name and Surname:</label><hr><textarea readonly>{{ questionnaire.witness_name }}</textarea><br>
+            <label>Witness Signature:</label><hr><textarea readonly>{{ questionnaire.witness_signature }}</textarea><br><br>
+            <hr>
+
+            <p>After being admitted, you will take this questionnaire, along with your CV and ID, to the Police Station to get an affidavit. The questionnaire will also be emailed to you.</p>
+            <p>Internship Success</p><br>
+
+            <h3 style="text-align:center;">Page 1 of 2</h3><br>
+        </form>
+    </div>
+</body>
+
+</html>

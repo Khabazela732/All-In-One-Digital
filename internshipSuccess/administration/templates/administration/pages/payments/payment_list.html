@@ -1,0 +1,31 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<h2>All Payments</h2>
+<a href="{% url 'payment_add' %}" class="btn btn-success">Add New Payment</a>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Expense Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for payment in payments %}
+        <tr>
+            <td>{{ payment.expense_type }}</td>
+            <td>R{{ payment.amount }}</td>
+            <td>{{ payment.created|date:"Y-m-d" }}</td>
+            <td>{{ payment.description }}</td>
+            <td>
+                <a href="{% url 'payment_edit' payment.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'payment_delete' payment.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4>Total: R{{ total_amount }}</h4>
+{% endblock %}

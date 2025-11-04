@@ -1,0 +1,753 @@
+{% extends 'administration/global/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.stats-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.stats-icon.purple { background-color: #6f42c1; }
+.stats-icon.blue { background-color: #007bff; }
+.stats-icon.green { background-color: #28a745; }
+.stats-icon.red { background-color: #dc3545; }
+.stats-icon.orange { background-color: #fd7e14; }
+.stats-icon.gray { background-color: #6c757d; }
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 2rem 0 rgba(58, 59, 69, 0.2);
+}
+.card-body {
+    padding: 2rem;
+}
+.card-header {
+    padding: 1.5rem 2rem;
+}
+.font-extrabold {
+    font-weight: 800;
+    font-size: 1.75rem;
+}
+.text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem;
+}
+.page-heading {
+    margin-bottom: 2rem;
+}
+.page-heading h3 {
+    font-size: 2rem;
+}
+.page-content {
+    padding: 0 1.5rem;
+}
+canvas, #radial-bar-chart, #radial-progress-chart {
+    max-height: 400px;
+    width: 100%;
+}
+.dark .card {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.dark .text-muted {
+    color: #9ca3af !important;
+}
+.dark .card-header {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+</style>
+
+<div class="page-heading">
+    <h3>HR Department Progress {{ current_year }}</h3>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="col-12">
+            <!-- Goal Setting Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Set Intern Placement Goal</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="{{ form.target_interns_placed.id_for_label }}" class="form-label">Target Interns to Place ({{ current_year }})</label>
+                                {{ form.target_interns_placed }}
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary">Save Goal</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Card: Total Interns -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon purple mb-3">
+                                        <i class="bi bi-person-workspace"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_interns }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Placed Interns -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-briefcase-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Placed Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ placed_interns }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Placement Progress -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-graph-up"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Placement Progress</h6>
+                                    <h6 class="font-extrabold mb-0">{{ placement_progress|floatformat:2 }}% ({{ placed_interns }}/{{ target_interns_placed }})</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Pending Logbook -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-book-half"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Pending Logbook</h6>
+                                    <h6 class="font-extrabold mb-0">{{ pending_logbook }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Terminated Interns -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon red mb-3">
+                                        <i class="bi bi-x-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Terminated Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ terminated_interns }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Completed Interns -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon orange mb-3">
+                                        <i class="bi bi-check-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Completed Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ completed_interns }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Attendance Records -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon gray mb-3">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Attendance Records</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_attendance_records }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Present Days -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-check-square"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Present Days</h6>
+                                    <h6 class="font-extrabold mb-0">{{ present_days }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Absent Days -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon red mb-3">
+                                        <i class="bi bi-x-square"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Absent Days</h6>
+                                    <h6 class="font-extrabold mb-0">{{ absent_days }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Duty Hours -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-clock"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total Duty Hours</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_duty_hours|floatformat:2 }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Staff -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon purple mb-3">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total Staff</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_staff }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Superior Performers -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon orange mb-3">
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Superior Performers</h6>
+                                    <h6 class="font-extrabold mb-0">{{ superior_performers }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Average Performance Score -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-graph-up"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Avg Performance Score</h6>
+                                    <h6 class="font-extrabold mb-0">{{ avg_performance_score|floatformat:2 }}%</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Vehicles -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon gray mb-3">
+                                        <i class="bi bi-truck"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total Vehicles</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_vehicles }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Vehicles In Use -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-truck"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Vehicles In Use</h6>
+                                    <h6 class="font-extrabold mb-0">{{ vehicles_in_use }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Vehicles in Maintenance -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon red mb-3">
+                                        <i class="bi bi-tools"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Vehicles in Maintenance</h6>
+                                    <h6 class="font-extrabold mb-0">{{ vehicles_in_maintenance }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Vehicle Requests -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon purple mb-3">
+                                        <i class="bi bi-card-checklist"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Vehicle Requests</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_vehicle_requests }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Approved Vehicle Requests -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-check2-all"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Approved Vehicle Requests</h6>
+                                    <h6 class="font-extrabold mb-0">{{ approved_vehicle_requests }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bar Graph: Intern Status and Staff by Department -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Intern Status and Staff by Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="bar-chart" aria-label="Bar chart showing intern statuses and staff by department"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pie Chart: Vehicle Status Distribution -->
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Vehicle Status Distribution</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pie-chart" aria-label="Pie chart showing vehicle status distribution"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Radial Bar Charts: Attendance and Placement Progress -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Attendance Percentages (%)</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="radial-bar-chart" aria-label="Radial bar chart showing attendance percentages"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Intern Placement Progress (%)</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="radial-progress-chart" aria-label="Radial bar chart showing intern placement progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Line Chart: Vehicle Requests Over Time -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Vehicle Requests Over Time {{ current_year }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="line-chart" aria-label="Line chart showing vehicle requests over time in {{ current_year }}"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    // Bar Chart: Intern Status and Staff by Department
+    if (document.querySelector("#bar-chart")) {
+        var ctx = document.getElementById("bar-chart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: {{ bar_labels|safe }},
+                datasets: [
+                    {
+                        label: "Intern Status",
+                        data: {{ intern_status_data|safe }},
+                        backgroundColor: "#007bff",
+                        borderColor: "#0056b3",
+                        borderWidth: 1,
+                    },
+                    {
+                        label: "Staff by Department",
+                        data: {{ staff_department_data|safe }},
+                        backgroundColor: "#28a745",
+                        borderColor: "#1e7e34",
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                            maxRotation: 45,
+                            minRotation: 45,
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // Pie Chart: Vehicle Status Distribution
+    if (document.querySelector("#pie-chart")) {
+        var ctx = document.getElementById("pie-chart").getContext("2d");
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: {{ pie_labels|safe }},
+                datasets: [{
+                    data: {{ pie_data|safe }},
+                    backgroundColor: ["#007bff", "#28a745", "#dc3545", "#6c757d"],
+                    borderColor: ["#0056b3", "#1e7e34", "#a71d2a", "#5a6268"],
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // Radial Bar Chart: Attendance Percentages
+    if (document.querySelector("#radial-bar-chart")) {
+        var options = {
+            series: {{ radial_attendance_data|safe }},
+            chart: {
+                height: 400,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    offsetY: 0,
+                    startAngle: 0,
+                    endAngle: 270,
+                    hollow: {
+                        margin: 5,
+                        size: '30%',
+                        background: 'transparent',
+                    },
+                    track: {
+                        background: '#e2e8f0',
+                        strokeWidth: '100%',
+                    },
+                    dataLabels: {
+                        name: {
+                            show: true,
+                            fontSize: '14px',
+                            fontFamily: 'Open Sans',
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '12px',
+                            fontFamily: 'Open Sans',
+                            formatter: function (val) {
+                                return val.toFixed(0) + '%';
+                            },
+                        },
+                    },
+                },
+            },
+            labels: {{ radial_attendance_labels|safe }},
+            colors: ['#28a745', '#dc3545'],
+            legend: {
+                show: true,
+                position: 'top',
+                fontSize: '14px',
+                fontFamily: 'Open Sans',
+                labels: {
+                    colors: '#333',
+                },
+            },
+            tooltip: {
+                enabled: true,
+                theme: 'dark',
+            },
+        };
+        var chart = new ApexCharts(document.querySelector("#radial-bar-chart"), options);
+        chart.render();
+    }
+
+    // Radial Bar Chart: Intern Placement Progress
+    if (document.querySelector("#radial-progress-chart")) {
+        var options = {
+            series: {{ radial_progress_data|safe }},
+            chart: {
+                height: 400,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    offsetY: 0,
+                    startAngle: 0,
+                    endAngle: 270,
+                    hollow: {
+                        margin: 5,
+                        size: '30%',
+                        background: 'transparent',
+                    },
+                    track: {
+                        background: '#e2e8f0',
+                        strokeWidth: '100%',
+                    },
+                    dataLabels: {
+                        name: {
+                            show: true,
+                            fontSize: '14px',
+                            fontFamily: 'Open Sans',
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '12px',
+                            fontFamily: 'Open Sans',
+                            formatter: function (val) {
+                                return val.toFixed(0) + '%';
+                            },
+                        },
+                    },
+                },
+            },
+            labels: {{ radial_progress_labels|safe }},
+            colors: ['#007bff'],
+            legend: {
+                show: true,
+                position: 'top',
+                fontSize: '14px',
+                fontFamily: 'Open Sans',
+                labels: {
+                    colors: '#333',
+                },
+            },
+            tooltip: {
+                enabled: true,
+                theme: 'dark',
+            },
+        };
+        var chart = new ApexCharts(document.querySelector("#radial-progress-chart"), options);
+        chart.render();
+    }
+
+    // Line Chart: Vehicle Requests Over Time
+    if (document.querySelector("#line-chart")) {
+        var ctx = document.getElementById("line-chart").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 400, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+        gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{ line_labels|safe }},
+                datasets: [{
+                    label: "Vehicle Requests",
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderColor: "#5e72e4",
+                    backgroundColor: gradientStroke,
+                    borderWidth: 4,
+                    fill: true,
+                    data: {{ line_data|safe }},
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        titleFont: { size: 16 },
+                        bodyFont: { size: 14 },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+</script>
+{% endblock extra_js %}
+{% endblock %}

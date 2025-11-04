@@ -1,0 +1,25 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block title %}| How do we manage our Interns {% endblock title %}
+{% block content %}
+   
+<main>
+    <!--page-title-area start-->
+    {% include "web/pages/placement/page-title-area.html" %}
+
+    {% include "web/pages/placement/placement.html" %}
+
+		
+	    
+     
+
+
+        <!--footer-area start-->
+    {% include "web/essentials/footer.html" %}
+        <!--footer-area end-->
+    </main>
+{% endblock content %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/assets/css/coming-soon.css' %}">
+{% endblock extra_css %}

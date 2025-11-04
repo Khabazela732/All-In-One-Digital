@@ -1,0 +1,26 @@
+{% load static %}
+<style>
+    #page-title-area-application-form {
+        background-image: url({% static 'web/assets/img/page-title/bg-1.webp' %});
+    }
+</style>
+<section id='page-title-area-application-form' class="page-title-area" >
+    <img class="right-shape" src="https://internship.org.za/assets/img/cta/dot-shape-1.png" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home /</a></li>
+                        <li class="active" aria-current="page">Induction Application Process</li>
+                    </ul>
+                    {% if induction_post.closed %}
+                        <h2 style="color: red; font-weight: bold;">This post is closed.</h2>
+                    {% else %}
+                        <h2 class="page-title">Complete your Application</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,109 @@
+{% extends "mar/global/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .blue-border {
+        border: 2px solid #435ebe; /* Adjust the border width and color as needed */
+        margin-bottom: 30px; /* Adjust this value as needed */
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .blue-border:hover {
+        transform: scale(1.05);
+    }
+
+    .fontawesome-icons {
+        text-align: center;
+    }
+
+    .fontawesome-icons .the-icon {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .fontawesome-icons .card {
+        margin-bottom: 20px; /* Space between cards */
+    }
+
+    .fontawesome-icons img {
+        height: 150px; 
+        width: 100%; 
+        object-fit: cover; 
+        border-radius: 10px;
+    }
+
+    .fontawesome-icons .card-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>News Letters</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">News Letters</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">News Letters</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if newsletters %}
+                        <div class="row fontawesome-icons">
+                            {% for newsletter in newsletters %}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="blue-border">
+                                    <img src="{{ newsletter.image.url }}" alt="">
+                                    <h5 class="card-title">{{ newsletter.title }}</h5>
+                                    <p>{{ newsletter.description|truncatechars:50 }}</p>
+                                    <a href="{{ newsletter.link }}" target="_blank" class="btn btn-primary">Read More</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <p>No newsletters found, contact Administrators</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Create News letter Post</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="form form-vertical" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-body">
+                                {{ form.as_p }}
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Internship Success</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
+        <h2 style="color: #007bff; text-align: center;">👋 Welcome, {{ full_name }}!</h2>
+        <p>You’ve been added to the <strong>Internship Success</strong> system as a <strong>{{ role }}</strong>.</p>
+        <p>To get started, please set your password by clicking the link below:</p>
+        <p style="text-align: center;">
+            <a href="{{ reset_link }}" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                Set Your Password
+            </a>
+        </p>
+        <p>If you didn’t expect this, you can safely ignore this message.</p>
+        <hr>
+        <p>Regards,<br><strong>Internship Success HR Team</strong></p>
+    </div>
+</body>
+</html>

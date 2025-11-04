@@ -1,0 +1,602 @@
+{% comment %} <div class="container">
+    <h2>{{ title }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ induction_post.title }}</h5>
+            <p class="card-text">{{ induction_post.description }}</p>
+            <p class="card-text"><small class="text-muted">Start Date: {{ induction_post.start_date }}</small></p>
+            <p class="card-text"><small class="text-muted">End Date: {{ induction_post.end_date }}</small></p>
+            <p class="card-text"><small class="text-muted">Location: {{ induction_post.location }}</small></p>
+        </div>
+    </div>
+    <hr>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+    </form>
+</div> {% endcomment %}
+
+
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>Internship Success | Application for {{ induction_post.title }} </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="manifest" href="site.webmanifest" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+	<!-- Place favicon.ico in the root directory -->
+
+	<link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/owl.carousel.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/animate.css' %} " />
+	<link rel="stylesheet" href="{% static 'web/css/magnific-popup.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/all.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/gt-font.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/metisMenu.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/nice-select.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/spacing.css' %}" />
+	<link rel="stylesheet" href="{% static 'web/css/main.css' %}" />
+    <style>
+        p{
+            font-family: sans-serif;
+        }
+        h1{font-family: sans-serif;}
+        h2{font-family: sans-serif;}
+        h3{font-family: sans-serif;}
+        h4{font-family: sans-serif;}
+        h5{font-family: sans-serif;}
+        h6{font-family: sans-serif;}
+        a{font-family: sans-serif;}
+        
+    </style> 
+</head>
+
+<body>
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+	<!-- Add your site or application content here -->
+	<!-- preloader -->
+	<div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- preloader end  -->
+	<!-- header-area start -->
+	<header>
+		<div class="header-top heding-bg">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md-6 col-6">
+						<div class="left-cta">
+							<span><i class="fal fa-envelope"></i> admin@internship.org.za</span>
+							<span><i class="fal fa-phone"></i> +27 13 753 3353</span>
+						</div>
+					</div>
+					<div class="col-md-6 col-6 text-end">
+						<div class="right-language">
+							<div class="dropdown">
+								<a  href="#">
+									 <i class="fal "></i>
+								</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottom-border-line"></div>
+			<div class="container d-none d-md-block">
+				<div class="row pt-25">
+					<div class="col-xl-4 col-lg-3 d-none d-lg-inline-block">
+						<div class="logo-area">
+							<a class="head-logo-1" href="index.html"><img src="https://internship.org.za/assets/img/logo/internship-success-logo-01.png"
+									alt="Internship Success"></a>
+						</div>
+					</div>
+					<div class="col-xl-8 col-lg-9">
+						<ul class="right-query mb-0">
+							<li>
+								<div class="icon"><i class="fal fa-map-marker-alt"></i></div>
+								<div class="query-list">
+									<span>1st Floor, Shell House</span>
+									<span>Ferreira St, Mbombela. 1200
+										</span>
+								</div>
+							</li>
+							<li>
+								<div class="icon"><i class="fal fa-clock"></i></div>
+								<div class="query-list">
+									<span>Mon - Fri 8.00 - 16.00</span>
+									<span>Sun - Sat: Closed</span>
+								</div>
+							</li>
+							<li>
+								<a class="theme_btn quote-btn" href="#">Login</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="heding-bg-1" id="hideshow-sticky-menu">
+			<div class="main-header-area">
+				<div class="container">
+					<div class="white-bg row align-items-center gx-0">
+						<div class="col-lg-10 col-6 text-start">
+							<div class="logo-area d-lg-none d-md-block">
+								<a href="index.html"><img src="https://internship.org.za/assets/img/logo/internship-success-logo-01.png" alt="Internship Success"></a>
+							</div>
+							<nav id="topheader" class="navbar navbar-expand-lg justify-content-start py-0">
+								<div class="nav-container">
+									<div class="collapse navbar-collapse" id="navbarSupportedContent">
+										<ul class="navbar-nav list-style-none">
+											<li class="nav-item">
+												<a class="nav-link" href="index.html">Home</a>
+											</li>
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#"
+													id="navbarDropdow2" role="button" data-bs-toggle="dropdown"
+													aria-expanded="false">Our Company<i
+														class="fal fa-chevron-down"></i></a>
+												<ul class="dropdown-menu">
+													<li>
+														<a class="dropdown-item" href="about.html">About Us</a>
+													</li>
+													<li>
+														<a class="dropdown-item" href="team.html">Our Team</a>
+													</li>
+												</ul>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="our-services.html">Services</a>
+											</li>
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
+													role="button" data-bs-toggle="dropdown" aria-expanded="false">Recruitment
+													<i class="fal fa-chevron-down"></i></a>
+												<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+													<li>
+														<a class="dropdown-item" href="career.html">Vacancies</a>
+													</li>
+													<li>
+														<a class="dropdown-item" href="faq.html">FAQs</a>
+													</li>
+													
+												</ul>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="blog.html">News & Updates</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="contact.html">Contact</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</div>
+						<div class="col-lg-2 col-6">
+							<ul class="right-nav mb-0 d-flex align-items-center justify-content-end">
+								<li class="search-area">
+									<a class="search_input nav-search search-trigger header-2-icon" href="#">
+										<i class="fal fa-search"></i></a>
+								</li>
+								<li>
+									<div class="hamburger-menu">
+										<a href="javascript:void(0);">
+											<img src="https://internship.org.za/assets/img/icon/eclips.png" alt="Eclips">
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.theme-main-menu -->
+		</div>
+	</header>
+	<!-- header-area end -->
+
+	<!-- slide-bar start -->
+	<aside class="slide-bar">
+		<div class="close-mobile-menu">
+			<a href="javascript:void(0);"><i class="fas fa-times"></i></a>
+		</div>
+		<!-- offset-sidebar start -->
+		<div class="offset-sidebar">
+			<div class="offset-widget offset-logo mb-30">
+				<a href="index.html">
+					<img src="https://internship.org.za/assets/img/logo/internship-success-logo-01.png" alt="logo">
+				</a>
+			</div>
+			<div class="offset-widget mb-40">
+				<div class="info-widget">
+					<h4 class="offset-title mb-20">About Us</h4>
+					<p class="mb-30">
+						Internship Success is a professional internship recruitment, placement  and management company based in Mbombela, Mpumalanga.
+					</p>
+					<a class="theme_btn theme_btn_bg" href="contact.html">Contact Us</a>
+				</div>
+			</div>
+			<div class="offset-widget mb-30 pr-10">
+				<div class="info-widget info-widget2">
+					<h4 class="offset-title mb-20">Contact Info</h4>
+					<p> <i class="fal fa-address-book"></i> 1st Floor, Shell House
+Ferreira St, Mbombela. 1200</p>
+					<p> <i class="fal fa-phone"></i> +27 13 753 3353 </p>
+					<p> <i class="fal fa-envelope-open"></i> info@internshipsuccess.org.za </p>
+				</div>
+			</div>
+		</div>
+		<!-- offset-sidebar end -->
+		<!-- side-mobile-menu start -->
+		<nav class="side-mobile-menu">
+			<ul id="mobile-menu-active">
+				<li>
+					<a href="index.html">Home</a>
+					
+				</li>
+				<li class="has-dropdown">
+					<a href="#"> Our Company </a>
+					<ul class="sub-menu">
+						<li><a href="about.html">About Us</a></li>
+						<li><a href="team.html">Our Team</a></li>
+					</ul>
+				</li>
+				<li><a href="our-services.html">Our Services</a></li>
+				
+				<li>
+					<a href="blog.html">News & Updates</a>
+					
+				</li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+		<!-- side-mobile-menu end -->
+	</aside>
+	<div class="body-overlay"></div>
+	<!-- slide-bar end -->
+
+	<main>
+		<!--page-title-area start-->
+		<section class="page-title-area" style="background-image: url(https://internship.org.za/assets/img/page-title/bg-1.webp);">
+			<img class="right-shape" src="https://internship.org.za/assets/img/cta/dot-shape-1.png" alt="Dot Pattern">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+							<ul class="breadcrumb">
+								<li><a href="index.html">Home /</a></li>
+								<li>Application Process /</li>
+                                <li class="active" aria-current="page">Questionnaire</li>
+							</ul>
+							<h2 class="page-title">Complete your Questionnaire</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--page-title-area end-->
+		<!--contact-area start-->
+		<section class="contact-area pt-105 pt-md-60 pb-md-30 pt-xs-60 pb-xs-30">
+            <div class="container">
+                <form method="post" 
+				action="{% url 'create_questionnaire' application_id=application.id %}"
+				enctype="multipart/form-data"
+				>
+                    {% csrf_token %}
+                    <p class="text-primary"><b>Self-examine your life and create an essay that includes, but is not limited to the following:<br>
+                        Do the assignment on word or pdf and WhatsApp it to cell: 0661204341 as soon as possible as this is a requirement to be invited to the Internship Advantage Induction.</b>
+                    </p>
+                    
+                    <div class="mb-3">
+                        <p class="text-danger"><b>1. Who are you?</b></p>
+                        <p>(Background information on you, people, relationships, events that make you who you are.) </p>
+                        <p>(Happy? Satisfied? Content? Complacent? Determined? Ambitious?)</p>
+                        <p>1.1 In your personal life, your family and social life.</p>
+                        <p>1.2 In your professional life or work environment.</p>
+                    </div>
+    
+                    <div class="mb-3">
+                        <p class="text-danger"><b>2. Where do you want to go and what is your dream?</b></p>
+                        <p>(Where do you see yourself? Who do you want to be?)</p>
+                        <p>2.1 In your personal life, your family and social life.</p>
+                        <p>2.2 In your professional life or work environment.</p>
+                    </div>
+            
+                    <div class="mb-3">
+                        <p class="text-danger"><b>3. How do you plan on getting there?</b></p>
+                        <p>(What do you need to do to get to your dream?)</p>
+                        <p>3.1 In your personal life, your family and social life.</p>
+                        <p>3.2 In your professional life or work environment.</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dream_personal" class="form-label">Answer:</label>
+                        <textarea class="form-control" rows="10" id="answer" name="answer" placeholder="Answer all the questions here as an essay...." required></textarea>
+                    </div>
+                    
+                    <p class="text-danger"><b>4. Questionnaire</b></p>
+                    
+                    <div class="form-group">
+                        <label for="attended_induction">4.1 Have you attended an Internship Success Induction Before?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="attended_induction" name="internship_success_before">
+                            <label class="form-check-label" for="attended_induction">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="previous_internship">4.2 Have you done an Internship Success Internship Before?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="previous_internship" name="internship_before">
+                            <label class="form-check-label" for="previous_internship">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pregnant">4.3 Are you Pregnant?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="pregnant" name="pregnant">
+                            <label class="form-check-label" for="pregnant">Yes</label>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="pregnancy_progress">4.4 If you are Pregnant how far along in your pregnancy are you?</label><br>
+                        <label for="weeks">Weeks:</label>
+                        {{ form.pregnancy_weeks }}
+                        <label for="months">Months:</label>
+                        {{ form.pregnancy_months }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="criminal_record">4.5 Do you have a criminal record?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="criminal_record" name="criminal_record">
+                            <label class="form-check-label" for="criminal_record">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="completed_qualification">4.6 Have you completed your qualification?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="completed_qualification" name="qualification_completed">
+                            <label class="form-check-label" for="completed_qualification">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qualification_completion_date">4.7 When did you complete your qualification?</label><br>
+                        <input type="date" name="signature_date" class="form-control" value="{{ form.qualification_completion_date.value|date:'Y-m-d' }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stipend_eligibility">4.8 Do you qualify for a stipend from Ehlanzeni Tvet College for an Internship?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="stipend_eligibility" name="stipend_eligibility">
+                            <label class="form-check-label" for="stipend_eligibility">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="relocate_nelspruit">4.9 Are you willing to relocate to Nelspruit?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="relocate_nelspruit" name="willing_to_relocate_nelspruit">
+                            <label class="form-check-label" for="relocate_nelspruit">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="relocate_barberton">Barberton?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="relocate_barberton" name="willing_to_relocate_barberton">
+                            <label class="form-check-label" for="relocate_barberton">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work_hours">4.10 Will you work shifts or retail hours applicable to your qualification?</label><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="work_hours" name="willing_to_work_shifts">
+                            <label class="form-check-label" for="work_hours">Yes</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>I accept that any assignments, presentations, videos, and photographs during recruitment, Induction, Internship can be used for training and marketing purposes.<br><br>
+                        I acknowledge that my answers are true and correct and understand that under Recruitment Law, criminal consequences will apply if dishonesty is involved.<br><br>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="acceptance_statement" name="acceptance_statement">
+                            <label class="form-check-label" for="acceptance_statement">Yes</label>
+                        </div>
+                    </label></div>
+                    
+                    <div class="mb-3">
+                        <label for="Date" class="form-label">Date Signed:</label>
+                        <input type="date" name="signature_date" class="form-control" value="{{ form.signature_date.value|date:'Y-m-d' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="Where" class="form-label">Where:</label>
+                        {{ form.signature_place }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="Signature" class="form-label">Signature:</label>
+                        {{ form.signature }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Witness Name and Surname:</label>
+                        {{ form.witness_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="Signature" class="form-label">Signature:</label>
+                        {{ form.witness_signature }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="Signature" class="form-label">Upload affidavit:</label>
+                        {{ form.affidavit }}
+                    </div>
+                    
+                    <p>After your admission, you will receive a link to your questionnaire. You are required to take the completed questionnaire, along with a copy of your CV and ID, to the police station to obtain an affidavit.</p>
+                    
+                    <p class="text-danger"><b>For more info contact: 0661204341(available on WhatsApp)</b></p>
+            
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    
+                    <h3 class="text-center mt-4">Page 1 of 2</h3>
+                    <hr />
+                </form>
+            </div>
+		</section>
+		<!--contact-area end-->
+		<!--map-area start-->
+		
+		<!--map-area end-->
+
+
+	</main>
+		<!--footer-area start-->
+		<footer class="heding-bg footer-area pt-100">
+			<div class="container">
+				<div class="row mb-15">
+					<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".1s">
+						<div class="footer__widget mb-30">
+							<h6 class="widget-title text-white pb-20 mb-35">About Internship Success</h6>
+							<p>Internship Success is a professional internship placement and management company which seeks to see all graduates benefit from a well-structured internship program.
+							</p>
+							<div class="footer__social mt-30">
+								<a href="https://www.facebook.com/profile.php?id=100091806840414"><i class="fab fa-facebook-f"></i></a>
+								<a href="https://www.instagram.com/internship_success"><i class="fab fa-instagram"></i></a>
+								<a href="https://www.youtube.com/@internshipsuccess001"><i class="fab fa-youtube"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>							
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".3s">
+						<div class="border-theme footer__widget mb-30 pl-135 pl-md-0 pl-xs-0">
+							<h6 class="widget-title text-white pb-20 mb-35">Main Menu</h6>
+							<ul class="fot-list">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About Us</a></li>
+								<li><a href="our-services.html">Key Services</a></li>
+								<li><a href="https://www.youtube.com/@internshipsuccess001">Success Stories</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".5s">
+						<div class="footer__widget mb-25 pl-25 pl-md-0 pl-xs-0">
+							<h6 class="widget-title text-white pb-20 mb-35">Get In Touch</h6>
+							<ul class="fot-list fot-list-1">
+								<li><a href="#"> +27 13 753 3353</a></li>
+								<li><a href="#">admin@internship.org.za</a></li>
+								<li><a href="#">Mon - Fri:08h00 - 16h00</a>
+								</li>
+								<li>
+									<a href="#">1st Floor, Shell House
+										Ferreira St, Mbombela. 1200 </a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp2 animated" data-wow-delay=".7s">
+						<div class="footer__widget mb-30">
+							<h6 class="widget-title text-white pb-20 mb-35">Subscribe Now</h6>
+							<form class="subscribe-form" action="#">
+								<div class="input-box mb-10">
+									<input type="text" placeholder="Your name">
+								</div>
+								<div class="input-box mail-input mb-10">
+									<input type="text" placeholder="Enter email address">
+								</div>
+	
+								<button class="theme_btn subscribe-btn">Subscribe Now <i
+										class="fal fa-long-arrow-right"></i></button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="copy-right-border">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 col-md-6">
+							<div class="copyright text-center text-md-start">
+								<p style="color: #fff;">Copyright &#169;2023 | Designed at <a style="color: grey;"  href="https://travelmysa.co.za">Travel My SA</a></p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 text-center text-md-end">
+							<ul class="footer-nav">
+								<li class="nav-item">
+									<a class="nav-link" style="color: #fff;" href="faq.html">FAQ</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" style="color: #fff;" href="#">Terms & Conditions</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" style="color: #fff;" href="#">Privacy Policy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!--footer-area end-->
+	<!-- Fullscreen search -->
+	<div class="search-wrap">
+		<div class="search-inner">
+			<i class="fas fa-times search-close" id="search-close"></i>
+			<div class="search-cell">
+				<form method="get">
+					<div class="search-field-holder">
+						<input type="search" class="main-search-input" placeholder="Search Your Keyword...">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end fullscreen search -->
+
+	<!-- JS here -->
+
+	<!-- JS here -->
+	<script src="{% static 'web/js/modernizr-3.5.0.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery-2.2.4.min.js' %}"></script>
+	<script src="{% static 'web/js/popper.min.js' %}"></script>
+	<script src="{% static 'web/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'web/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'web/js/metisMenu.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.nice-select.js' %}"></script>
+	<script src="{% static 'web/js/wow.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'web/js/waypoints.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'web/js/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'web/js/imagesloaded.pkgd.min.js' %}"></script>
+	<script src="{% static 'web/js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'web/js/plugins.js' %}"></script>
+	<script src="{% static 'web/js/main.js' %}"></script>
+</body>
+
+</html>

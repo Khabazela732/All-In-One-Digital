@@ -1,0 +1,134 @@
+//font-weight
+.fw-bold {
+    font-weight: 700;
+}
+
+.fw-semi {
+    font-weight: 600;
+}
+
+.fw-medium {
+    font-weight: 500;
+}
+
+.fw-normal {
+    font-weight: 400;
+}
+
+.fw-light {
+    font-weight: 300;
+}
+.fw-thin {
+    font-weight: 100;
+}
+
+//font-size
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+/*--
+    - Background color
+-----------------------------------------*/
+
+.grey-bg {
+    background: $grey;
+}
+.grey-bg2 {
+    background: $grey2;
+}
+.grey-bg3 {
+    background: $grey3;
+}
+.grey-bg4 {
+    background: $grey4;
+}
+
+.white-bg {
+    background: $white;
+}
+
+.black-bg {
+    background: $black;
+}
+
+.heding-bg {
+    background: $heding;
+}
+
+.theme-bg {
+    background: $theme-color !important;
+}
+.theme-bg2 {
+    background: $theme-color2 !important;
+}
+
+.grey-bg-color {
+    background-color: rgba(27, 33, 47, 0.03);
+}
+
+/*--
+    - color
+-----------------------------------------*/
+.white-color {
+    color: $white;
+}
+.black-color {
+    color: $black;
+}
+.theme-color {
+    color: $theme-color;
+}
+.theme-color2 {
+    color: $theme-color2 !important;
+}
+.body-color {
+    color: $body-text-color;
+}
+
+.heding-color {
+    color: $heding;
+}
+.heding-color2 {
+    color: $heding2;
+}
+.text-heding {
+    color: $heding3 !important;
+}
+.grey-heding {
+    color: #92aab6;
+}
+
+/*--
+    - fonts
+-----------------------------------------*/
+
+.body-font {
+    font-family: $gt-font;
+}
+.heding-font {
+    font-family: $gt-font;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+.capitalize {
+    text-transform: capitalize;
+}
+.capitalize {
+    text-transform: lowercase;
+}

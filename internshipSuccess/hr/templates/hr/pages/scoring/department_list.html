@@ -1,0 +1,12 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<h3>Departments</h3>
+<ul>
+    {% for dept in departments %}
+    <li>
+        {{ dept.name }}
+        <a href="{% url 'scoring-category-list-by-department' dept.id %}">View Categories</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

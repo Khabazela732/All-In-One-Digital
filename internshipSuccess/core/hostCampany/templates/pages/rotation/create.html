@@ -1,0 +1,42 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Add Intern Rotation</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="intern">Intern:</label>
+            <select name="intern" id="intern" class="form-control" required>
+                {% for enrollment in enrollments %}
+                <option value="{{ enrollment.id }}">{{ enrollment.intern.get_full_name }} ({{ enrollment.company.company_name }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="qualification">Qualification:</label>
+            <input type="text" name="qualification" class="form-control" placeholder="Qualification (e.g., Business Management)" required>
+        </div>
+        <div class="mb-3">
+            <label for="department">Department:</label>
+            <select name="department" id="department" class="form-control" required>
+                {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="end_date">End Date:</label>
+            <input type="date" name="end_date" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Rotation</button>
+    </form>
+</div>
+{% endblock %}

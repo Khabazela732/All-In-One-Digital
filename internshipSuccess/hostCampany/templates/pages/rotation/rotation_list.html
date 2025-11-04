@@ -1,0 +1,37 @@
+{% extends "coordination/global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Rotation Plan</h3>
+    <a href="{% url 'rotation-create' %}" class="btn btn-success mb-3">+ Add Rotation</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Key Performance Area</th>
+                <th>Department</th>
+                <th>PoE (Portfolio of Evidence)</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rotation in rotations %}
+                {% for deliverable in rotation.deliverables.all %}
+                <tr>
+                    <td>{{ rotation.work_item.subject.name }}</td>
+                    <td>{{ rotation.work_item.name }}</td>
+                    <td>{{ rotation.department.name }}</td>
+                    <td>{{ deliverable.deliverable.deliverable.name }}</td>
+                    <td>{{ rotation.start_date }}</td>
+                    <td>{{ rotation.end_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No rotation plans available</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

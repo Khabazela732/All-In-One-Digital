@@ -1,0 +1,52 @@
+{% extends "intern/global/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Upload / Edit Assignment Two
+        </div>
+        <div class="card-body">
+
+            {% if assignment %}
+                {% if assignment.answer %}
+                    <p>Current File: <a href="{{ assignment.answer.url }}">{{ assignment.answer.name }}</a></p>
+                {% else %}
+                    <p>No file uploaded yet.</p>
+                {% endif %}
+            {% else %}
+                <p>You have not submitted any assignment yet.</p>
+            {% endif %}
+
+            <!-- Upload / Edit Form -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success">
+                    {% if assignment %}Update{% else %}Submit{% endif %}
+                </button>
+
+                {% if assignment %}
+                    <!-- Delete Assignment using POST for safety -->
+                    <form method="POST" action="{% url 'delete_assignment_two' %}" style="display:inline-block;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete Assignment</button>
+                    </form>
+                {% endif %}
+            </form>
+
+            <hr>
+            <a href="{% url 'view_assignment2' %}" class="btn btn-secondary">View Assignment Two</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

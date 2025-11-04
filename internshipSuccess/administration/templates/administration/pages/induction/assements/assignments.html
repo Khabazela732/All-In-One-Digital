@@ -1,0 +1,58 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+   
+<div class="page-heading mb-4 text-center">
+    <h2 class="fw-bold">Admin - Assignment Views</h2>
+    <p class="text-muted">Select an assignment to manage and view details</p>
+</div> 
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-lg border-0" style="max-width: 700px; width: 100%;">
+        <div class="card-header bg-primary text-white rounded-top text-center">
+            <h4 class="mb-0"><i class="bi bi-journal-text me-2"></i> Choose Assignment</h4>
+        </div>
+        
+        <div class="card-body text-center">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs justify-content-center mb-4" id="assignmentTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active px-4 fw-semibold" id="assignment1-tab" data-bs-toggle="tab" 
+                            data-bs-target="#assignment1" type="button" role="tab">
+                        <i class="bi bi-1-circle me-1"></i> Assignment One
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 fw-semibold" id="assignment2-tab" data-bs-toggle="tab" 
+                            data-bs-target="#assignment2" type="button" role="tab">
+                        <i class="bi bi-2-circle me-1"></i> Assignment Two
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="assignmentTabsContent">
+                <div class="tab-pane fade show active" id="assignment1" role="tabpanel">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-text me-2"></i> Assignment One</h5>
+                    <p>
+                        <a href="{% url 'induction-assigment-one-view' %}" 
+                           class="btn btn-lg btn-outline-primary shadow-sm">
+                            <i class="bi bi-eye"></i> View Assignment One
+                        </a>
+                    </p>
+                </div>
+                
+                <div class="tab-pane fade" id="assignment2" role="tabpanel">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-text me-2"></i> Assignment Two</h5>
+                    <p>
+                        <a href="{% url 'induction-assigment-two-view' %}" 
+                           class="btn btn-lg btn-outline-success shadow-sm">
+                            <i class="bi bi-eye"></i> View Assignment Two
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

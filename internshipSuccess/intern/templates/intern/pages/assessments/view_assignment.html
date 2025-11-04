@@ -1,0 +1,49 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+
+<div class="container mt-5">
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            Your Assignment
+        </div>
+        <div class="card-body">
+            {% if assignment %}
+                {% if assignment.answer %}
+                    <p>File: <a href="{{ assignment.answer.url }}">{{ assignment.answer.name }}</a></p>
+                {% else %}
+                    <p>No file uploaded yet.</p>
+                {% endif %}
+
+                <!-- Buttons -->
+                <a href="{% url 'write_assignment' %}" class="btn btn-success">Upload / Edit Assignment</a>
+<form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success">
+                    {% if assignment %}Update{% else %}Submit{% endif %}
+                </button>
+
+                {% if assignment %}
+                    <!-- Delete Assignment using POST for safety -->
+                    <form method="POST" action="{% url 'delete_assignment_two' %}" style="display:inline-block;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete Assignment</button>
+                    </form>
+                {% endif %}
+            </form>
+            {% else %}
+                <p>You have not submitted any assignment yet.</p>
+                <a href="{% url 'write_assignment' %}" class="btn btn-success">Submit Assignment</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

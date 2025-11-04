@@ -1,0 +1,692 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Success - Consent Form</title>
+   <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-image {
+            text-align: center;
+            max-width: 100%;
+        }
+        
+        .header-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .document-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .document-header h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .document-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .document-meta div {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+text-align: center;
+        }
+        
+        h2 {
+            margin-top: 25px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .checkbox-group {
+            margin: 10px 0;
+        }
+        
+        .checkbox-item {
+            margin-bottom: 8px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            width: 200px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .signature-pad {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 15px 0;
+            background-color: white;
+        }
+        
+        .signature-clear {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .signature-clear:hover {
+            background-color: #c0392b;
+        }
+        
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .document-meta {
+                flex-direction: column;
+            }
+            
+            .document-meta div {
+                margin-bottom: 10px;
+                padding: 0;
+            }
+            
+            .form-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Centered Header Image -->
+    <div class="header-container">
+        <div class="header-image">
+            <img src="{% static 'images/icons/internship.png' %} "
+                 alt="Internship Success - www.internship-success.com - Benefit from a Structured Internship Program">
+        </div>
+    </div>
+<form method="POST">
+    {% csrf_token %}
+
+    <h1>Consent Form for Story Sharing and Use of Photographs/Recordings</h1>
+    
+    <div class="form-section">
+        <h2>Organization: Internship Success</h2>
+        
+        <div class="input-group">
+            <label for="{{ form.contact_person.id_for_label }}" class="required">Contact Person:</label>
+            {{ form.contact_person }}
+            {{ form.contact_person.errors }}
+        </div>
+
+        <div class="input-group">
+            <label for="{{ form.email.id_for_label }}" class="required">Email:</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="input-group">
+            <label for="{{ form.phone.id_for_label }}" class="required">Phone:</label>
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        <div class="input-group">
+            <label for="{{ form.form_date.id_for_label }}" class="required">Date:</label>
+            {{ form.form_date }}
+            {{ form.form_date.errors }}
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h2>1. Purpose of Consent</h2>
+        <p>By completing this form, you consent to Internship Success using your photograph(s), video(s), audio recording(s), written or spoken testimonials, and/or personal story for the following purposes:</p>
+        
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="purpose-training" name="purpose">
+                <label for="purpose-training">Training and development materials for interns, employees, and host employers</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="purpose-marketing" name="purpose">
+                <label for="purpose-marketing">Marketing and promotional campaigns (brochures, websites, social media, newsletters, radio, TV, etc.)</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="purpose-awareness" name="purpose">
+                <label for="purpose-awareness">Public awareness and success story showcases</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="purpose-commercial" name="purpose">
+                <label for="purpose-commercial">Commercial use, including but not limited to:</label>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>Paid advertisements and sponsored content</li>
+                    <li>Sale of photographs and video/audio recordings to media outlets, stock libraries, or third-party buyers</li>
+                    <li>Fundraising or income-generating activities related to the mission of Internship Success</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h2>2. What Will Be Collected and Used</h2>
+        <p>Select the types of content you consent to share:</p>
+        
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="content-photos" name="content">
+                <label for="content-photos">Photographs</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="content-videos" name="content">
+                <label for="content-videos">Video recordings</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="content-audio" name="content">
+                <label for="content-audio">Audio recordings</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="content-testimonials" name="content">
+                <label for="content-testimonials">Written testimonials</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="content-story" name="content">
+                <label for="content-story">Personal success story</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h2>3. Consent Conditions</h2>
+        <ul>
+            <li>Participation is voluntary, and consent may be withdrawn in writing at any time.</li>
+            <li>Materials may be edited for clarity while preserving the core message.</li>
+            <li>No financial compensation will be provided for the use or sale of submitted content.</li>
+            <li>The signatory waives the right to inspect or approve final products.</li>
+            <li>Full rights are granted to Internship Success to use, reproduce, publish, distribute, and commercially exploit (including through sale) any media or stories provided.</li>
+        </ul>
+    </div>
+    
+    <div class="form-section">
+        <h2>4. Protection of Personal Information</h2>
+        <p>Internship Success adheres to the Protection of Personal Information Act (POPIA) and commits to safeguarding your personal data. Your information will only be used for the purposes outlined above and stored securely.</p>
+    </div>
+    
+    <div class="form-section">
+        <h2>5. Consent Declaration (For Individuals 18 and Older)</h2>
+        
+        <div class="input-group">
+            <label for="full-name" class="required">Full Name:</label>
+            <input type="text" id="full-name" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="id-number" class="required">ID Number:</label>
+            <input type="text" id="id-number" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="dob" class="required">Date of Birth (DD/MM/YYYY):</label>
+            <input type="date" id="dob" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="age" class="required">Age:</label>
+            <input type="number" id="age" min="18" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="company">Company/Organization (if applicable):</label>
+            <input type="text" id="company">
+        </div>
+        
+        <div class="input-group">
+            <label>Roles (select all that apply):</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-intern" name="role">
+                    <label for="role-intern">Intern</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-employer" name="role">
+                    <label for="role-employer">Host Employer</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-employee" name="role">
+                    <label for="role-employee">Employee</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-public" name="role">
+                    <label for="role-public">Public</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-ambassador" name="role">
+                    <label for="role-ambassador">Ambassador</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="role-influencer" name="role">
+                    <label for="role-influencer">Influencer</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label class="required">Consent Options:</label>
+            <div class="checkbox-item">
+                <input type="radio" id="consent-yes" name="consent" value="yes" required>
+                <label for="consent-yes">I consent to the use of my story and media as outlined above, including for commercial sale.</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="radio" id="consent-no" name="consent" value="no">
+                <label for="consent-no">I do NOT consent.</label>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label class="required">Signature:</label>
+            <div id="signature-pad" class="signature-pad">
+                <canvas id="signature-canvas" width="500" height="150"></canvas>
+            </div>
+            <button type="button" id="clear-signature" class="signature-clear">Clear Signature</button>
+            <input type="hidden" id="signature-data" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="sign-date" class="required">Date (of Signing):</label>
+            <input type="date" id="sign-date" required>
+        </div>
+    </div>
+    
+    <div class="form-section" id="guardian-section" style="display: none;">
+        <h2>6. Guardian Consent (Required for Individuals Under 18)</h2>
+        
+        <div class="input-group">
+            <label for="minor-name" class="required">Minor's Full Name:</label>
+            <input type="text" id="minor-name">
+        </div>
+        
+        <div class="input-group">
+            <label for="minor-age" class="required">Age:</label>
+            <input type="number" id="minor-age" min="1" max="17">
+        </div>
+        
+        <div class="input-group">
+            <label for="guardian-name" class="required">Guardian's Full Name:</label>
+            <input type="text" id="guardian-name">
+        </div>
+        
+        <div class="input-group">
+            <label for="relationship" class="required">Relationship to Minor:</label>
+            <input type="text" id="relationship">
+        </div>
+        
+        <div class="input-group">
+            <label for="guardian-phone" class="required">Guardian Contact Number:</label>
+            <input type="tel" id="guardian-phone">
+        </div>
+        
+        <div class="input-group">
+            <label class="required">Consent Options:</label>
+            <div class="checkbox-item">
+                <input type="radio" id="guardian-consent-yes" name="guardian-consent" value="yes">
+                <label for="guardian-consent-yes">I consent on behalf of the minor to the use of their story and media, including for commercial sale.</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="radio" id="guardian-consent-no" name="guardian-consent" value="no">
+                <label for="guardian-consent-no">I do NOT consent.</label>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label class="required">Guardian Signature:</label>
+            <div id="guardian-signature-pad" class="signature-pad">
+                <canvas id="guardian-signature-canvas" width="500" height="150"></canvas>
+            </div>
+            <button type="button" id="clear-guardian-signature" class="signature-clear">Clear Signature</button>
+            <input type="hidden" id="guardian-signature-data">
+        </div>
+        
+        <div class="input-group">
+            <label for="guardian-date" class="required">Date:</label>
+            <input type="date" id="guardian-date">
+        </div>
+    </div>
+    
+    <button type="button" id="submit-form">Submit Consent Form</button>
+</form>
+    <script>
+        // Show/hide guardian section based on age
+        document.getElementById('age').addEventListener('change', function() {
+            const age = parseInt(this.value);
+            const guardianSection = document.getElementById('guardian-section');
+            
+            if (age < 18) {
+                guardianSection.style.display = 'block';
+                // Make guardian fields required
+                document.querySelectorAll('#guardian-section .required').forEach(el => {
+                    const input = el.querySelector('input, select, textarea');
+                    if (input) input.required = true;
+                });
+            } else {
+                guardianSection.style.display = 'none';
+                // Remove required from guardian fields
+                document.querySelectorAll('#guardian-section input, #guardian-section select, #guardian-section textarea').forEach(el => {
+                    el.required = false;
+                });
+            }
+        });
+
+        // Signature pad functionality
+        const canvas = document.getElementById('signature-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Set canvas background to white
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('touchstart', startDrawing);
+
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('touchmove', draw);
+
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        document.getElementById('clear-signature').addEventListener('click', clearSignature);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            [lastX, lastY] = getPosition(e);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            [lastX, lastY] = getPosition(e);
+            ctx.lineTo(lastX, lastY);
+            ctx.stroke();
+            
+            // Update hidden field with signature data
+            document.getElementById('signature-data').value = canvas.toDataURL();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            document.getElementById('signature-data').value = canvas.toDataURL();
+        }
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('signature-data').value = '';
+        }
+
+        function getPosition(e) {
+            let x, y;
+            if (e.type.includes('touch')) {
+                const rect = canvas.getBoundingClientRect();
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.offsetX;
+                y = e.offsetY;
+            }
+            return [x, y];
+        }
+
+        // Guardian signature pad (same functionality)
+        const guardianCanvas = document.getElementById('guardian-signature-canvas');
+        const guardianCtx = guardianCanvas.getContext('2d');
+        let isGuardianDrawing = false;
+        let guardianLastX = 0;
+        let guardianLastY = 0;
+
+        guardianCtx.fillStyle = 'white';
+        guardianCtx.fillRect(0, 0, guardianCanvas.width, guardianCanvas.height);
+        guardianCtx.strokeStyle = '#000';
+        guardianCtx.lineWidth = 2;
+        guardianCtx.lineJoin = 'round';
+        guardianCtx.lineCap = 'round';
+
+        guardianCanvas.addEventListener('mousedown', startGuardianDrawing);
+        guardianCanvas.addEventListener('touchstart', startGuardianDrawing);
+
+        guardianCanvas.addEventListener('mousemove', guardianDraw);
+        guardianCanvas.addEventListener('touchmove', guardianDraw);
+
+        guardianCanvas.addEventListener('mouseup', stopGuardianDrawing);
+        guardianCanvas.addEventListener('touchend', stopGuardianDrawing);
+        guardianCanvas.addEventListener('mouseout', stopGuardianDrawing);
+
+        document.getElementById('clear-guardian-signature').addEventListener('click', clearGuardianSignature);
+
+        function startGuardianDrawing(e) {
+            isGuardianDrawing = true;
+            [guardianLastX, guardianLastY] = getGuardianPosition(e);
+        }
+
+        function guardianDraw(e) {
+            if (!isGuardianDrawing) return;
+            
+            guardianCtx.beginPath();
+            guardianCtx.moveTo(guardianLastX, guardianLastY);
+            [guardianLastX, guardianLastY] = getGuardianPosition(e);
+            guardianCtx.lineTo(guardianLastX, guardianLastY);
+            guardianCtx.stroke();
+            
+            document.getElementById('guardian-signature-data').value = guardianCanvas.toDataURL();
+        }
+
+        function stopGuardianDrawing() {
+            isGuardianDrawing = false;
+            document.getElementById('guardian-signature-data').value = guardianCanvas.toDataURL();
+        }
+
+        function clearGuardianSignature() {
+            guardianCtx.clearRect(0, 0, guardianCanvas.width, guardianCanvas.height);
+            guardianCtx.fillStyle = 'white';
+            guardianCtx.fillRect(0, 0, guardianCanvas.width, guardianCanvas.height);
+            document.getElementById('guardian-signature-data').value = '';
+        }
+
+        function getGuardianPosition(e) {
+            let x, y;
+            if (e.type.includes('touch')) {
+                const rect = guardianCanvas.getBoundingClientRect();
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.offsetX;
+                y = e.offsetY;
+            }
+            return [x, y];
+        }
+
+        // Form submission
+        document.getElementById('submit-form').addEventListener('click', function() {
+            // Validate form
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.style.borderColor = 'red';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            // Check at least one purpose is selected
+            const purposes = document.querySelectorAll('input[name="purpose"]:checked');
+            if (purposes.length === 0) {
+                alert('Please select at least one purpose for consent.');
+                isValid = false;
+            }
+            
+            // Check consent is selected
+            const consent = document.querySelector('input[name="consent"]:checked');
+            if (!consent) {
+                alert('Please select your consent option.');
+                isValid = false;
+            }
+            
+            // For minors, check guardian consent
+            const age = parseInt(document.getElementById('age').value);
+            if (age < 18) {
+                const guardianConsent = document.querySelector('input[name="guardian-consent"]:checked');
+                if (!guardianConsent) {
+                    alert('Please select guardian consent option.');
+                    isValid = false;
+                }
+            }
+            
+            if (isValid) {
+                // Here you would typically send the form data to a server
+                // For this example, we'll just show a success message
+                alert('Thank you for submitting your consent form. A confirmation email will be sent to the provided email address.');
+                
+                // In a real implementation, you would:
+                // 1. Collect all form data
+                // 2. Send it to your server via AJAX or form submission
+                // 3. Handle the response
+                
+                // Example of collecting data:
+                const formData = {
+                    contactPerson: document.getElementById('contact-person').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    date: document.getElementById('form-date').value,
+                    purposes: Array.from(document.querySelectorAll('input[name="purpose"]:checked')).map(el => el.id),
+                    contentTypes: Array.from(document.querySelectorAll('input[name="content"]:checked')).map(el => el.id),
+                    fullName: document.getElementById('full-name').value,
+                    idNumber: document.getElementById('id-number').value,
+                    dob: document.getElementById('dob').value,
+                    age: document.getElementById('age').value,
+                    company: document.getElementById('company').value,
+                    roles: Array.from(document.querySelectorAll('input[name="role"]:checked')).map(el => el.id),
+                    consent: document.querySelector('input[name="consent"]:checked').value,
+                    signature: document.getElementById('signature-data').value,
+                    signDate: document.getElementById('sign-date').value,
+                    isMinor: age < 18
+                };
+                
+                if (formData.isMinor) {
+                    formData.minorName = document.getElementById('minor-name').value;
+                    formData.minorAge = document.getElementById('minor-age').value;
+                    formData.guardianName = document.getElementById('guardian-name').value;
+                    formData.relationship = document.getElementById('relationship').value;
+                    formData.guardianPhone = document.getElementById('guardian-phone').value;
+                    formData.guardianConsent = document.querySelector('input[name="guardian-consent"]:checked').value;
+                    formData.guardianSignature = document.getElementById('guardian-signature-data').value;
+                    formData.guardianDate = document.getElementById('guardian-date').value;
+                }
+                
+                console.log('Form data:', formData); // For demonstration
+                // In a real app: send formData to your server
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+{% extends 'administration/global/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+/* Expanded styles to match provided dashboard and increase size */
+.stats-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem; /* Larger icon size */
+}
+.stats-icon.purple { background-color: #6f42c1; }
+.stats-icon.blue { background-color: #007bff; }
+.stats-icon.green { background-color: #28a745; }
+.stats-icon.red { background-color: #dc3545; }
+.stats-icon.orange { background-color: #fd7e14; }
+.stats-icon.gray { background-color: #6c757d; }
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 2rem 0 rgba(58, 59, 69, 0.2); /* Larger shadow */
+}
+.card-body {
+    padding: 2rem; /* Increased padding */
+}
+.card-header {
+    padding: 1.5rem 2rem;
+}
+.font-extrabold {
+    font-weight: 800;
+    font-size: 1.75rem; /* Larger font for values */
+}
+.text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem; /* Larger label font */
+}
+.page-heading {
+    margin-bottom: 2rem;
+}
+.page-heading h3 {
+    font-size: 2rem; /* Larger heading */
+}
+.page-content {
+    padding: 0 1.5rem;
+}
+canvas {
+    max-height: 400px; /* Larger chart */
+    width: 100%;
+}
+/* Dark mode styles */
+.dark .card {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.dark .text-muted {
+    color: #9ca3af !important;
+}
+.dark .card-header {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+</style>
+
+<div class="page-heading">
+    <h3>Financial Statistics</h3>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="col-12">
+            <div class="row">
+                <!-- Card: Total Approved/Paid Invoices -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-currency-rand"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Approved/Paid Invoices</h6>
+                                    <h6 class="font-extrabold mb-0">R{{ total_approved_paid|floatformat:2 }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Expenses -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon red mb-3">
+                                        <i class="bi bi-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total Expenses</h6>
+                                    <h6 class="font-extrabold mb-0">R{{ total_expenses|floatformat:2 }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Pending Invoices -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon orange mb-3" style="background-color: #fd7e14;">
+                                        <i class="bi bi-archive-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Pending Invoices</h6>
+                                    <h6 class="font-extrabold mb-0">{{ pending_invoices }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Suspended Invoices -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon gray mb-3" style="background-color: #6c757d;">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Suspended Invoices</h6>
+                                    <h6 class="font-extrabold mb-0">{{ suspended_invoices }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Financial Chart -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Financial Overview {{ current_year }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <canvas id="chart-finance" aria-label="Line chart showing approved/paid invoices and company expenses per month"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Pass Django context to JavaScript
+    const chartLabels = {{ chart_labels|safe }};
+    const approvedPaidInvoices = {{ approved_paid_invoices|safe }};
+    const expenses = {{ expenses|safe }};
+
+    // Line Chart: Approved/Paid Invoices vs Expenses
+    if (document.querySelector("#chart-finance")) {
+        var ctx = document.getElementById("chart-finance").getContext("2d");
+        var gradientStroke1 = ctx.createLinearGradient(0, 400, 0, 50);
+        gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+        gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+        gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+        var gradientStroke2 = ctx.createLinearGradient(0, 400, 0, 50);
+        gradientStroke2.addColorStop(1, 'rgba(239, 68, 68, 0.2)');
+        gradientStroke2.addColorStop(0.2, 'rgba(239, 68, 68, 0.0)');
+        gradientStroke2.addColorStop(0, 'rgba(239, 68, 68, 0)');
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: chartLabels,
+                datasets: [
+                    {
+                        label: "Approved/Paid Invoices",
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#5e72e4", // Blue
+                        backgroundColor: gradientStroke1,
+                        borderWidth: 4, // Thicker lines
+                        fill: true,
+                        data: approvedPaidInvoices,
+                    },
+                    {
+                        label: "Expenses",
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#ef4444", // Red
+                        backgroundColor: gradientStroke2,
+                        borderWidth: 4,
+                        fill: true,
+                        data: expenses,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#333',
+                            font: { size: 14, family: "Open Sans" } // Larger legend font
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        titleFont: { size: 16 },
+                        bodyFont: { size: 14 },
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5],
+                        },
+                        ticks: {
+                            display: true,
+                            padding: 15,
+                            color: '#333',
+                            font: {
+                                size: 14, // Larger ticks
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2,
+                            },
+                            callback: function(value) {
+                                return 'R' + value.toFixed(2);
+                            },
+                        },
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#333',
+                            padding: 20,
+                            font: {
+                                size: 14, // Larger ticks
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+</script>
+{% endblock extra_js %}
+{% endblock %}

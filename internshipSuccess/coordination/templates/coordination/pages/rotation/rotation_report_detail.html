@@ -1,0 +1,35 @@
+{% extends "coordination/global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Rotation Report for {{ intern.get_full_name }}</h3>
+    <a href="{% url 'rotation-report-intern-list' %}" class="btn btn-secondary mb-3">Back to Intern List</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Key Performance Area</th>
+                <th>Department</th>
+                <th>PoE (Portfolio of Evidence)</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rotation_data %}
+            <tr>
+                <td>{{ row.field }}</td>
+                <td>{{ row.key_area }}</td>
+                <td>{{ row.department }}</td>
+                <td>{{ row.poe }}</td>
+                <td>{{ row.start_date }}</td>
+                <td>{{ row.end_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No rotation plans assigned to this intern.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

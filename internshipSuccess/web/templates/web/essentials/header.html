@@ -1,0 +1,147 @@
+{% load static %}
+<header>
+    <div class="header-top heding-bg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-6">
+                    <div class="left-cta">
+                        <span><i class="fal fa-envelope"></i> recruit@wopcoe.com</span>
+                        <span><i class="fal fa-phone"></i> +27 13 753 3353</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-6 text-end">
+                    <div class="right-language">
+                        <div class="dropdown">
+                            <a  href="#">
+                                <i class="fal "></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-border-line"></div>
+        <div class="container d-none d-md-block">
+            <div class="row pt-25">
+                <div class="col-xl-4 col-lg-3 d-none d-lg-inline-block">
+                    <div class="logo-area">
+                        <a style="padding:10px; border-radius:10px; background-color: transparent;" class="head-logo-1" href="{% url 'home' %}">
+                            <img style="width:300px" src="{% static 'web/assets/img/logo/correct Logo Internship Success Benefit.png' %}" alt="Header-logo">
+                        </a>
+                        
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-9">
+                    <ul class="right-query mb-0">
+                        <li>
+                            <div class="icon"><i class="fal fa-map-marker-alt"></i></div>
+                            <div class="query-list">
+                                <span>1st Floor, Shell House</span>
+                                <span>Ferreira St, Mbombela. 1200
+                                    </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fal fa-clock"></i></div>
+                            <div class="query-list">
+                                <span>Mon - Fri 07:30 - 16:30</span>
+                                <span>Sat - Sun: Closed</span>
+                            </div>
+                        </li>
+                        <li>
+                            {% if request.user.is_authenticated %}
+                              <p>You are logged in as <strong>{{request.user}}</strong></p>
+                            {% if request.user.role == request.user.Role.ADMIN %}
+                            <a class="theme_btn border_btn" href="{% url 'admini-home' %}">Portal</a>
+                            {% elif request.user.role == request.user.Role.INTERN %}
+                            <a class="theme_btn border_btn" href="{% url 'intern-dashboard' %}">Portal</a>
+                            {% endif %}
+                            <a class="theme_btn quote-btn" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                            <a class="theme_btn quote-btn" href="{% url 'login' %}">Login</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="heding-bg-1" id="hideshow-sticky-menu">
+        <div  class="main-header-area">
+            <div class="container">
+                <div class="white-bg row align-items-center gx-0">
+                    <div class="col-lg-10 col-6 text-start">
+                        <div class="logo-area d-lg-none d-md-block">
+                            <a href="index.html"><img src="{% static 'web/assets/img/logo/correct Logo Internship Success Benefit.png' %}" alt="Header-logo"></a>
+                        </div>
+                        <nav id="topheader" class="navbar navbar-expand-lg justify-content-start py-0">
+                            <div class="nav-container">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav list-style-none">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'about-page' %}">About</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'services-page' %}">Services</a>	
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Recruitment
+                                                <i class="fal fa-chevron-down"></i></a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                                                {% if request.user.is_authenticated and request.user.role == request.user.Role.INTERN %}
+
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'web-induction-posts' %}">Host Vacancies</a>
+                                                </li>
+                                            {% endif %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'web-induction-posts' %}">Application Post</a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'news-page' %}">News & Updates</a>	
+                                </li>
+                                     <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'team-page' %}">Team</a>
+                                    </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'contact-page' %}">Contact</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'marketing-page' %}">Marketing</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="https://klcbt.co.za/internship-success/">Member OF KLCBT</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <ul class="right-nav mb-0 d-flex align-items-center justify-content-end">
+                            <li>
+                                <div class="hamburger-menu">
+                                    <a href="javascript:void(0);">
+                                        <img src="{% static 'web/assets/img/icon/eclips.png' %}" alt="Eclips">
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.theme-main-menu -->
+    </div>
+</header>

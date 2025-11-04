@@ -1,0 +1,102 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<div class="page-heading">
+    <h3>{{ host_employer.company_name }}</h3>
+</div> 
+
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Leave Management</h5>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped" id="induction-posts">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Intern</th>
+                            <th>Leave Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Reason</th>
+                            <th>Proof</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leave_requests %}
+                            <tr>
+                                <td>{{ leave.intern.username }}</td>
+                                <td>{{ leave.get_leave_type_display }}</td>
+                                <td>{{ leave.start_date }}</td>
+                                <td>{{ leave.end_date }}</td>
+                                <td>{{ leave.reason }}</td>
+                                <td>
+                                    {% if leave.leave_type == 'sick' and leave.sick_note %}
+                                        <a href="{{ leave.sick_note.url }}" target="_blank" class="btn btn-primary">View Proof</a>
+                                    {% else %}
+                                        <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge 
+                                        {% if leave.status == 'pending' %}badge-warning
+                                        {% elif leave.status == 'approved' %}badge-success
+                                        {% elif leave.status == 'rejected' %}badge-danger
+                                        {% endif %}
+                                    ">
+                                        {{ leave.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if leave.status == 'pending' %}
+                                        <form method="post" class="d-inline-block">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                                            <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
+                                    {% else %}
+                                        <p>{{ leave.get_status_display }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center">No leave requests found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const action = form.querySelector('button[type="submit"][name="action"]').value;
+            const confirmationText = action === 'approve' ? 'approve this leave request?' : 'reject this leave request?';
+
+            Swal.fire({
+                title: `Are you sure you want to ${confirmationText}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock content %}

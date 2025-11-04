@@ -1,0 +1,49 @@
+/* administration/css/custom.css */
+.stats-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stats-icon.purple { background-color: #6f42c1; }
+.stats-icon.blue { background-color: #007bff; }
+.stats-icon.green { background-color: #28a745; }
+.stats-icon.red { background-color: #dc3545; }
+.stats-icon.orange { background-color: #fd7e14; }
+.stats-icon.gray { background-color: #6c757d; }
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+.card-body {
+    padding: 1.5rem;
+}
+.font-extrabold {
+    font-weight: 800;
+}
+.text-muted {
+    color: #6c757d !important;
+}
+.page-heading {
+    margin-bottom: 1.5rem;
+}
+.page-content {
+    padding: 0 1rem;
+}
+/* Dark mode styles */
+.dark .card {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.dark .text-muted {
+    color: #9ca3af !important;
+}
+.dark .card-header {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+canvas {
+    background-color: transparent;
+}

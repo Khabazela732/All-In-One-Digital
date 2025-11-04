@@ -1,0 +1,33 @@
+// Font Family
+$gt-font: "GT Walsheim Pro";
+
+// Colors ---------------
+$white: #ffffff;
+$black: #000;
+$grey: #a7bbc5;
+$grey2: #f6f6f6;
+$grey3: #f7f7f7;
+$grey4: #f8f8f8;
+$purple: #6c63ff;
+$soft-red: #fd5f5c;
+$grey-dark: #ebebeb;
+$green: #81b03f;
+$theme-color: #ffa84b;
+$theme-color2: rgb(187, 11, 11);
+$body-text-color: #777777;
+$body-text-color2: #999999;
+$hr-border-color: rgba(27, 33, 47, 0.1);
+
+// Heading Color
+$heding: #083d59;
+$heding2: #b8b8b8;
+$heding3: #040404;
+
+// Responsive Variables
+$xxl: "only screen and (min-width: 1601px) and (max-width: 1900px)";
+$xl: "only screen and (min-width: 1601px) and (max-width: 1800px)";
+$laptop: "only screen and (min-width: 1200px) and (max-width: 1600px)";
+$lg: "only screen and (min-width: 992px) and (max-width: 1200px)";
+$md: "only screen and (min-width: 768px) and (max-width: 991px)";
+$xs: "(max-width: 767px)";
+$sm: "only screen and (min-width: 576px) and (max-width: 767px)";

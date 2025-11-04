@@ -1,0 +1,390 @@
+{% extends "administration/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Logbook Preview</h3>
+</div> 
+<script src="assets/static/js/initTheme.js"></script>
+
+    <!-- Bordered table start -->
+    <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Log Book Template</h4>
+                    </div>
+                        <div class="card-body">
+                            <p class="card-text">STATEMENT OF WORK EXPERIENCE/LOGBOOK 
+                            </p>
+                            <button class="btn btn-primary">Print Logbook Template</button><br><br>
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name: 
+                                                </th>
+                                            <th>{{logbook_template.name}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-bold-500">Company:</td>
+                                            <td>{{logbook_template.company.company_name}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Qualification:</td>
+                                            <td>{{logbook_template.qualification}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Total Credits:</td>
+                                            <td>{{total_credits}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Required Credits:</td>
+                                            <td>{{minimum_credits_required}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Percentage:</td>
+                                            <td>{{percentage_pass}}%</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Interns:</td>
+                                            <td>
+                                                {{logbook_template.logbooks.all.count}}
+                                            </td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500"></td>
+                                            <td>
+                                                <span><button class="btn btn-primary" onclick="DistributeLogbookToInterns()">Distribute Logbook</button></span>
+                                            </td>                                       
+                                        </tr>                                 
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function DistributeLogbookToInterns() {
+            // Specify URL and window properties
+            var url = '{% url "distribute-logbook" logbook_template_id=logbook_template.id company_id=logbook_template.company.id %}'; // URL of the content to be loaded in the popup
+            var windowName = 'Popup'; // Name of the popup window
+            var width = 900; // Width of the popup window
+            var height = 700; // Height of the popup window
+            var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+            var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+            var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+
+            // Open the popup window
+            var popup = window.open(url, windowName, features);
+          }
+    </script>
+    <!-- Bordered table end -->
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">           
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Learner Details 
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name & Surname:  
+                                            </th>
+                                        <th>
+                                            </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-bold-500">ID Number:  </td>
+                                        <td> N/A
+                                            </td>
+                                        
+                                    </tr>
+                                    
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Employer Details 
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name: 
+                                            </th>
+                                        <th>
+                                            N/A
+                                            </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr>
+                                        <td class="text-bold-500">Address:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Supervisor Name:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Work Telephone:  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">E-Mail: 	 	  </td>
+                                        <td>
+
+                                            </td>
+                                        
+                                    </tr>
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+
+
+    <!-- Bordered table start -->
+    {% comment %} <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Management Assistant Compulsory subjects
+                            </p>
+                        </div>
+                        <!-- table bordered -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Office Practice  
+                                            </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-bold-500">Information Processing   </td>
+                                        
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Additional: </td>
+                                       
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold-500">Workplace Competencies  </td>
+                                        
+                                        
+                                    </tr>
+                                    
+                                   
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- Bordered table end -->
+
+    <!-- Bordered table start -->
+    <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Duties 
+                            </p>
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-primary">CODE 
+                                                </th>
+                                            <th class="table-primary">NAME
+                                                </th>
+                                            <th class="table-primary">POINTS
+                                                </th>
+                                            <th class="table-primary">STATUS
+                                                </th>
+                                            <th class="table-primary">
+                                                APPROVAL
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for work_item in logbook_template.qualification.workitems.all %}
+                                        {% with work_item.deliverables.count as deliverable_count %}
+                                        {% if deliverable_count > 0 %}
+                                        <thead>
+                                            <tr>
+                                                <th class="table-danger"></th>
+                                                <th class="table-danger">WorkItem: {{ work_item.name }}</th>
+                                                <th class="table-danger"></th>
+                                                <th class="table-danger"></th>
+                                                <th class="table-danger"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for logbook_deliverable in logbook_template.deliverables.all %}
+                                            {% if logbook_deliverable.deliverable.work_item == work_item %}
+                                            <tr>
+                                                <td class="text-bold-500">DE{{ logbook_deliverable.id }}</td>
+                                                <td>{{ logbook_deliverable.deliverable.name }}</td>
+                                                <td>{{ deliverable_pts | floatformat:2 }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                        {% endif %}
+                                        {% endwith %}
+                                        {% endfor %}
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="row" id="table-bordered">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p class="card-text">Interns 
+                            </p>
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-primary"># 
+                                                </th>
+                                            <th class="table-primary">FULL NAME
+                                                </th>
+                                            <th class="table-primary">
+                                                LOGBOOK
+                                                </th>
+                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                                         
+                                    {% for logbook in logbook_template.logbooks.all %}
+                                    <tr>
+                                        <td class="text-bold-500">{{forloop.counter}}</td>
+                                        <td>
+                                            <a href="{% url 'intern_profil' intern_id=logbook.intern.id %}">
+                                                {{logbook.intern.first_name}} {{logbook.intern.last_name}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'admin_intern_logbook' intern_id=logbook.intern.id %}">
+                                            {{logbook}}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bordered table end -->
+
+
+
+
+
+
+
+
+
+
+
+<!--<section class="section">
+    {% comment %} For this section You need to Show a dropdown of all available qualifications {% endcomment %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                
+            </h5>
+            <h6>Select the qualification you want for this logbook.</h6>
+        </div>
+    </div>
+</section>-->
+{% endblock content %} 
+

@@ -1,0 +1,148 @@
+//plan-area
+.service-plan-bg {
+    background: rgb(243, 243, 243);
+    position: relative;
+    z-index: 1;
+    padding-top: 340px;
+    @media #{$lg} {
+        padding-top: 120px;
+    }
+    @media #{$md} {
+        padding-top: 60px;
+    }
+    @media #{$xs} {
+        padding-top: 60px;
+    }
+}
+.plan2 {
+    .plan-body {
+        border-top: 2px solid $theme-color;
+        position: relative;
+        z-index: 1;
+        .tag {
+            color: $theme-color;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgb(255, 244, 233);
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            padding: 10px 20px;
+            line-height: 1;
+            z-index: 2;
+            border-radius: 30px;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            -ms-border-radius: 30px;
+            -o-border-radius: 30px;
+            @media #{$lg} {
+                padding: 10px 10px;
+                left: 55%;
+            }
+            @media #{$md} {
+                padding: 10px 10px;
+                left: 55%;
+            }
+            @media #{$xs} {
+                padding: 10px 10px;
+                left: 55%;
+            }
+        }
+    }
+}
+.plan-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.plan-body {
+    background: $white;
+    padding: 45px 50px 42px 50px;
+    margin-top: 35px;
+    @media #{$lg} {
+        padding: 45px 20px 35px 20px;
+    }
+    @media #{$md} {
+        padding: 45px 25px 35px 25px;
+    }
+    @media #{$xs} {
+        padding: 45px 25px 35px 25px;
+    }
+    h2 {
+        font-size: 40px;
+    }
+    .plan-list {
+        border-top: 1px solid rgb(233, 233, 233);
+        padding: 0;
+        margin: 0;
+        padding-top: 14px;
+        margin-top: 30px;
+        margin-bottom: 35px;
+        li {
+            position: relative;
+            z-index: 1;
+            padding: 8px 0 8px 0;
+            &::before {
+                content: "\f00c";
+                position: absolute;
+                font-family: "Font awesome 5 Pro";
+                font-size: 16px;
+                color: $body-text-color;
+                font-weight: 300;
+                right: 0;
+                top: 9px;
+                z-index: 1;
+            }
+            &.delete {
+                color: #d3d3d3;
+            }
+        }
+    }
+    .price-btn {
+        color: $heding;
+        font-size: 16px;
+        width: 100%;
+        background: rgb(245, 245, 245);
+        text-transform: capitalize;
+        text-align: center;
+        @media #{$xs} {
+            padding: 24px 15px;
+        }
+        i {
+            color: $heding;
+            padding-left: 30px;
+        }
+        &:hover {
+            color: $white;
+            background: $theme-color;
+            i {
+                color: $white;
+            }
+        }
+    }
+}
+
+.plan3 {
+    .plan-body {
+        background: $heding;
+        h2 {
+            color: $white;
+        }
+        p {
+            color: #adbbc2;
+        }
+        .plan-list {
+            li {
+                color: #adbbc2;
+                &::before {
+                    color: #adbbc2;
+                }
+            }
+        }
+        .price-btn {
+            background: $white;
+            &:hover {
+                background: $theme-color;
+            }
+        }
+    }
+}

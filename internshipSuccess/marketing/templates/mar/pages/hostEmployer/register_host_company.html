@@ -1,0 +1,46 @@
+<!-- register_host_company.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Success - Register Host Company</title>
+    <link rel="shortcut icon" href="{% static 'administration/compiled/svg/favicon.svg' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{% static 'administration/compiled/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'administration/compiled/css/app-dark.css' %}">
+</head>
+<body>
+    <section id="basic-vertical-layouts">
+        <div class="row match-height">
+            <div class="col-md-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Register Host Company</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form method="post" class="form form-vertical">
+                                {% csrf_token %}
+                                <div class="form-body">
+                                    {{ form.company_name.label_tag }}{{ form.company_name }}
+                                    {{ form.description.label_tag }}{{ form.description }}
+                                    {{ form.joined_date.label_tag }}{{ form.joined_date }}
+                                    {{ form.location.label_tag }}{{ form.location }}
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

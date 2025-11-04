@@ -1,0 +1,83 @@
+{% extends "hr/global/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Staff Profile</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        {% if staff.photo %}
+                            <img src="{{ staff.photo.url }}" alt="Profile Picture" class="rounded-circle" width="120">
+                        {% else %}
+                            <img src="{% static 'profile.png' %}" class="rounded-circle" width="120" alt="No photo">
+                        {% endif %}
+                        <h5 class="mt-3">{{ staff.full_name }}</h5>
+                        <p class="text-muted">{{ staff.role }} — {{ staff.department.name }}</p>
+                    </div>
+
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Phone:</th>
+                                <td>{{ staff.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>RSA ID Number:</th>
+                                <td>{{ staff.rsa_id_number }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status:</th>
+                                <td>{{ staff.status }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Joined:</th>
+                                <td>{{ staff.date_joined }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5 class="mt-4">Uploaded Documents</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>ID Document:</strong>
+                            {% if staff.id_document %}
+                                <a href="{{ staff.id_document.url }}" target="_blank">View</a>
+                            {% else %}
+                                Not uploaded
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Driver's License:</strong>
+                            {% if staff.drivers_license %}
+                                <a href="{{ staff.drivers_license.url }}" target="_blank">View</a>
+                            {% else %}
+                                Not uploaded
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Contract Agreement:</strong>
+                            {% if staff.contract_agreement %}
+                                <a href="{{ staff.contract_agreement.url }}" target="_blank">View</a>
+                            {% else %}
+                                Not uploaded
+                            {% endif %}
+                        </li>
+                        
+                    </ul>
+                    <div class="mt-3 d-flex justify-content-end">
+                        <a href="{% url 'staff-edit' staff.id %}" class="btn btn-warning me-2">Edit</a>
+                        <a href="{% url 'staff-delete' staff.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    <a href="{% url 'create-staff-scoring' staff.id %}" class="btn btn-outline-primary mb-2">
+                        📝 Add Scoring
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

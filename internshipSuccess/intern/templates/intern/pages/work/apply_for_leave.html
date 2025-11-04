@@ -1,0 +1,299 @@
+{% extends "intern/global/base.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<div class="attendance-container">
+    <div class="attendance-card">
+        <div class="card-header">
+            <h2 class="card-title">Leave Request Form</h2>
+            <p class="card-subtitle">Submit your leave application</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" class="leave-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_leave_type" class="form-label">Leave Type</label>
+                {{ form.leave_type }}
+            </div>
+            
+            <div class="date-row">
+                <div class="form-group">
+                    <label for="id_start_date" class="form-label">Start Date</label>
+                    <div class="date-input-wrapper">
+                        {{ form.start_date }}
+                        <i class="bi bi-calendar-date date-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_end_date" class="form-label">End Date</label>
+                    <div class="date-input-wrapper">
+                        {{ form.end_date }}
+                        <i class="bi bi-calendar-date date-icon"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_reason" class="form-label">Reason</label>
+                {{ form.reason }}
+            </div>
+
+            <div id="sick-note-upload" class="form-group" style="display: none;">
+                <label for="id_sick_note" class="form-label">Upload Sick Note</label>
+                <div class="file-upload-wrapper">
+                    {{ form.sick_note }}
+                    <span class="file-upload-text">Click to upload or drag and drop</span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="bi bi-send-fill"></i> Submit Request
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #f8f9fa;
+        --text-color: #2b2d42;
+        --border-color: #e9ecef;
+        --error-color: #ef233c;
+        --success-color: #4cc9f0;
+    }
+    
+    .attendance-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+        background-color: var(--secondary-color);
+    }
+    
+    .attendance-card {
+        width: 100%;
+        max-width: 600px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .card-header {
+        padding: 1.5rem 2rem;
+        background-color: var(--primary-color);
+        color: white;
+    }
+    
+    .card-title {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    
+    .card-subtitle {
+        margin: 0.25rem 0 0;
+        opacity: 0.9;
+        font-size: 0.9rem;
+    }
+    
+    .leave-form {
+        padding: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+    
+    .date-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    select, input, textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    select:focus, input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    /* Date Input Styling */
+    .date-input-wrapper {
+        position: relative;
+    }
+    
+    .date-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-color);
+        pointer-events: none;
+    }
+    
+    /* File Upload Styling */
+    .file-upload-wrapper {
+        position: relative;
+        border: 2px dashed var(--border-color);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .file-upload-wrapper:hover {
+        border-color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.03);
+    }
+    
+    .file-upload-text {
+        display: block;
+        margin-top: 0.5rem;
+        color: #6c757d;
+    }
+    
+    input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
+    .btn-submit {
+        width: 100%;
+        padding: 0.875rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-submit:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .date-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .attendance-container {
+            padding: 1rem;
+        }
+        
+        .leave-form {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+// Initialize date pickers
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#id_start_date", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        allowInput: true,
+        clickOpens: true,
+        onClose: function(selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                endDatePicker.set('minDate', selectedDates[0]);
+            }
+        }
+    });
+    
+    const endDatePicker = flatpickr("#id_end_date", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        allowInput: true,
+        clickOpens: true
+    });
+
+    // Sick note upload toggle
+    document.getElementById("id_leave_type").addEventListener("change", function() {
+        const sickNoteUpload = document.getElementById("sick-note-upload");
+        const fileUpload = document.querySelector(".file-upload-wrapper");
+        
+        if (this.value === "sick") {
+            sickNoteUpload.style.display = "block";
+            setTimeout(() => {
+                sickNoteUpload.style.opacity = "1";
+            }, 10);
+        } else {
+            sickNoteUpload.style.opacity = "0";
+            setTimeout(() => {
+                sickNoteUpload.style.display = "none";
+            }, 300);
+        }
+    });
+
+
+    
+
+    // File upload feedback
+    const fileInput = document.querySelector('input[type="file"]');
+    fileInput.addEventListener('change', function() {
+        const fileName = this.files[0]?.name || 'No file chosen';
+        document.querySelector('.file-upload-text').textContent = fileName;
+    });
+});
+</script>
+
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 80px auto;
+        padding: 30px;
+        background-color: #f8f9fa;
+        border: 2px solid #28a745;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .success-icon {
+        font-size: 60px;
+        color: #28a745;
+    }
+
+    .success-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 15px;
+        color: #28a745;
+    }
+
+    .success-message {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .next-actions {
+        margin-top: 25px;
+    }
+
+    .btn-action {
+        margin: 5px;
+    }
+</style>
+
+<div class="success-container">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Vehicle Request Submitted</div>
+    <div class="success-message">
+        Your request has been submitted successfully.<br>
+        Please wait for HR to review and approve your request.
+    </div>
+
+    <div class="next-actions">
+        <a href="{% url 'vehicle-request-list' %}" class="btn btn-outline-primary btn-action">🔙 Back to Vehicles</a>
+        <a href="{% url 'hr-dashboard' %}" class="btn btn-outline-success btn-action">🏠 Go to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

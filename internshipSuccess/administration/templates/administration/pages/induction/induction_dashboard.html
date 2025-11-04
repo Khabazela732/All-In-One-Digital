@@ -1,0 +1,480 @@
+{% extends 'administration/global/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.stats-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.stats-icon.purple { background-color: #6f42c1; }
+.stats-icon.blue { background-color: #007bff; }
+.stats-icon.green { background-color: #28a745; }
+.stats-icon.red { background-color: #dc3545; }
+.stats-icon.orange { background-color: #fd7e14; }
+.stats-icon.gray { background-color: #6c757d; }
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 2rem 0 rgba(58, 59, 69, 0.2);
+}
+.card-body {
+    padding: 2rem;
+}
+.card-header {
+    padding: 1.5rem 2rem;
+}
+.font-extrabold {
+    font-weight: 800;
+    font-size: 1.75rem;
+}
+.text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem;
+}
+.page-heading {
+    margin-bottom: 2rem;
+}
+.page-heading h3 {
+    font-size: 2rem;
+}
+.page-content {
+    padding: 0 1.5rem;
+}
+canvas {
+    max-height: 400px;
+    width: 100%;
+}
+.dark .card {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.dark .text-muted {
+    color: #9ca3af !important;
+}
+.dark .card-header {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+</style>
+
+<div class="page-heading">
+    <h3>Induction Statistics {{ current_year }}</h3>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="col-12">
+            <div class="row">
+                <!-- Card: Total Induction Posts -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon purple mb-3">
+                                        <i class="bi bi-book-half"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Induction Posts</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_induction_posts }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Applications -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Applications</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_applications }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Total Admitted -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Admitted Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_admitted }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Pending Placements -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon orange mb-3">
+                                        <i class="bi bi-hourglass-split"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Pending Placements</h6>
+                                    <h6 class="font-extrabold mb-0">{{ pending_placements }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Placed Interns -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon red mb-3">
+                                        <i class="bi bi-briefcase-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Placed Interns</h6>
+                                    <h6 class="font-extrabold mb-0">{{ placed_interns }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Bypassed Enrollments -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon gray mb-3">
+                                        <i class="bi bi-skip-forward-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Bypassed Enrollments</h6>
+                                    <h6 class="font-extrabold mb-0">{{ bypassed_enrollments }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Day 1 Attendance -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon blue mb-3">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Day 1 Attendance</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_day_1_attended }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Day 2 Attendance -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-5 py-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                    <div class="stats-icon green mb-3">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Day 2 Attendance</h6>
+                                    <h6 class="font-extrabold mb-0">{{ total_day_2_attended }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bar Graph: Applications and Admitted per Post -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Applications and Admitted per Induction Post</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="bar-chart" aria-label="Bar chart showing applications and admitted interns per induction post"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pie Chart: Gender Distribution -->
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Gender Distribution</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pie-chart" aria-label="Pie chart showing gender distribution of applicants"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Radial Bar: Attendance Completion -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Attendance Completion (%)</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="radial-bar-chart" aria-label="Radial bar chart showing Day 1 and Day 2 attendance completion"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Line Chart: Applications Over Time -->
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Applications Over Time {{ current_year }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="line-chart" aria-label="Line chart showing applications over time in {{ current_year }}"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    // Bar Chart: Applications and Admitted per Post
+    if (document.querySelector("#bar-chart")) {
+        var ctx = document.getElementById("bar-chart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: {{ bar_labels|safe }},
+                datasets: [
+                    {
+                        label: "Applications",
+                        data: {{ applications_data|safe }},
+                        backgroundColor: "#007bff",
+                        borderColor: "#0056b3",
+                        borderWidth: 1,
+                    },
+                    {
+                        label: "Admitted",
+                        data: {{ admitted_data|safe }},
+                        backgroundColor: "#28a745",
+                        borderColor: "#1e7e34",
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // Pie Chart: Gender Distribution
+    if (document.querySelector("#pie-chart")) {
+        var ctx = document.getElementById("pie-chart").getContext("2d");
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: {{ gender_labels|safe }},
+                datasets: [{
+                    data: {{ gender_counts|safe }},
+                    backgroundColor: ["#007bff", "#dc3545", "#6c757d"],
+                    borderColor: ["#0056b3", "#a71d2a", "#5a6268"],
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // Radial Bar Chart: Attendance Completion
+    if (document.querySelector("#radial-bar-chart")) {
+        var options = {
+            series: [
+                {{ day_1_completion|safe }},
+                {{ day_2_completion|safe }},
+            ],
+            chart: {
+                height: 400,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    offsetY: 0,
+                    startAngle: 0,
+                    endAngle: 270,
+                    hollow: {
+                        margin: 5,
+                        size: '30%',
+                        background: 'transparent',
+                    },
+                    track: {
+                        background: '#e2e8f0',
+                        strokeWidth: '100%',
+                    },
+                    dataLabels: {
+                        name: {
+                            show: true,
+                            fontSize: '14px',
+                            fontFamily: 'Open Sans',
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '12px',
+                            fontFamily: 'Open Sans',
+                            formatter: function (val) {
+                                return val.toFixed(0) + '%';
+                            },
+                        },
+                    },
+                },
+            },
+            labels: {{ radial_labels|safe }},
+            colors: ['#007bff', '#28a745'],
+            legend: {
+                show: true,
+                position: 'top',
+                fontSize: '14px',
+                fontFamily: 'Open Sans',
+                labels: {
+                    colors: '#333',
+                },
+            },
+            tooltip: {
+                enabled: true,
+                theme: 'dark',
+            },
+        };
+        var chart = new ApexCharts(document.querySelector("#radial-bar-chart"), options);
+        chart.render();
+    }
+
+    // Line Chart: Applications Over Time
+    if (document.querySelector("#line-chart")) {
+        var ctx = document.getElementById("line-chart").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 400, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+        gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{ line_labels|safe }},
+                datasets: [{
+                    label: "Applications",
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderColor: "#5e72e4",
+                    backgroundColor: gradientStroke,
+                    borderWidth: 4,
+                    fill: true,
+                    data: {{ line_data|safe }},
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        titleFont: { size: 16 },
+                        bodyFont: { size: 14 },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 14, family: "Open Sans" },
+                            color: '#333',
+                        },
+                    },
+                },
+            },
+        });
+    }
+</script>
+{% endblock extra_js %}
+{% endblock %}

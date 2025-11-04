@@ -1,0 +1,30 @@
+{% extends "administration/global/base.html" %}
+{% load static %}
+
+{% block content %}
+<table class="table-auto border border-gray-300">
+    <thead>
+        <tr>
+            <th>Company Type</th>
+            <th>Interns Placed</th>
+            <th>Logbooks Completed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for type in interns_placed %}
+        <tr>
+            <td>{{ type.company__company_type }}</td>
+            <td>{{ type.total }}</td>
+            <td>
+                {% for log in logbooks_completed %}
+                    {% if log.intern_logbook__logbook_template__company__company_type == type.company__company_type %}
+                        {{ log.total }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

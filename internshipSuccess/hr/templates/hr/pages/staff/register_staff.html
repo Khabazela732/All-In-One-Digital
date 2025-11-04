@@ -1,0 +1,329 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Success{% if title %} - {{ title }}{% endif %}</title>
+
+    <link rel="shortcut icon" href="{% static 'administration/compiled/svg/favicon.svg' %}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'administration/compiled/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'administration/compiled/css/app-dark.css' %}">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .profile-info {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-control {
+            border-radius: 25px !important;
+            padding: 0.5rem 0.75rem !important;
+            border: 2px solid #d1d5db !important; /* Gray border by default - FIXED */
+            transition: all 0.3s ease;
+            outline: none !important;
+        }
+
+        .form-control:focus {
+            border-color: #007bff !important; /* Blue border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+            border-radius: 25px !important;
+        }
+
+        /* Ensure all input types get rounded borders */
+        input[type="text"], 
+        input[type="email"], 
+        input[type="tel"], 
+        input[type="file"],
+        select,
+        textarea {
+            border-radius: 25px !important;
+            border: 2px solid #d1d5db !important; /* Gray border by default - FIXED */
+            padding: 0.5rem 0.75rem !important;
+        }
+
+        /* Special styling for file inputs */
+        input[type="file"] {
+            padding: 0.4rem 0.75rem !important;
+        }
+
+        /* Special styling for select dropdowns */
+        select.form-control {
+            border-radius: 25px !important;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 25px;
+            padding: 0.6rem 1.4rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .form-section {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .form-help-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container form-section">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Register New Staff Member</h4>
+                        <div class="card-header">
+                            <strong>Profile Owner: {{ user_first_name }} {{ user_last_name }}</strong>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" enctype="multipart/form-data" class="form form-vertical" autocomplete="off">
+                            {% csrf_token %}
+                            
+                            <!-- Hidden dummy fields to trick browser autocomplete -->
+                            <input type="text" style="display:none" autocomplete="off">
+                            <input type="password" style="display:none" autocomplete="off">
+                            
+                            <div class="form-body">
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.full_name.id_for_label }}">Full Name <span class="required">*</span></label>
+                                    <input type="text" name="{{ form.full_name.name }}" id="{{ form.full_name.id_for_label }}" class="form-control" autocomplete="off" required>
+                                    {% if form.full_name.errors %}
+                                    <small class="text-danger">{{ form.full_name.errors.0 }}</small>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.phone.id_for_label }}">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" class="form-control" autocomplete="off" required>
+                                    {% if form.phone.errors %}
+                                    <small class="text-danger">{{ form.phone.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Enter a valid phone number</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.department.id_for_label }}">Department <span class="required">*</span></label>
+                                    {% if form.department.field.widget.input_type == 'select' %}
+                                        <select name="{{ form.department.name }}" id="{{ form.department.id_for_label }}" class="form-control" autocomplete="off" required>
+                                            <option value="">-- Select Department --</option>
+                                            {% for value, label in form.department.field.choices %}
+                                                {% if value %}
+                                                <option value="{{ value }}">{{ label }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input type="text" name="{{ form.department.name }}" id="{{ form.department.id_for_label }}" class="form-control" autocomplete="off" required>
+                                    {% endif %}
+                                    {% if form.department.errors %}
+                                    <small class="text-danger">{{ form.department.errors.0 }}</small>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.status.id_for_label }}">Status <span class="required">*</span></label>
+                                    {% if form.status.field.widget.input_type == 'select' %}
+                                        <select name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" class="form-control" autocomplete="off" required>
+                                            <option value="">-- Select Status --</option>
+                                            {% for value, label in form.status.field.choices %}
+                                                {% if value %}
+                                                <option value="{{ value }}">{{ label }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input type="text" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" class="form-control" autocomplete="off" required>
+                                    {% endif %}
+                                    {% if form.status.errors %}
+                                    <small class="text-danger">{{ form.status.errors.0 }}</small>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.rsa_id_number.id_for_label }}">RSA ID Number <span class="required">*</span></label>
+                                    <input type="text" name="{{ form.rsa_id_number.name }}" id="{{ form.rsa_id_number.id_for_label }}" class="form-control" autocomplete="off" required pattern="[0-9]{13}" maxlength="13">
+                                    {% if form.rsa_id_number.errors %}
+                                    <small class="text-danger">{{ form.rsa_id_number.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Enter 13-digit South African ID number</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.id_document.id_for_label }}">ID Document <span class="required">*</span></label>
+                                    <input type="file" name="{{ form.id_document.name }}" id="{{ form.id_document.id_for_label }}" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
+                                    {% if form.id_document.errors %}
+                                    <small class="text-danger">{{ form.id_document.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Upload PDF, JPG, or PNG file</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.drivers_license.id_for_label }}">Driver's License</label>
+                                    <input type="file" name="{{ form.drivers_license.name }}" id="{{ form.drivers_license.id_for_label }}" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                                    {% if form.drivers_license.errors %}
+                                    <small class="text-danger">{{ form.drivers_license.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Optional - Upload PDF, JPG, or PNG file</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.contract_agreement.id_for_label }}">Contract Agreement <span class="required">*</span></label>
+                                    <input type="file" name="{{ form.contract_agreement.name }}" id="{{ form.contract_agreement.id_for_label }}" class="form-control" accept=".pdf" required>
+                                    {% if form.contract_agreement.errors %}
+                                    <small class="text-danger">{{ form.contract_agreement.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Upload signed contract agreement (PDF only)</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.photo.id_for_label }}">Photo <span class="required">*</span></label>
+                                    <input type="file" name="{{ form.photo.name }}" id="{{ form.photo.id_for_label }}" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                    {% if form.photo.errors %}
+                                    <small class="text-danger">{{ form.photo.errors.0 }}</small>
+                                    {% endif %}
+                                    <small class="form-help-text">Upload a professional photo (JPG or PNG)</small>
+                                </div>
+
+                                <div class="form-group mt-4 text-end">
+                                    <button type="submit" class="btn btn-primary">Submit Registration</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        // RSA ID Number validation
+        document.getElementById('{{ form.rsa_id_number.id_for_label }}').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, ''); // Only allow numbers
+        });
+        
+        // Phone number formatting
+        document.getElementById('{{ form.phone.id_for_label }}').addEventListener('input', function() {
+            // Allow numbers, spaces, dashes, parentheses, and plus sign
+            this.value = this.value.replace(/[^0-9\s\-\(\)\+]/g, '');
+        });
+        
+        // File upload validation
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        fileInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+                    if (file.size > maxSize) {
+                        alert('File size must be less than 5MB');
+                        this.value = '';
+                        return;
+                    }
+                }
+            });
+        });
+        
+        // Form submission validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const rsaId = document.getElementById('{{ form.rsa_id_number.id_for_label }}').value;
+            
+            // Validate RSA ID number length
+            if (rsaId.length !== 13) {
+                e.preventDefault();
+                alert('RSA ID Number must be exactly 13 digits.');
+                return false;
+            }
+            
+            // Check if required files are uploaded
+            const requiredFiles = ['{{ form.id_document.id_for_label }}', '{{ form.contract_agreement.id_for_label }}', '{{ form.photo.id_for_label }}'];
+            for (let fileId of requiredFiles) {
+                const fileInput = document.getElementById(fileId);
+                if (!fileInput.files.length) {
+                    e.preventDefault();
+                    alert('Please upload all required documents.');
+                    return false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

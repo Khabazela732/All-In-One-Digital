@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Invoice Summary</title></head>
+<body>
+    <h1>Invoice for {{ invoice.month|date:"F Y" }}</h1>
+    <p>Dear {{ invoice.company.mentor.username }},</p>
+    <p>Please find your invoice summary for {{ invoice.company.company_name }} below.</p>
+    <table border="1">
+        <tr><th>Intern</th><th>Amount (R)</th></tr>
+        {% for intern_invoice in intern_invoices %}
+        <tr>
+            <td>{{ intern_invoice.enrollment.intern.username }}</td>
+            <td>{{ intern_invoice.amount|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><strong>Total Amount:</strong> R{{ invoice.total_amount|floatformat:2 }}</p>
+    <p><strong>VAT ({{ vat_rate|floatformat:2 }}):</strong> R{{ vat_amount|floatformat:2 }}</p>
+    <p><strong>Total with VAT:</strong> R{{ total_with_vat|floatformat:2 }}</p>
+    <p>Payment is due by the {{ intern_invoices.0.expected_day_of_month }}th. Contact support@[domain].com for queries.</p>
+    <p>{{ privacy_notice }}</p>
+</body>
+</html>

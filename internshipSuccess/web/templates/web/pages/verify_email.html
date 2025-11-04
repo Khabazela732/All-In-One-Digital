@@ -1,0 +1,55 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    #page-title-area-email-verification {
+        background-image: url({% static 'web/assets/img/page-title/bg-1.webp' %});
+        background-size: cover;
+        background-position: center;
+        padding: 50px 0;
+    }
+</style>
+
+<section id="page-title-area-email-verification" class="page-title-area">
+    <img class="right-shape" src="https://internship.org.za/assets/img/cta/dot-shape-1.png" alt="Dot Pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10 text-center">
+                    <h2 class="page-title">Email Verification</h2>
+                    <p>Please enter the verification code sent to your email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow" style="border-radius: 10px;">
+                    <div class="card-body text-center" style="padding: 2rem;">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="otp" class="form-control mb-3" placeholder="Enter OTP" required>
+                            <button type="submit" class="btn btn-primary w-100">Verify</button>
+                        </form>
+
+                        {% if messages %}
+                        <div class="mt-3">
+                            {% for message in messages %}
+                            <p class="text-danger">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include "web/essentials/footer.html" %}
+{% endblock content %}

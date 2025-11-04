@@ -1,0 +1,31 @@
+<section class="section">
+    {% comment %} For this section You need to Show a dropdown of all available qualifications {% endcomment %}
+    <div class="card">
+        {% if form %}
+                <div class="card-header">
+            <h5 class="card-title">
+                Qualification Selection
+            </h5>
+            <h6>Select the qualification you want for this logbook.</h6>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="card-header">
+            <h5 class="card-title">
+                Logbook for {{logbook_template.qualification}}
+            </h5>
+            name 
+            description
+            company
+            <p>Name : {{logbook_template.name}}</p>
+            <p>Company : {{logbook_template.company.company_name}}</p>
+            
+        </div>
+        {% endif %}
+
+    </div>
+</section>

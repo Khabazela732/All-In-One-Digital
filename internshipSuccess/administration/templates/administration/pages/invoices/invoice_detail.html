@@ -1,0 +1,28 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<h1>Invoice Details - {{ invoice.company.company_name }} - {{ invoice.month|date:"F Y" }}</h1>
+<p><strong>Status:</strong> {{ invoice.status }}</p>
+<p><strong>Approval:</strong> {{ invoice.approval }}</p>
+<h2>Interns</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intern</th>
+            <th>Amount (R)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for intern_invoice in intern_invoices %}
+        <tr>
+            <td>{{ intern_invoice.enrollment.intern.username }}</td>
+            <td>{{ intern_invoice.amount|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">No interns found</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p><strong>Total Amount:</strong> R{{ invoice.total_amount|floatformat:2 }}</p>
+<p><strong>VAT ({{ vat_rate|floatformat:2 }}):</strong> R{{ vat_amount|floatformat:2 }}</p>
+<p><strong>Total with VAT:</strong> R{{ total_with_vat|floatformat:2 }}</p>
+{% endblock %}

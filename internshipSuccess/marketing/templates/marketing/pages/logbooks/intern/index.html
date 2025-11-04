@@ -1,0 +1,297 @@
+{% extends "administration/global/base.html" %}
+{% load static %}
+{% block content %}
+<header class="mb-3">
+    <a href="#" class="burger-btn d-block d-xl-none">
+        <i class="bi bi-justify fs-3"></i>
+    </a>
+</header> 
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Intern Logbook for {{intern_logbook}}</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item">Intern</li>
+                        <li class="breadcrumb-item active" aria-current="page">Logbook</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <script src="assets/static/js/initTheme.js"></script>
+    
+        <!-- Bordered table start -->
+        <section class="section">
+            <div class="row" id="table-bordered">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        {% if intern_logbook %}                       
+                        <div class="card-body">
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name: 
+                                                </th>
+                                            <th>{{intern_logbook}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-bold-500">Company:</td>
+                                            <td>{{intern_logbook.logbook_template.company.company_name}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Qualification:</td>
+                                            <td>{{intern_logbook.logbook_template.qualification}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Total Credits:</td>
+                                            <td>{{total_credits}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Required Credits:</td>
+                                            <td>{{minimum_credits_required}}</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Minimum Percentage:</td>
+                                            <td>{{percentage_pass}}%</td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">Completed Deliverables:</td>
+                                            <td>
+                                                {{completed_deliverables_count}}
+                                            </td>                                       
+                                        </tr>                                 
+                                        <tr>
+                                            <td class="text-bold-500">My Percentage</td>
+                                            <td>
+                                                <span>{{completed_percent | floatformat:2 }}%</span>
+                                            </td>                                       
+                                        </tr>                                 
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                        {% else %}
+                        No Logbook has been assigned to this intern
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            function DistributeLogbookToInterns() {
+                // Specify URL and window properties
+                
+              }
+        </script>
+        <!-- Bordered table end -->
+    
+    
+    
+        <!-- Bordered table start -->
+        <section class="section">
+            <div class="row" id="table-bordered">
+                <div class="col-12">
+                    <div class="card">
+                        
+                        <div class="card-content">
+                            <div class="card-body">
+                                <p class="card-text">Duties 
+                                </p>
+                                <!-- table bordered -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="table-primary">CODE 
+                                                    </th>
+                                                <th class="table-primary">NAME
+                                                    </th>
+                                                <th class="table-primary">POINTS
+                                                    </th>
+                                                <th class="table-primary">STATUS
+                                                    </th>
+                                                <th class="table-primary">
+                                                    APPROVAL
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for work_item in intern_logbook.logbook_template.qualification.workitems.all %}                                                    
+                                            <thead>
+                                                <tr>
+                                                    <th class="table-danger"> 
+                                                        </th>
+                                                    <th class="table-danger">{{ work_item.name }}
+                                                        </th>
+                                                    <th class="table-danger">
+                                                        </th>
+                                                    <th class="table-danger">
+                                                        </th>
+                                                    <th class="table-danger">              
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>                                
+                                                {% for logbook_deliverable in intern_logbook.deliverables.all %}
+                                                {% if logbook_deliverable.deliverable.deliverable.work_item == work_item %}
+                                                <tr>
+                                                <td class="text-bold-500">DE{{logbook_deliverable.id}}</td>
+                                                <td>{{logbook_deliverable.deliverable.deliverable}}</td>
+                                                <td>{{deliverable_pts | floatformat:2}}
+                                                    <span>{% if logbook_deliverable.completed %}✅{% else %}❌{% endif %}</span>
+                                                </td>
+                                                <td>
+                                                    {% if logbook_deliverable.completed %}
+                                                    <span class="badge text-bg-success">Completed</span>
+                                                    
+                                                    {% else %}
+                                                    <span class="badge text-bg-danger">Not Complete</span>
+                                            
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if logbook_deliverable.approved %}
+                                                    <button type="button" onclick="Disapprove({{logbook_deliverable.id}})" class="btn btn-danger btn-sm">Disapprove</button>
+                                                    {% else %}
+                                                    {% if logbook_deliverable.completed %}
+                                                    <button type="button" onclick="Approve({{logbook_deliverable.id}})" class="btn btn-primary btn-sm" >Approve</button>
+                                                    {% else %}
+                                                    <span class="badge text-bg-secondary">Awaiting Completion</span>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                </td>
+                                                {% endif %}
+                                                </tr>
+                                                {% empty %}
+                                                <td class="text-bold-500"></td>
+                                                <td colspan="2">No deliverables for this work item.</td>
+                                                <td></td>
+                                                <td></td>
+                                                {% endfor %}
+                                            </tbody>
+                                            {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bordered table end -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            const url = "{% url 'approval-status' %}";
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: "btn btn-primary",
+                  cancelButton: "btn btn-outline-danger"
+                },
+                buttonsStyling: false
+              });
+
+            function Approve(logbook_deliverable_id){
+                swalWithBootstrapButtons.fire({
+                    title: "Are you sure you want to approve this completed duty?",
+                    text: "You will then await approval for this duty",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Complete",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        HandleApprovalStatus(logbook_deliverable_id, "approve")
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "",
+                        icon: "error"
+                      });
+                    }
+                  });
+            }
+            
+            function Disapprove(logbook_deliverable_id){
+
+                swalWithBootstrapButtons.fire({
+                    title: "Are you sure you want disapprove completion of this duty?",
+                    text: "",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Disapprove",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        HandleApprovalStatus(logbook_deliverable_id, "disapprove")           
+
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "",
+                        icon: "error"
+                      });
+                    }
+                  });
+
+            }
+
+            function HandleApprovalStatus(logbook_deliverable_id, action){
+                // Send the POST request
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}" // Include CSRF token for Django
+                    },
+                    body: JSON.stringify({
+                        logbook_deliverable_id: logbook_deliverable_id,
+                        action: action
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Success:", data);
+                    swalWithBootstrapButtons.fire({
+                        title: "Action completed successfully",
+                        text: "",
+                        icon: "success"
+                      }); 
+
+                      
+                    setTimeout(
+                        () => {
+                            location.reload();  // Refresh the page to see the updated status
+ 
+                        }, 1000
+                    )  
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    swalWithBootstrapButtons.fire({
+                        title: "Error",
+                        text: "Opps there seems to be a problem",
+                        icon: "error"
+                      });
+                });
+            }
+              
+        </script>
+{% endblock content %}

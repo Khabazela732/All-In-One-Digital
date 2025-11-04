@@ -1,0 +1,106 @@
+{% extends "intern/global/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if assignment %}
+        <div class="card shadow-lg p-4 mb-4" style="border-radius: 20px; background-color: #f8f9fa;">
+            <h2 class="text-success fw-bold">Assignment Two Submitted Successfully!</h2>
+            <p class="mt-2">You can view, edit, or delete your submission below.</p>
+
+            <!-- Display the uploaded assignment -->
+            <div class="card mt-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>My Answer:</span>
+                    <div>
+                        <!-- Edit button toggles upload form -->
+                        <button class="btn btn-sm btn-primary me-2" id="editBtn">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </button>
+
+                        <!-- Delete button -->
+                        <form action="{% url 'delete_assignment_two' %}" method="POST" style="display:inline-block;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if assignment.answer %}
+                        <iframe allowfullscreen src="{{ assignment.answer.url }}" width="100%" height="600px" frameborder="0"></iframe>
+                    {% else %}
+                        <h6>No Assignment Document Uploaded</h6>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Hidden form for editing/uploading new file -->
+            <div class="card mt-4" id="editForm" style="display:none;">
+                <div class="card-header bg-primary text-white">
+                    Edit Your Assignment Two
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{% url 'write_assignment2' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.answer.label_tag }}
+                            {{ form.answer }}
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-upload"></i> Upload New File
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Toggle edit form visibility
+            document.addEventListener('DOMContentLoaded', function() {
+                const editBtn = document.getElementById('editBtn');
+                const editForm = document.getElementById('editForm');
+
+                editBtn.addEventListener('click', function() {
+                    if (editForm.style.display === 'none') {
+                        editForm.style.display = 'block';
+                        this.innerHTML = '<i class="bi bi-x-circle"></i> Cancel';
+                        this.classList.remove('btn-primary');
+                        this.classList.add('btn-danger');
+                    } else {
+                        editForm.style.display = 'none';
+                        this.innerHTML = '<i class="bi bi-pencil-square"></i> Edit';
+                        this.classList.remove('btn-danger');
+                        this.classList.add('btn-primary');
+                    }
+                });
+            });
+        </script>
+
+    {% else %}
+        <!-- Show upload form if no assignment exists -->
+        <div class="card shadow-lg p-4" style="border-radius: 20px; background-color: #f8f9fa;">
+            <h2 class="fw-bold">Upload Assignment Two</h2>
+            <form method="POST" enctype="multipart/form-data" class="mt-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.answer.label_tag }}
+                    {{ form.answer }}
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-upload"></i> Submit
+                </button>
+            </form>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

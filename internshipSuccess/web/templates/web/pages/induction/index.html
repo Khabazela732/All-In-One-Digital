@@ -1,0 +1,26 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block content %}
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+	<!-- Add your site or application content here -->
+	<main>
+		<!--page-title-area start-->
+		{% include "web/pages/induction/page-title-area.html" %}
+		<!--page-title-area end-->
+		<!--about-us-area start-->
+		{% include "web/pages/induction/about-post.html" %}
+        <!--about-us-area end-->
+		<!--cta-area start-->
+		{% include "web/pages/induction/cta-area.html" %}
+		<!--cta-area end-->
+	</main>
+	<!--footer-area start-->
+	{% include "web/essentials/footer.html" %}
+	<!--footer-area end-->
+{% endblock content %}

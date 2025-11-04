@@ -1,0 +1,37 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow p-4" style="width: 100%; max-width: 600px;">
+        <h2 class="text-center mb-4">{% if object %}Edit{% else %}Add{% endif %} Payment</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                <label for="id_expense_type">Expense Type</label>
+                <select name="expense_type" class="form-control" id="id_expense_type">
+                    {% for value, label in form.expense_type.field.choices %}
+                        <option value="{{ value }}" {% if form.expense_type.value == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="id_amount">Amount</label>
+                <input type="number" name="amount" step="0.01" class="form-control" id="id_amount" value="{{ form.amount.value }}">
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="id_description">Description</label>
+                <textarea name="description" class="form-control" id="id_description" rows="4" style="resize: vertical;">{{ form.description.value }}</textarea>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'payment_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

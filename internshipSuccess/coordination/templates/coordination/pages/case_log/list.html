@@ -1,0 +1,67 @@
+{% extends "coordination/global/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>   
+<div class="page-heading">
+    <h3> All cases logged</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="">Case Log</a>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">DataTable jQuery</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            
+            <div class="card-body">
+                
+                
+            
+        <div class="table-responsive datatable-minimal">
+           <table class="table" id="induction-posts">
+                        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Intern</th>
+                <th>Company</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+                        <tbody>
+            {% for case in cases %}
+            <tr>
+                <td>{{ case.date_reported }}</td>
+                <td>{{ case.intern.intern.get_full_name }}</td>
+                <td>{{ case.company.company_name }}</td>
+                <td>{{ case.issue_title }}</td>
+                <td>{{ case.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+{% endblock content %}

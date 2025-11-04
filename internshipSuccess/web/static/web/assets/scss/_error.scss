@@ -1,0 +1,25 @@
+//error-wrapper
+.error-wrapper {
+    .error-title {
+        font-size: 48px;
+        @media #{$md} {
+            font-size: 24px;
+        }
+        @media #{$xs} {
+            font-size: 20px;
+        }
+    }
+    p {
+        color: $body-text-color;
+        letter-spacing: normal;
+        margin-bottom: 34px;
+        line-height: 1.4;
+    }
+    a.theme_btn {
+        text-transform: capitalize;
+        padding: 17px 37px;
+        i {
+            margin-right: 20px;
+        }
+    }
+}

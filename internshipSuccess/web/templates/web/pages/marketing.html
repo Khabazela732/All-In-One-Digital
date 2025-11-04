@@ -1,0 +1,485 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>Internship Success | Professional Rescruitment, Placement & Internship Management Company</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="manifest" href="site.webmanifest" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- CSS here -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="assets/css/animate.css" />
+	<link rel="stylesheet" href="assets/css/magnific-popup.css" />
+	<link rel="stylesheet" href="assets/css/all.min.css" />
+	<link rel="stylesheet" href="assets/css/gt-font.css" />
+	<link rel="stylesheet" href="assets/css/metisMenu.css" />
+	<link rel="stylesheet" href="assets/css/nice-select.css" />
+	<link rel="stylesheet" href="assets/css/spacing.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body>
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+	<!-- Add your site or application content here -->
+	<!-- preloader -->
+	<div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- preloader end  -->
+	<!-- header-area start -->
+	<header>
+		<div class="header-top heding-bg">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md-6 col-6">
+						<div class="left-cta">
+							<span><i class="fal fa-envelope"></i> recruit@wopcoe.com</span>
+							<span><i class="fal fa-phone"></i> +27 13 753 3353</span>
+						</div>
+					</div>
+					<div class="col-md-6 col-6 text-end">
+						<div class="right-language">
+							<div class="dropdown">
+								<a  href="#">
+									 <i class="fal "></i>
+								</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottom-border-line"></div>
+			<div class="container d-none d-md-block">
+				<div class="row pt-25">
+					<div class="col-xl-4 col-lg-3 d-none d-lg-inline-block">
+						<div class="logo-area">
+							<a class="head-logo-1" href="index.html"><img src="{% static 'web/assets/img/logo/internshipsucess-logo.png' %}"
+									alt="Header-logo"></a>
+						</div>
+					</div>
+					<div class="col-xl-8 col-lg-9">
+						<ul class="right-query mb-0">
+							<li>
+								<div class="icon"><i class="fal fa-map-marker-alt"></i></div>
+								<div class="query-list">
+									<span>1st Floor, Shell House</span>
+									<span>Ferreira St, Mbombela. 1200
+										</span>
+								</div>
+							</li>
+							<li>
+								<div class="icon"><i class="fal fa-clock"></i></div>
+								<div class="query-list">
+									<span>Mon - Fri 07:30 - 16:30</span>
+									<span>Sat - Sun: Closed</span>
+								</div>
+							</li>
+							<li>
+								<a class="theme_btn quote-btn" href="#">Login</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="heding-bg-1" id="hideshow-sticky-menu">
+			<div class="main-header-area">
+				<div class="container">
+					<div class="white-bg row align-items-center gx-0">
+						<div class="col-lg-10 col-6 text-start">
+							<div class="logo-area d-lg-none d-md-block">
+								<a href="index.html"><img src="{% static 'web/assets/img/logo/internshipsucess-logo.png' %}" alt="Header-logo"></a>
+							</div>
+							<nav id="topheader" class="navbar navbar-expand-lg justify-content-start py-0">
+								<div class="nav-container">
+									<div class="collapse navbar-collapse" id="navbarSupportedContent">
+										<ul class="navbar-nav list-style-none">
+											<li class="nav-item">
+												<a class="nav-link" href="{% url 'home' %}">Home</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="{% url 'about-page' %}">About</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="{% url 'services-page' %}">Services</a>	
+											</li>
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
+													role="button" data-bs-toggle="dropdown" aria-expanded="false">Recruitment
+													<i class="fal fa-chevron-down"></i></a>
+												<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+													{% if request.user.is_authenticated and request.user.role == request.user.Role.INTERN %}
+	
+													<li>
+														<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Host Vacancies</a>
+													</li>
+												{% endif %}
+													<li>
+														<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Application Post</a>
+													</li>
+													
+												</ul>
+											</li>
+										
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'news-page' %}">News & Updates</a>	
+									</li>
+											<li class="nav-item">
+												<a class="nav-link" href="{% url 'contact-page' %}">Contact</a>
+											</li>
+	
+											<li class="nav-item">
+												<a class="nav-link" href="{% url 'marketing-page' %}">Marketing</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</div>
+						<div class="col-lg-2 col-6">
+							<ul class="right-nav mb-0 d-flex align-items-center justify-content-end">
+								<li class="search-area">
+									<a class="search_input nav-search search-trigger header-2-icon" href="#">
+										<i class="fal fa-search"></i></a>
+								</li>
+								<li>
+									<div class="hamburger-menu">
+										<a href="javascript:void(0);">
+											<img src="{% static 'web/assets/img/icon/eclips.png' %}" alt="Eclips">
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.theme-main-menu -->
+		</div>
+	</header>
+	<!-- header-area end -->
+
+	<!-- slide-bar start -->
+	<aside class="slide-bar">
+		<div class="close-mobile-menu">
+			<a href="javascript:void(0);"><i class="fas fa-times"></i></a>
+		</div>
+		<!-- offset-sidebar start -->
+		<div class="offset-sidebar">
+			<div class="offset-widget offset-logo mb-30">
+				<a href="index.html">
+					<img src="{% static 'web/assets/img/logo/internshipsucess-logo.png' %}" alt="logo">
+				</a>
+			</div>
+			<div class="offset-widget mb-40">
+				<div class="info-widget">
+					<h4 class="offset-title mb-20">About Us</h4>
+					<p class="mb-30">
+						But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
+						was born and will give you a complete account of the system and expound the actual teachings of
+						the great explore
+					</p>
+					<a class="theme_btn theme_btn_bg" href="contact.html">Contact Us</a>
+				</div>
+			</div>
+			<div class="offset-widget mb-30 pr-10">
+				<div class="info-widget info-widget2">
+					<h4 class="offset-title mb-20">Contact Info</h4>
+					<p> <i class="fal fa-address-book"></i> 1st Floor, Shell House
+Ferreira St, Mbombela. 1200</p>
+					<p> <i class="fal fa-phone"></i> +27 13 753 3353 </p>
+					<p> <i class="fal fa-envelope-open"></i> recruit@wopcoe.com </p>
+				</div>
+			</div>
+		</div>
+		<!-- offset-sidebar end -->
+		<!-- side-mobile-menu start -->
+		<nav class="side-mobile-menu">
+			<ul class="navbar-nav list-style-none">
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'home' %}">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'about-page' %}">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'services-page' %}">Services</a>	
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">Recruitment
+						<i class="fal fa-chevron-down"></i></a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+						{% if request.user.is_authenticated and request.user.role == request.user.Role.INTERN %}
+
+						<li>
+							<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Host Vacancies</a>
+						</li>
+					{% endif %}
+						<li>
+							<a class="dropdown-item" href="{% url 'web-induction-posts' %}">Application Post</a>
+						</li>
+						
+					</ul>
+				</li>
+			
+		<li class="nav-item">
+			<a class="nav-link" href="{% url 'news-page' %}">News & Updates</a>	
+		</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'contact-page' %}">Contact</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'marketing-page' %}">Marketing</a>
+				</li>
+			</ul>
+		</nav>
+		<!-- side-mobile-menu end -->
+
+	<main>
+		<!--page-title-area start-->
+		<section class="page-title-area" style="background-image: url(assets/img/page-title/bg-1.webp);">
+			<img class="right-shape" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}" alt="Dot Pattern">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="page-title-wrapper pt-30 pt-lg-40 pt-md-10 pt-xs-10">
+							<ul class="breadcrumb">
+								<li><a href="index.html">Home /</a></li>
+								<li class="active" aria-current="page">Blog</li>
+							</ul>
+							<h2 class="page-title">Welcome to our Clothing Store</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--page-title-area end-->
+		<!--portfolio-area start-->
+		<section class="portfolio-details-area pt-105 pb-100 pt-md-60 pt-xs-60 pb-md-30 pb-xs-40">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-12">
+						<div class="portfolio-details-content">
+							<img class="img-fluid mb-55" src="{% static 'web/assets/img/cta/dot-shape-1.png' %}"
+								alt="Portfolio Image">
+
+								<div class="row client-values">
+									<div class="col-lg-10 col-md-8">
+										<ul>
+											<li><b>Category:</b> T-Shirts / Sweaters</li>
+											<li><b>Client:</b> Interns / Staff</li>
+											<li><b>Values:</b> R150</li>
+										</ul>
+									</div>
+
+								<div class="row client-values"></div>
+
+							<div class="row mb-30 mt-55">
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+
+
+									
+							<div class="row mb-30 mt-55">
+								<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+									<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+										alt="Portfolio Image">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+									<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+										alt="Portfolio Image">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+										alt="Portfolio Image">
+								</div>
+
+							
+								
+								<div class="row mb-30 mt-55">
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 mb-30">
+										<img class="w-100" src="{% static 'web/assets/img/portfolio/White T-shirts.jpg' %}"
+											alt="Portfolio Image">
+									</div>
+
+
+								</div>
+								
+										<div class="author-img ml-20 order-first order-md-last">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--portfolio-area end-->
+
+
+	</main>
+	<!--footer-area start-->
+	<footer class="heding-bg footer-area pt-100">
+		<div class="container">
+			<div class="row mb-15">
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".1s">
+					<div class="footer__widget mb-30">
+						<h6 class="widget-title text-white pb-20 mb-35">About Internship Success</h6>
+						<p>Internship Success is a professional internship placement and management company which seeks to see all graduates benefit from a well-structured internship program.
+						</p>
+						<div class="footer__social mt-30">
+							<a href="https://web.facebook.com/profile.php?id=100091806840414"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://twitter.com/home"><i class="fab fa-twitter"></i></a>
+							<a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+							<a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".3s">
+					<div class="border-theme footer__widget mb-30 pl-135 pl-md-0 pl-xs-0">
+						<h6 class="widget-title text-white pb-20 mb-35">Main Menu</h6>
+						<ul class="fot-list">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About Us</a></li>
+							<li><a href="our-services.html">Key Services</a></li>
+							<li><a href="#">Success Stories</a></li>
+							<li><a href="#">FAQs</a></li>
+							<li><a href="contact.html">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp2 animated" data-wow-delay=".5s">
+					<div class="footer__widget mb-25 pl-25 pl-md-0 pl-xs-0">
+						<h6 class="widget-title text-white pb-20 mb-35">Get In Touch</h6>
+						<ul class="fot-list fot-list-1">
+							<li><a href="#"> +27 13 753 3353</a></li>
+							<li><a href="#">recruit@wopcoe.com</a></li>
+							<li><a href="#">Mon - Fri:<span> 07h30 - 16h30</span></a>
+							</li>
+							<li>
+								<a href="#">1st Floor, Shell House
+									Ferreira St, Mbombela. 1200 </a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp2 animated" data-wow-delay=".7s">
+					<div class="footer__widget mb-30">
+						<h6 class="widget-title text-white pb-20 mb-35">Subscribe Now</h6>
+						<form class="subscribe-form" action="#">
+							<div class="input-box mb-10">
+								<input type="text" placeholder="Your name">
+							</div>
+							<div class="input-box mail-input mb-10">
+								<input type="text" placeholder="Enter email address">
+							</div>
+
+							<button class="theme_btn subscribe-btn">Subscribe Now <i
+									class="fal fa-long-arrow-right"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copy-right-border">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 col-md-6">
+						<div class="copyright text-center text-md-start">
+							<p style="color: #fff;">Internship Success &#169;2024 | Designed at <a style="color: grey;"  href="https://travelmysa.co.za">Travel My SA</a></p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 text-center text-md-end">
+						<ul class="footer-nav">
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="#">FAQ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="#">Terms & Conditions</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" style="color: #fff;" href="#">Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--footer-area end-->
+	<!-- Fullscreen search -->
+	<div class="search-wrap">
+		<div class="search-inner">
+			<i class="fas fa-times search-close" id="search-close"></i>
+			<div class="search-cell">
+				<form method="get">
+					<div class="search-field-holder">
+						<input type="search" class="main-search-input" placeholder="Search Your Keyword...">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end fullscreen search -->
+
+	<!-- JS here -->
+
+	<script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="assets/js/popper.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="assets/js/metisMenu.min.js"></script>
+	<script src="assets/js/jquery.nice-select.js"></script>
+	<script src="assets/js/wow.min.js"></script>
+	<script src="assets/js/jquery.counterup.min.js"></script>
+	<script src="assets/js/waypoints.min.js"></script>
+	<script src="assets/js/jquery.scrollUp.min.js"></script>
+	<script src="assets/js/isotope.pkgd.min.js"></script>
+	<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="assets/js/plugins.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+
+</html>

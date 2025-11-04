@@ -1,0 +1,17 @@
+{% extends "administration/global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>Logbook Creation Step 2</h3>
+</div> 
+{% comment %} Qualification Selection {% endcomment %}
+{% include "pages/logbooks/steps/test/qualification-selection.html" %}
+{% comment %} ./Qualification Selection {% endcomment %}
+
+{% comment %} After Qualification Selection {% endcomment %}
+{% comment %} {% include "pages/logbooks/steps/test/qualification-detail.html" %} {% endcomment %}
+{% comment %} ./After Qualification Selection {% endcomment %}
+
+{% comment %} deliverables selection {% endcomment %}
+{% include "pages/logbooks/steps/test/deliverable-selection.html" %}
+{% comment %} ./deliverables selection {% endcomment %}
+{% endblock content %}

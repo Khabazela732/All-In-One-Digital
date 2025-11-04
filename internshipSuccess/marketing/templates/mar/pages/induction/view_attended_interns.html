@@ -1,0 +1,177 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>    
+<div class="page-heading">
+    <h3>Induction Attendance - QUE{{assesment.id}} </h3>
+    <!-- QR Code Container -->
+    <div style = "background: white; padding : 30px; display:flex">
+        <div  id="qrcode"></div>
+        <br>
+        <div style="margin:40px">
+            <p>SCAN THE QR CODE TO GET PASSCODE</p>
+            <h2>Pass Code : {{post.passcode}}</h2>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">
+                View in Full Screen
+            </button>
+            <!-- The Modal -->
+            <div class="modal" style="width:100%%" id="myModal">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                          <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">SCAN TO SUBMIT ATTENDANCE</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <div  id="qrcode2"></div>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+            
+                </div>
+                </div>
+            </div>
+                    </div>
+
+                </div>
+            </div>
+
+<script>
+    function getHostFromUrl(url) {
+        try {
+            // Create a new URL object
+            const urlObj = new URL(url);
+            // Return the host part of the URL
+            return urlObj.host;
+        } catch (error) {
+            console.error("Invalid URL:", error);
+            return null;
+        }
+    }
+    const protocol = window.location.protocol + "//"
+    // Example usage
+    const url1 = window.location.href;
+    const hostLink = getHostFromUrl(url1)// Output: "127.0.0.1:8000"
+    // Generate QR code from the passcode
+    var passcode = protocol +  hostLink + "/intern/induction/{{post.id}}/mark-attendance/?passcode={{post.passcode}}"; // Ensure this is correctly passed from your view
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: passcode,
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+    var qrcode2 = new QRCode(document.getElementById("qrcode2"), {
+        text: passcode,
+        width: 500,
+        height: 500,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="">Induction Attendance - QUE{{assesment.id}}</a>
+            </div>
+        
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">Assesment</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Questions</li>
+                        
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    Attendance 
+                </h5>
+            </div>
+            <script>
+
+            
+            function CreateInductionPost() {
+                // Specify URL and window properties
+                var url = '{% url "induction-create" %}'; // URL of the content to be loaded in the popup
+                var windowName = 'Popup'; // Name of the popup window
+                var width = 500; // Width of the popup window
+                var height = 700; // Height of the popup window
+                var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+                var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+                var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+              
+                // Open the popup window
+                var popup = window.open(url, windowName, features);
+              }
+              
+          </script>
+          <div class="card-body">
+                <form  method="post">
+                  {% csrf_token %}
+                <div class="table-responsive datatable-minimal">
+                    <table class="table" id="induction-posts">
+                        <thead>
+                            <tr>
+                                <th>ID Number</th>
+                                <th>Names</th>
+                                <th>Attended Time</th>
+                                <th>Attended Date</th>
+                                <th>Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attended_intern in attended_interns %}
+                        <tr>
+                            <td>{{ attended_intern.intern.username }}</td>
+                            <td>{{ attended_intern.intern.first_name }} {{ attended_intern.intern.last_name }}</td>
+                            <td>{{ attended_intern.time }}</td>
+                            <td>{{ attended_intern.date }}</td>
+                            <td>
+                                <input {% if attended_intern.approve %}checked{% endif %} class="form-check-input" type="checkbox" name="attendance_to_approve_{{attended_intern.id}}" value="{{attended_intern.id}}" id="attendance_to_approve_{{intern.id}}">
+                            </td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                 
+                    <script>
+                        function ViewInductionApplication(button) {
+
+                        // Specify URL and window properties
+                        var url = button.getAttribute('data-url');
+                        var windowName = 'Popup'; // Name of the popup window
+                        var width = 1000; // Width of the popup window
+                        var height = 800; // Height of the popup window
+                        var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+                        var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+                        var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+                        // Open the popup window
+                        var popup = window.open(url, windowName, features);
+            }
+                    </script>
+                </div>
+                <button class="btn btn-primary btn-sm" type="submit">Approve Attedence List</button>
+            </form>
+            </div>
+        </div>
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+{% endblock content %}

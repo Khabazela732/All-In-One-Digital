@@ -1,0 +1,50 @@
+{% extends "administration/global/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Bulk Assign Work Items to Subject</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }} {{message.subject}}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <small>
+                        <a href="javascript:void(0);" onclick="openAddSubjectPopup()">Can't find it? Add a new subject</a>
+                        </small>
+        <button type="submit" class="btn btn-primary">Assign</button>
+    </form>
+</div>
+<script>       
+    const workItemsTable = document.getElementById("workitems_table")
+    const addWorkItemForm = document.getElementById("addWorkItem_form")
+    const addWorkItemBtn = document.getElementById("addWorkItemBtn")
+
+    function AddWorkItem() {
+        if(addWorkItemForm.style.display == 'none'){
+            addWorkItemForm.style.display = "block"
+            workItemsTable.style.display = "none"
+            addWorkItemBtn.innerHTML = "Cancel"
+        } else {
+            addWorkItemForm.style.display = "none"
+            workItemsTable.style.display = "block"
+            addWorkItemBtn.innerHTML = "Add Add workItem"
+        }
+    }
+    function openAddSubjectPopup() {
+        var url = "{% url 'add_subject' %}";
+        var windowName = 'AddSubjectPopup';
+        var width = 600;
+        var height = 500;
+        var left = (window.innerWidth - width) / 2;
+        var top = (window.innerHeight - height) / 2;
+        var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+        window.open(url, windowName, features);
+    }
+  </script>
+{% endblock %}

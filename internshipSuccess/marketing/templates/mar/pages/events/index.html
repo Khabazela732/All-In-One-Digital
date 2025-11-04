@@ -1,0 +1,565 @@
+{% extends "mar/global/base.html" %} {% block content %}
+<style>
+  #calendar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .month h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #435ebe;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-weight: 600;
+  }
+
+  .weekdays div {
+    padding: 10px;
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+
+  .day {
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-weight: 500;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .day:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .day.event-day {
+    background-color: #0056b3;
+    color: white;
+    border: 2px solid #0056b3;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4);
+  }
+
+  .day.current-day {
+    background-color: #28a745;
+    color: white;
+    border: 2px solid #218838;
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.4);
+  }
+
+  .day.holiday {
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid #c82333;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.4);
+  }
+
+  .empty {
+    visibility: hidden;
+  }
+
+  #prev-month,
+  #next-month {
+    font-size: 1.2rem;
+    color: #0056b3;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  #prev-month:hover,
+  #next-month:hover {
+    color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .day {
+      font-size: 0.875rem;
+      padding: 12px;
+    }
+
+    .month h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .day-tooltip {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .day-tooltip .tooltip-content {
+    visibility: hidden;
+    width: 150px;
+    background-color: #0056b3;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the day */
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .day-tooltip:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+
+<div class="page-heading">
+  <h3>Event Management</h3>
+</div>
+<div class="page-content">
+  <div class="row">
+    <div class="col-6">
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Calendar</h5>
+          </div>
+          <div class="card-body">
+            <div id="calendar">
+              <div class="month">
+                <button id="prev-year" class="btn btn-outline-primary">
+                  &lt;&lt;
+                </button>
+                <!-- Button for previous year -->
+                <button id="prev-month" class="btn btn-outline-primary">
+                  &lt;
+                </button>
+                <!-- Button for previous month -->
+
+                <h3 id="month-year"></h3>
+
+                <button id="next-month" class="btn btn-outline-primary">
+                  &gt;
+                </button>
+                <!-- Button for next month -->
+                <button id="next-year" class="btn btn-outline-primary">
+                  &gt;&gt;
+                </button>
+                <!-- Button for next year -->
+              </div>
+
+              <div style="margin-bottom: 20px" class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+              <div id="days" class="days"></div>
+              <div id="loading-events">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only"></span>
+                </div>
+                Loading Events
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">All Events</h5>
+        </div>
+        <div class="card-body">
+          <table id="eventTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <!-- <th>Actions</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in events %}
+              <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.start_time|date:"Y-m-d" }}</td>
+                <!-- <td>
+                                    <button type="button" class="btn btn-primary btn-sm edit-event" data-bs-toggle="modal" data-bs-target="#eventModal" data-id="{{ event.id }}">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm delete-event" data-id="{{ event.id }}">Delete</button>
+                                </td> -->
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for creating/editing events -->
+  <div
+    class="modal fade"
+    id="eventModal"
+    tabindex="-1"
+    aria-labelledby="eventModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Add/Edit Event</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- Form to add or edit event -->
+          <form id="eventForm">
+            <input type="hidden" id="eventId" />
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Event Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="eventTitle"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="eventDate" class="form-label">Event Date</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="eventDate"
+                required
+              />
+            </div>
+          </form>
+
+          <!-- Events for the selected day -->
+          <h5>Events on <span id="selectedDate"></span></h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventList">
+          
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" id="saveEvent">
+            Save Event
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const daysEl = document.getElementById("days");
+      const monthYearEl = document.getElementById("month-year");
+      let currentDate = new Date();
+      let selectedDate = null;
+      let events = [];
+      const holidays = {
+        // South African public holidays
+        "01-01": "New Year's Day",
+        "03-21": "Human Rights Day",
+        "04-27": "Freedom Day",
+        "05-01": "Workers' Day",
+        "06-16": "Youth Day",
+        "08-09": "National Women's Day",
+        "12-25": "Christmas Day",
+        "12-26": "Day of Goodwill",
+      };
+
+      // Fetch initial events data
+      fetchEvents();
+
+      // Render calendar for the current month
+      function renderCalendar() {
+        daysEl.innerHTML = "";
+        const month = currentDate.getMonth();
+        const year = currentDate.getFullYear();
+        monthYearEl.textContent = `${currentDate.toLocaleString("default", {
+          month: "long",
+        })} ${year}`;
+
+        // First day of the month
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+
+        // Fill in blank days
+        for (let i = 0; i < firstDay; i++) {
+          const blankDay = document.createElement("div");
+          blankDay.classList.add("day", "empty");
+          daysEl.appendChild(blankDay);
+        }
+
+        // Fill in actual days
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayEl = document.createElement("div");
+          dayEl.classList.add("day");
+          dayEl.textContent = day;
+
+          // Check if it's the current day
+          if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+          ) {
+            dayEl.classList.add("current-day");
+          }
+
+          // Check if it's a South African holiday
+          const holidayKey = `${(month + 1).toString().padStart(2, "0")}-${day
+            .toString()
+            .padStart(2, "0")}`;
+          if (holidays[holidayKey]) {
+            dayEl.classList.add("holiday");
+            dayEl.title = holidays[holidayKey];
+          }
+
+          // Click event for adding/editing events
+          dayEl.addEventListener("click", function () {
+            // Calculate the selected date
+            selectedDate = new Date(year, month, day);
+
+            // Extract local date and time components
+            let yearOnday = selectedDate.getFullYear();
+            let monthOnday = String(selectedDate.getMonth() + 1).padStart(
+              2,
+              "0"
+            ); // Months are zero-indexed
+            let dayOnday = String(selectedDate.getDate()).padStart(2, "0");
+            let hours = String(new Date().getHours()).padStart(2, "0");
+            let minutes = String(new Date().getMinutes()).padStart(2, "0");
+
+            // Format the selected date as "YYYY-MM-DDTHH:MM" for datetime-local input
+            let formattedDate = `${yearOnday}-${monthOnday}-${dayOnday}T${hours}:${minutes}`;
+
+            // Show the modal
+            $("#eventModal").modal("show");
+
+            // Set the value of the eventDate input to the selected date
+            document.getElementById("eventDate").value = formattedDate;
+            document.getElementById("selectedDate").innerText =
+              formattedDate.split("T")[0];
+
+            // Data Fetching
+            // Fetch events for the selected date
+            fetch(`events-by-date/?date=${formattedDate.split("T")[0]}`)
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.error) {
+                  console.error("Error:", data.error);
+                } else {
+                  console.log("Events:", data);
+                  // Here, you can loop through the events and render them in the modal or on the page
+                  let eventList = document.getElementById("eventList");
+                  eventList.innerHTML = ""; // Clear the existing event list
+                  data.forEach((event) => {
+                    eventList.innerHTML += `
+                    <tr>
+                        <td>${event.title}</td>
+                        <td>${new Date(event.start_time).toLocaleString()}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm">View</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                  });
+                }
+              })
+              .catch((error) => console.error("Error fetching events:", error));
+          });
+
+          // Check if there are events on this day
+          const dayEvents = events.filter(
+            (event) =>
+              new Date(event.start).toDateString() ===
+              new Date(year, month, day).toDateString()
+          );
+          if (dayEvents.length > 0) {
+            dayEl.classList.add("event-day");
+          }
+
+          daysEl.appendChild(dayEl);
+        }
+      }
+
+      // Previous and next month buttons
+      document.getElementById("prev-month").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+      document.getElementById("next-month").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      // **New** - Previous and next year buttons
+      document.getElementById("prev-year").addEventListener("click", () => {
+        currentDate.setFullYear(currentDate.getFullYear() - 1);
+        renderCalendar();
+      });
+      document.getElementById("next-year").addEventListener("click", () => {
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+        renderCalendar();
+      });
+
+      // Save event button
+      document.getElementById("saveEvent").addEventListener("click", () => {
+        const eventTitle = document.getElementById("eventTitle").value;
+        const eventDate = document.getElementById("eventDate").value;
+
+        // If updating existing event
+        if (document.getElementById("eventId").value) {
+          updateEvent(eventTitle, eventDate);
+        } else {
+          createEvent(eventTitle, eventDate);
+        }
+
+        $("#eventModal").modal("hide");
+      });
+
+      // Fetch events
+      function fetchEvents() {
+        document.getElementById("loading-events").style.display = "block";
+        fetch("events/data/")
+          .then((response) => response.json())
+          .then((data) => {
+            events = data;
+            document.getElementById("loading-events").style.display = "none";
+            populateEvents();
+            renderCalendar();
+          });
+      }
+
+      // Function to populate the events in the table body
+      function populateEvents() {
+        const tbody = document.querySelector("#eventTable tbody");
+
+        // Clear any existing rows
+        tbody.innerHTML = "";
+
+        // Loop through each event and create a row
+        events.forEach((event) => {
+          const row = document.createElement("tr");
+
+          // Create a cell for the title
+          const titleCell = document.createElement("td");
+          titleCell.textContent = event.title;
+          row.appendChild(titleCell);
+
+          // Create a cell for the date
+          const dateCell = document.createElement("td");
+          dateCell.textContent = event.start;
+          row.appendChild(dateCell);
+
+          // Append the row to the tbody
+          tbody.appendChild(row);
+        });
+      }
+
+      // Create new event
+      function createEvent(title, date) {
+        document.getElementById("loading-events").style.display = "block";
+        fetch("events/create/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+          body: JSON.stringify({ title, start: date }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            events.push(data);
+            populateEvents();
+            document.getElementById("loading-events").style.display = "none";
+            renderCalendar();
+          });
+      }
+
+      // Update event
+      function updateEvent(title, date) {
+        const eventId = document.getElementById("eventId").value;
+        fetch(`events/${eventId}/update/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+          body: JSON.stringify({ title, start: date }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const eventIndex = events.findIndex(
+              (event) => event.id === eventId
+            );
+            events[eventIndex] = data;
+            populateEvents();
+            renderCalendar();
+          });
+      }
+
+      // Initial render
+      renderCalendar();
+    });
+  </script>
+
+  {% endblock %}
+</div>

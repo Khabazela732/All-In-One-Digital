@@ -1,0 +1,222 @@
+{% load static %}
+<div id="sidebar">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header position-relative">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a style="padding:15px; background-color: white;border-radius: 5px;" href="{% url "admini-home" %}"> <img src="{% static 'administration/compiled/svg/correct Logo Internship Success Benefit.png' %}" 
+                        alt="Logo" 
+                        class="img-fluid" 
+                        style="width: 400px; height: auto;"></a>
+                </div>
+                <div class="sidebar-toggler  x" >
+                    <a href="#" id="sidebar-xbtn" class="sidebar-hide d-xl-none d-block"
+                    ><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+               
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "admini-home" %}" class='sidebar-link'>
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li
+                class="sidebar-item  ">
+                <a href="{% url "qualifications" %}" class='sidebar-link'>
+                    <i class="bi bi-mortarboard-fill"></i>
+                    <span>Qualifications</span>
+                </a>
+            </li>
+
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url 'event-management' %}" class='sidebar-link'>
+                        <i class="bi bi-calendar-week"></i>
+                        <span>Event Management</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item  ">
+                    <a href="{% url "host_employer_list" %}" class='sidebar-link'>
+                        <i class="bi bi-briefcase"></i>
+                        <span>Host Employers</span>
+                    </a>
+                </li>
+
+            </li>
+                <li
+                class="sidebar-item active has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-pen-fill"></i>
+                    <span>Induction</span>
+                </a>
+                
+                <ul class="submenu ">
+                    <li class="submenu-item  ">
+                        <a href="{% url "induction_dashboard" %}" class="submenu-link">Inductions Stats</a>
+                        
+                    </li>
+                    <li class="submenu-item  ">
+                        <a href="{% url "questionnaire_dashboard" %}" class="submenu-link">Questionnaires Stats</a>
+                        
+                    </li>
+                    <li class="submenu-item  ">
+                        <a href="{% url "induction" %}" class="submenu-link">Induction</a>
+                        
+                    </li>
+                    
+                    <li class="submenu-item  ">
+                        <a href="{% url "assesments"%}" class="submenu-link">Assesments</a>
+                        
+                    </li>
+                    <li class="submenu-item  ">
+                        <a href="{% url "induction-attendance-view" %}" class="submenu-link">Attendance</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
+            <li
+                class="sidebar-item active has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-badge-fill"></i>
+                    <span>Interns</span>
+                </a>
+                
+                <ul class="submenu ">
+                    
+                    <li class="submenu-item  active">
+                        <a href="{% url "all-interns" %}" class="submenu-link">All Intern Users</a>  
+                    </li>
+                    <hr>
+                    <li class="submenu-item  active">
+                        <a href="{% url "waiting_internships" %}" class="submenu-link">Pending Placement</a>
+                        
+                    </li>
+                    
+                    <li class="submenu-item  active">
+                        <a href="{% url "placed_internships" %}" class="submenu-link">Placed</a>
+                        
+                    </li>
+                    
+                    <li class="submenu-item  active">
+                        <a href="{% url "terminated_internships" %}" class="submenu-link">Terminated</a>
+                            
+                    </li>
+                    <li class="submenu-item  active">
+                        <a href="{% url "defaulted_internships" %}" class="submenu-link">Defaulted</a>
+                            
+                    </li>
+                    <li class="submenu-item  active">
+                        <a href="{% url "completed_internships" %}" class="submenu-link">Completed</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
+        </li>
+        <li
+        class="sidebar-item active has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-pen-fill"></i>
+            <span>Internship</span>
+        </a>
+        
+        <ul class="submenu ">
+            
+            <li class="submenu-item  ">
+                <a href="{% url "work_attendance_list" %}" class="submenu-link">Work Attendance</a>
+                
+            </li>
+            <li class="submenu-item  ">
+                <a href="{% url "meeting_attendance_list" %}" class="submenu-link">Meetings</a>
+                
+            </li>
+            <li class="submenu-item  ">
+                
+                <a href="{% url "manage_leave_requests" %}" class="submenu-link">Leave Management</a>
+                
+            </li>
+            
+        </ul>
+        <li
+        class="sidebar-item active has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-pen-fill"></i>
+            <span>Finances</span>
+        </a>
+        
+        <ul class="submenu ">
+            <li class="submenu-item  ">
+                <a href="{% url "financial_dashboard" %}" class="submenu-link">Finance Stats</a>
+                
+            </li>
+            <li class="submenu-item  ">
+                <a href="{% url "company_invoice_list" %}" class="submenu-link">Retainers</a>
+                
+            </li>
+            <li class="submenu-item  ">
+                <a href="#" class="submenu-link">Admin Fees</a>
+                
+            </li>
+            
+        </ul>
+    </li>
+    <li
+        class="sidebar-item active has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-pen-fill"></i>
+            <span>Payments</span>
+        </a>
+         <ul class="submenu ">
+            <li class="submenu-item  ">
+                <a href="{% url "payment_list" %}" class="submenu-link"> Payment List</a>
+                
+            </li>
+        </ul>
+    </li>
+    <li
+        class="sidebar-item active has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-pen-fill"></i>
+            <span>Departments Progess</span>
+        </a>
+         <ul class="submenu ">
+            <li class="submenu-item  ">
+                <a href="{% url "hr_dashboard_stats" %}" class="submenu-link"> HR</a> 
+            </li>
+            <li class="submenu-item  ">
+                <a href="{% url "financial_dashboard" %}" class="submenu-link"> Finance</a> 
+            </li>
+            <li class="submenu-item  ">
+                <a href="#" class="submenu-link"> Coordination</a> 
+            </li>
+            <li class="submenu-item  ">
+                <a href="#" class="submenu-link"> Marketing</a> 
+            </li>
+        </ul>
+        
+    </li>
+                {% comment %} Logout BTN {% endcomment %}
+                <li
+                    class="sidebar-item">
+                    <a href="{% url "logout" %}" class='btn btn-danger'>
+                        <i class="bi bi-people"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</div>

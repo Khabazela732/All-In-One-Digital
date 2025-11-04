@@ -1,0 +1,66 @@
+{% extends "global/base.html" %}
+{% block content %}   
+<div class="page-heading">
+    <h3>{{ host_employer.company_name }}</h3>
+</div> 
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                Our Active Interns
+            </h5>
+        </div>
+        <script>
+
+        function CreateInductionPost() {
+            // Specify URL and window properties
+            var url = '{% url "induction-create" %}'; // URL of the content to be loaded in the popup
+            var windowName = 'Popup'; // Name of the popup window
+            var width = 500; // Width of the popup window
+            var height = 700; // Height of the popup window
+            var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+            var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+            var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+          
+            // Open the popup window
+            var popup = window.open(url, windowName, features);
+          }
+          
+      </script>
+        <div class="card-body">
+            <div class="table-responsive datatable-minimal">
+                <table class="table" id="induction-posts">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Intern</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Department</th>
+                            <th>Shift</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for intern in interns %}
+                    <tr>
+                        <td>{{ intern.id }}</td>
+                        <td>{{ intern.intern }}</td>
+                        <td>{{ intern.contract }}</td>
+                        <td>{{ intern.end_date }}</td>
+                        <td>{{ intern.department }}</td>
+                        <td>{{ intern.shift }}</td>
+                        <td><a href="{% url 'intern_profile' intern_id=intern.intern.id  %}">View Intern</a></td>
+                        <!-- <td><a href="#">More Information</a></td> -->
+                        <td>
+                           
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

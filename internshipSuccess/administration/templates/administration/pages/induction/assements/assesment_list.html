@@ -1,0 +1,75 @@
+{% extends "administration/global/base.html" %}
+{% block content %}
+   
+<div class="page-heading mb-4 text-center">
+    <h3 class="fw-bold">Assessments</h3>
+    <p class="text-muted">All Interns – Internship Success</p>
+</div> 
+
+<div class="page-content"> 
+    <div class="page-title mb-3">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-12">
+                <h5 class="mb-0">All Assessments</h5>
+                <small class="text-muted">View and manage interns’ submissions</small>
+            </div>
+            <div class="col-md-6 col-12 text-md-end text-start">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light p-2 rounded-3 mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="#" class="text-decoration-none">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            All Interns
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assessments Section -->
+    <section class="section">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white rounded-top">
+                <h5 class="mb-0"><i class="bi bi-journal-check me-2"></i> Intern Assessments</h5>
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="induction-posts">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Intern ID</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for assignment in assignment %}
+                            <tr>
+                                <td>{{ assignment.id }}</td>
+                                <td class="fw-semibold">{{ assignment.intern }}</td>
+                                <td>
+                                    <a href="{% url 'assesment' assignment.id %}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-3">
+                                    No assessments available.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}

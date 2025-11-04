@@ -1,0 +1,18 @@
+{% extends "intern/global/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Log a Case/Concern</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="issue_title" class="form-label">Issue Title</label>
+            {{ form.issue_title }}
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description of Issue/Concern</label>
+            {{ form.description }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Case</button>
+    </form>
+</div>
+{% endblock %}

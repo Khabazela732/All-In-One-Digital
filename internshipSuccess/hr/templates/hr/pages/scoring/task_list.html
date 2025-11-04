@@ -1,0 +1,18 @@
+{% extends "hr/global/base.html" %}
+{% block content %}
+<h3>Tasks under {{ tasks.0.category.name }}</h3>
+
+<a href="{% url 'scoring-task-create' %}?category={{ category.id }}" class="btn btn-success mb-3">+ Add Task</a>
+
+<ul>
+    {% for task in tasks %}
+    <li>
+        {{ task.description }}
+        <a href="{% url 'scoring-task-edit' task.id %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'scoring-task-delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+
+
+{% extends "coordination/global/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>   
+<div class="page-heading">
+    <h3> Internship Success Rotation Schedule</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="">Rotation Schedule</a>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">DataTable jQuery</li>
+                    </ol>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            
+            <div class="card-body">
+                
+                
+            
+                <div class="table-responsive datatable-minimal">
+                    <table class="table" id="induction-posts">
+                       <h3>Rotation Schedule</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Intern</th>
+                <th>Qualification</th>
+                <th>Department</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+                        <tbody>
+            {% for rotation in rotations %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ rotation.intern }}</td>
+                <td>{{ rotation.qualification }}</td>
+                <td>{{ rotation.department.name }}</td>
+                <td>{{ rotation.start_date }}</td>
+                <td>{{ rotation.end_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No rotations found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+{% endblock content %}

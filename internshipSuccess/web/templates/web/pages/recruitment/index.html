@@ -1,0 +1,50 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block title %}| How do we manage our Interns {% endblock title %}
+{% block content %}
+   
+    <main>
+        
+
+                
+        {% include "web/pages/recruitment/page-title-area.html" %}
+
+
+           
+	    {% include "web/pages/recruitment/recruitment.html" %}
+
+    </main>
+
+           
+
+     
+
+
+        <!--footer-area start-->
+        {% include "web/essentials/footer.html" %}
+        <!--footer-area end-->
+    
+{% endblock content %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/assets/css/coming-soon.css' %}">
+{% endblock extra_css %}
+
+<!-- <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="services-left mb-30">
+                                <h2 style="font-size: 36px; color: #333;">Recruitment of Interns. </h2><br><br>
+                                <p class="mb-30">At Internship Success, our recruitment process is designed to connect talented, motivated individuals with businesses in need of fresh perspectives and skills. 
+                                    We focus on bridging the gap between higher education and industry by recruiting interns who are eager to apply their academic knowledge in real-world settings. 
+                                    Our structured recruitment ensures that we match interns with roles where they can gain relevant experience and contribute meaningfully to your organization.
+                                    We prioritize inclusivity and actively seek out students from diverse backgrounds, including those with disabilities, to ensure equal opportunities for all. 
+                                    Our goal is to provide businesses with dedicated interns who are well-prepared for the challenges of the job market, 
+                                    while also helping young people build a strong foundation for their future careers.<br><br>
+                                    
+                            <img class="img-fluid" src="{% static 'web/assets/img/services/training.webp' %}" alt="Internship Recruitment in Nelspruit">
+                             -->
+
+                                
+            <!-- <h2 style="font-size: 36px; color: #333;">Recruitment of Interns</h2><br><br>
+            <p style="font-size: 18px; color: #666;"> -->

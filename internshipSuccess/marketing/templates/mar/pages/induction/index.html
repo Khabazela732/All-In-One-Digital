@@ -1,0 +1,155 @@
+{% extends "mar/global/base.html" %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">   
+<div class="page-heading">
+    <h3>Induction Applications</h3>
+</div> 
+<div class="page-content"> 
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <a href="">Induction Application Post</a>
+                <p class="text-subtitle text-muted">Create Post for Induction</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">DataTable jQuery</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal jQuery Datatable start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    Posts
+                </h5>
+            </div>
+            <div class="card-header">
+                <button class="btn btn-primary" onclick="CreateInductionPost()">Creeate Induction Post</button>
+            </div>
+            <script>       
+            function CreateInductionPost() {
+                // Specify URL and window properties
+                var url = '{% url "induction-create" %}'; // URL of the content to be loaded in the popup
+                var windowName = 'Popup'; // Name of the popup window
+                var width = 500; // Width of the popup window
+                var height = 700; // Height of the popup window
+                var left = (window.innerWidth - width) / 2; // Position the popup window horizontally
+                var top = (window.innerHeight - height) / 2; // Position the popup window vertically
+                var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+    
+                // Open the popup window
+                var popup = window.open(url, windowName, features);
+              }
+              
+          </script>
+            <div class="card-body">
+                <div class="table-responsive datatable-minimal">
+                    <table class="table" id="induction-posts">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>start_date</th>
+                                <th>end_date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Link</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for induction in inductions %}
+                        <tr>
+                            <td>{{ induction.id }}</td>
+                            <td>{{ induction.title }}</td>
+                            <td>{{ induction.start_date }}</td>
+                            <td>{{ induction.end_date }}</td>
+                            <td>
+                                <span class="{% if induction.closed %}text-danger{% else %}text-success{% endif %}">
+                                    {% if induction.closed %}Closed{% else %}Open{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <button id="toggle-btn-{{ induction.id }}" class="btn btn-sm btn-warning"
+                                    onclick="toggleStatus({{ induction.id }}, {{ induction.closed|yesno:'false,true' }})">
+                                    {% if induction.closed %}Reopen{% else %}Close{% endif %}
+                                </button>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="copyInductionLink({{ induction.id }})" class="text-secondary">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                            </td>
+                            <td><a href="{% url 'induction-application-posts' induction.id %}">View Applications</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Minimal jQuery Datatable end -->
+</div>
+<script>
+     function toggleStatus(inductionId, currentStatus) {
+        fetch(`/admin/induction/toggle-status/${inductionId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ closed: !currentStatus })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response from server:", data);  // Log response
+
+            if (data.success) {
+                let statusElement = document.getElementById(`status-${inductionId}`);
+                let buttonElement = document.getElementById(`toggle-btn-${inductionId}`);
+
+                if (statusElement && buttonElement) {
+                    if (data.new_status) {
+                        statusElement.textContent = "Closed";
+                        statusElement.classList.remove("text-success");
+                        statusElement.classList.add("text-danger");
+                        buttonElement.textContent = "Reopen";
+                    } else {
+                        statusElement.textContent = "Open";
+                        statusElement.classList.remove("text-danger");
+                        statusElement.classList.add("text-success");
+                        buttonElement.textContent = "Close";
+                    }
+                } else {
+                    console.error("Error: Elements not found in DOM!");
+                }
+            } else {
+                alert("Failed to update status");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+
+    function copyInductionLink(inductionId) {
+        // Construct the link dynamically
+        var link = window.location.origin + "/inductions/application/" + inductionId;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(link).then(function() {
+            alert("Link copied: " + link);
+        }).catch(function(err) {
+            console.error("Error copying link: ", err);
+        });
+    }
+</script>
+{% endblock content %}

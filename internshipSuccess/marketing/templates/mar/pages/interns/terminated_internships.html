@@ -1,0 +1,98 @@
+{% extends "administration/global/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .blue-border {
+        border: 2px solid #435ebe; /* Default border for other interns */
+        margin-bottom: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .blue-border:hover {
+        transform: scale(1.05);
+    }
+
+    .highlighted {
+        border: 2px solid red; /* Red border for interns with pending reports */
+        margin-bottom: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: transform 0.2s;
+    }
+
+    .highlighted:hover {
+        transform: scale(1.05);
+    }
+
+    .fontawesome-icons {
+        text-align: center;
+    }
+
+    .fontawesome-icons .the-icon {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .fontawesome-icons .card {
+        margin-bottom: 20px;
+    }
+
+    .fontawesome-icons img {
+        height: 150px; 
+        width: 100%; 
+        object-fit: cover; 
+        border-radius: 10px;
+    }
+
+    .fontawesome-icons .card-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Terminated Interns</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Terminated Interns</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Terminated Interns</h4>
+            </div>
+            <div class="card-body">
+                <div class="row fontawesome-icons">
+                    {% for internship_enrollment in internships %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="{% if internship_enrollment.has_pending_reports %}highlighted{% else %}blue-border{% endif %}" 
+                             onclick="location.href = '{% url 'intern_profil' intern_id=internship_enrollment.intern.id %}'">
+                            {% if internship_enrollment.intern.profile_picture %}
+                            <img src="{{ internship_enrollment.intern.profile_picture.url }}" alt="Intern Profile Picture">
+                            {% else %}
+                            <img src="{% static 'profile.png' %}" alt="" style="width: 80px; height: 100px;">
+                            {% endif %}
+                            <div class="card-title">{{ internship_enrollment.intern.first_name }} {{ internship_enrollment.intern.last_name }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

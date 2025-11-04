@@ -1,0 +1,14 @@
+{% extends "mar/global/base.html" %}
+
+{% block content %}
+<h2>Campaigns</h2>
+<a href="{% url 'create_campaign' %}" class="btn btn-primary">Create Campaign</a>
+<ul>
+    {% for campaign in campaigns %}
+        <li>
+            <strong>{{ campaign.name }}</strong> ({{ campaign.start_date }} - {{ campaign.end_date }})  
+            <p>{{ campaign.description }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

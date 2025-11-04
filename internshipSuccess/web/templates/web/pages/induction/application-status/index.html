@@ -1,0 +1,47 @@
+{% extends "web/global/base.html" %}
+{% load static %}
+{% block content %}
+<!--[if lte IE 9]>
+<p class="browserupgrade">
+    You are using an <strong>outdated</strong> browser. Please
+    <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+    your experience and security.
+</p>
+<![endif]-->
+<!-- Add your site or application content here -->
+<main>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="mb-4" style="color: #007bff;">Application Status</h1>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <p><strong>Email:</strong> {{ email }}</p>
+                        <p><strong>Contact Number:</strong> {{ contact }}</p>
+                        <p><strong>National ID:</strong> {{ national_id }}</p>
+
+                        {% if applications %}
+                        <h3>Your Applications:</h3>
+                        <ul class="list-group">
+                            {% for application in applications %}
+                            <li class="list-group-item">
+                                <strong>Status:</strong> {{ application.status }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            Seems like you do not have any applications available.
+                        </div>
+                        <a class="btn btn-primary" style="background-color: #ff4b4b; border-color: #ff4b4b;" role="button" href="{% url 'web-induction-posts' %}">Apply for available posts</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--footer-area start-->
+{% include "web/essentials/footer.html" %}
+<!--footer-area end-->
+{% endblock content %}

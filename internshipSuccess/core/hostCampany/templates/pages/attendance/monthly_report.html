@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monthly Report - {{ month }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monthly Report - {{ month }}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Intern</th>
+                    <th>Days Attended</th>
+                    <th>Total Duty Hours</th>
+                    <th>Total Stipend</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in data %}
+                <tr>
+                    <td>{{ record.intern }}</td>
+                    <td>{{ record.days_attended }}</td>
+                    <td>{{ record.total_duty_hours|floatformat:2 }}</td>
+                    <td>${{ record.total_stipend|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

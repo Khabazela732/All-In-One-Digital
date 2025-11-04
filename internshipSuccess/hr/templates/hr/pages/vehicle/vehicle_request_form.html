@@ -1,0 +1,166 @@
+{% extends "hr/global/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.01);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 1rem 1.5rem;
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+        border-radius: 25px !important;
+        padding: 0.5rem 0.75rem !important;
+        border: 2px solid #d1d5db !important;
+        transition: all 0.3s ease;
+        outline: none !important;
+    }
+
+    .form-control:focus {
+        border-color: #007bff !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+        border-radius: 25px !important;
+    }
+
+    input[type="text"], 
+    input[type="email"], 
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+        border-radius: 25px !important;
+        border: 2px solid #d1d5db !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    select.form-control {
+        border-radius: 20px !important;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+
+    textarea.form-control {
+        border-radius: 15px !important;
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 20px;
+        padding: 0.6rem 1.4rem;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .form-section {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+        font-size: 0.875rem !important;
+        margin-top: 0.25rem !important;
+    }
+
+    .required-asterisk {
+        color: #dc3545 !important;
+        font-weight: bold !important;
+        margin-left: 2px !important;
+    }
+</style>
+
+<div class="container form-section">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">🚗 Request Vehicle</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" class="form form-vertical">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            {% for field in form %}
+                                <div class="form-group mb-3">
+                                    <label for="{{ field.id_for_label }}">
+                                        {{ field.label }}
+                                        {% if field.field.required %}
+                                            <span class="required-asterisk">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <small class="text-danger">{{ field.errors.0 }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            
+                            <div class="form-group mt-4 text-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <strong> Submit Request</strong>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Simple form enhancement - loading state for submit button
+    const submitBtn = document.querySelector('.btn-primary');
+    const form = document.querySelector('form');
+    
+    if (form && submitBtn) {
+        form.addEventListener('submit', function() {
+            submitBtn.innerHTML = 'Submitting...';
+            submitBtn.disabled = true;
+        });
+    }
+});
+</script>
+{% endblock %}

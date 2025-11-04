@@ -1,0 +1,84 @@
+{% extends "administration/global/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .blue-border {
+        border: 2px solid #435ebe; /* Adjust the border width and color as needed */
+        margin-bottom: 30px; /* Adjust this value as needed */
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .blue-border:hover {
+        transform: scale(1.05);
+    }
+
+    .fontawesome-icons {
+        text-align: center;
+    }
+
+    .fontawesome-icons .the-icon {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .fontawesome-icons .card {
+        margin-bottom: 20px; /* Space between cards */
+    }
+
+    .fontawesome-icons img {
+        height: 150px; 
+        width: 100%; 
+        object-fit: cover; 
+        border-radius: 10px;
+    }
+
+    .fontawesome-icons .card-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Placed Interns</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Placed Interns</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Placed Interns</h4>
+            </div>
+            <div class="card-body">
+                <div class="row fontawesome-icons">
+                    {% for internship_enrollment in internships %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="blue-border" onclick="location.href = '{% url 'intern_profil' intern_id=internship_enrollment.intern.id %}'">
+                            <img src="{% if internship_enrollment.profile_picture %}{{ internship_enrollment.profile_picture.url }}{% else %}{% static 'profile.png' %}{% endif %}" 
+                            alt="Intern Profile Picture" 
+                            style="width: 80px; height: 100px;">
+
+                        <div class="card-title" style="font-weight: bold; color: black;">{{ internship_enrollment.intern.first_name }} {{ internship_enrollment.intern.last_name }}</div>
+                        <div class="card-title">{{ internship_enrollment.company }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
