@@ -1,0 +1,343 @@
+/* =====================================================
+   HR PORTAL - ADD EMPLOYEE PAGE STYLING
+===================================================== */
+
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background: #f1f5f9;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #1e293b;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container-fluid {
+    padding: 35px;
+    min-height: 100vh;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.d-flex.justify-content-between.align-items-center {
+    margin-bottom: 25px !important;
+    gap: 20px;
+}
+
+/* PAGE TITLE */
+
+.container-fluid h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: 0.5px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+/* BACK BUTTON */
+
+.btn-outline-secondary {
+    background: #ffffff;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 11px 22px;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+/* BACK BUTTON HOVER */
+
+.btn-outline-secondary:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    transform: translateY(-2px);
+}
+
+/* SAVE BUTTON */
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-size: 15px;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* SAVE BUTTON HOVER */
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+/* BUTTON CLICK EFFECT */
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   ALERT MESSAGES
+========================= */
+
+.alert {
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    animation: fadeIn 0.4s ease;
+}
+
+/* SUCCESS ALERT */
+
+.alert-success {
+    background: #ecfdf3;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.08);
+}
+
+/* ALERT ICON */
+
+.alert-success i {
+    margin-right: 10px;
+    color: #16a34a;
+    font-size: 18px;
+}
+
+/* =========================
+   CARD STYLING
+========================= */
+
+.card {
+    border: none;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* CARD BODY */
+
+.card-body {
+    padding: 35px;
+}
+
+/* =========================
+   FORM LAYOUT
+========================= */
+
+form {
+    width: 100%;
+}
+
+/* FORM GRID SPACING */
+
+.row.g-3 {
+    row-gap: 20px;
+}
+
+/* FORM GROUP */
+
+.col-md-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   LABELS
+========================= */
+
+label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select,
+textarea {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+/* TEXTAREA */
+
+textarea {
+    min-height: 120px;
+    padding-top: 14px;
+    resize: vertical;
+}
+
+/* INPUT PLACEHOLDER */
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* INPUT FOCUS */
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+/* DATE INPUT */
+
+input[type="date"] {
+    cursor: pointer;
+}
+
+/* =========================
+   SAVE BUTTON AREA
+========================= */
+
+.mt-3 {
+    margin-top: 30px !important;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 992px) {
+
+    .container-fluid {
+        padding: 25px;
+    }
+
+    .container-fluid h2 {
+        font-size: 28px;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container-fluid {
+        padding: 20px;
+    }
+
+    /* STACK HEADER */
+    .d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    /* FULL WIDTH BUTTONS */
+    .btn-outline-secondary,
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* SMALLER TITLE */
+    .container-fluid h2 {
+        font-size: 24px;
+    }
+
+    /* CARD BODY */
+    .card-body {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .container-fluid {
+        padding: 15px;
+    }
+
+    .container-fluid h2 {
+        font-size: 22px;
+    }
+
+    input,
+    select,
+    textarea {
+        height: 48px;
+        font-size: 13px;
+    }
+
+    .btn-outline-secondary,
+    .btn-primary {
+        font-size: 14px;
+        padding: 11px 18px;
+    }
+
+    .alert {
+        font-size: 14px;
+        padding: 14px 16px;
+    }
+}

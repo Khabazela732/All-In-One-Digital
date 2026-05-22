@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+<!-- Toggle button (place above or beside your sidebar) -->
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2><i class="fas fa-building"></i> Innocential Digitals</h2>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#dashboard" class="nav-item">
+      <i class="fas fa-tachometer-alt"></i>
+      <span class="nav-label">HR Dashboard</span>
+    </a>
+<a href="{% url 'employee_list' %}" class="nav-item">
+  <i class="fas fa-users"></i>
+  <span class="nav-label">All Employees</span>
+</a>
+    <a href="#departments" class="nav-item">
+      <i class="fas fa-people-group"></i>
+      <span class="nav-label">Leave Management</span>
+    </a>
+    <a href="#applications" class="nav-item">
+      <i class="fas fa-file-alt"></i>
+      <span class="nav-label">Job Applications</span>
+    </a>
+    <a href="#interviews" class="nav-item">
+      <i class="fas fa-microphone-alt"></i>
+      <span class="nav-label">Interviews</span>
+    </a>
+    <a href="#attendance" class="nav-item">
+      <i class="fas fa-check-circle"></i>
+      <span class="nav-label">Attendance</span>
+    </a>
+    <a href="#reports" class="nav-item">
+      <i class="fas fa-chart-pie"></i>
+      <span class="nav-label">Reports & Analytics</span>
+    </a>
+    <a href="#announcements" class="nav-item">
+      <i class="fas fa-bullhorn"></i>
+      <span class="nav-label">Announcements</span>
+    </a>
+    <a href="#calendar" class="nav-item">
+      <i class="fas fa-calendar-alt"></i>
+      <span class="nav-label">HR Calendar</span>
+    </a>
+  </nav>
+</aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+            <h1>Admin Dashboard</h1>
+        </div>
+
+        <!-- Centered search bar -->
+        <div class="search-wrapper">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+        </div>
+
+        <!-- User profile: icon at top right, name below -->
+<div class="user-profile-wrapper">
+    <div class="user-profile-clickable">
+        <i class="fas fa-user-circle"></i>
+        <span>{{ user.get_full_name|default:user.username }}</span>
+    </div>
+
+    <!-- Dropdown (hidden by default) -->
+    <div class="user-dropdown">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="#">Profile</a>
+        <a href="{% url 'home' %}">Logout</a>
+    </div>
+</div>
+    </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>1 248</h3>
+                    <p>Total Employees</p>
+                </div>
+            </div>
+            <div class="stat-card revenue">
+                <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="stat-info">
+                    <h3>42</h3>
+                    <p>Available Departments</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="stat-info">
+                    <h3>56</h3>
+                    <p>Available Positions</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>94.3%</h3>
+                    <p>Employee Attendance</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Charts & Recent Activity -->
+        <div class="content-grid">
+            <!-- Performance Chart -->
+            <div class="chart-card">
+                <h3>Employee Performance Trend</h3>
+                <canvas id="revenueChart" width="400" height="200"></canvas>
+            </div>
+
+
+<!-- Recent Activity / Notices -->
+<div class="orders-card">
+    <h3>Recent HR Activity</h3>
+    <div class="orders-table">
+        <div class="order-row">
+            <span>New employee onboarding: Thabo Mkhize (Finance)</span>
+            <span>Today</span>
+            <span class="status completed">Completed</span>
+        </div>
+        <div class="order-row">
+            <span>Annual leave request approved for Lindiwe Ndlovu</span>
+            <span>Today</span>
+            <span class="status completed">Approved</span>
+        </div>
+        <div class="order-row">
+            <span>Probation review scheduled for Sipho Nxumalo (IT)</span>
+            <span>Tomorrow</span>
+            <span class="status upcoming">Upcoming</span>
+        </div>
+        <div class="order-row">
+            <span>Disciplinary meeting record awaiting manager sign‑off</span>
+            <span>Tomorrow</span>
+            <span class="status warning">Pending</span>
+        </div>
+    </div>
+</div>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'javaScript/dashboard.js' %}"></script>
+</body>
+</html>

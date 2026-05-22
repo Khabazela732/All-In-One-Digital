@@ -1,0 +1,162 @@
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/employee_list.css' %}">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+    <div class="top-bar">
+
+    <div>
+        <h2 class="page-title">Employee Management</h2>
+        <p class="page-subtitle">
+            Manage all employees, departments and workforce records.
+        </p>
+    </div>
+
+    <!-- ADD EMPLOYEE BUTTON (RIGHT SIDE) -->
+    <a href="{% url 'add_employee' %}" class="add-btn">
+        <i class="fas fa-plus"></i>
+        Add Employee
+    </a>
+
+</div><br>
+    <!-- =========================
+         ALERTS
+    ========================== -->
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- =========================
+         TABLE CARD
+    ========================== -->
+
+    <div class="employee-card">
+        <!-- =========================
+             TABLE
+        ========================== -->
+
+        <div class="table-responsive">
+            <table class="table employee-table">
+
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Employee ID</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Hire Date</th>
+                        <th>Actions</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <!-- EMPLOYEE PROFILE -->
+                        <td>
+    <div class="employee-info">
+
+        <!-- Avatar -->
+        <div class="employee-avatar">
+            {{ emp.first_name|slice:":1" }}{{ emp.last_name|slice:":1" }}
+        </div>
+
+        <!-- Name + role -->
+        <div class="employee-meta">
+            <h6>{{ emp.full_name }}</h6>
+            <span>{{ emp.position }}</span>
+        </div>
+
+    </div>
+</td>
+                        <!-- EMPLOYEE ID -->
+                        <td>
+                            <span class="employee-id">
+                                {{ emp.employee_id }}
+                            </span>
+                        </td>
+
+                        <!-- EMAIL -->
+                        <td>{{ emp.email }}</td>
+
+                        <!-- DEPARTMENT -->
+                        <td>
+                            <span class="department-badge">
+                                {{ emp.department }}
+                            </span>
+                        </td>
+
+                        <!-- POSITION -->
+
+                        <td>{{ emp.position }}</td>
+
+                        <!-- STATUS -->
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <!-- HIRE DATE -->
+
+                        <td>{{ emp.hire_date }}</td>
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <button class="action-btn view">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+
+                                <button class="action-btn edit">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                              <i class="fas fa-users-slash"></i>
+                                <h4>No Employees Found</h4>
+                                <p>
+                                    Start by adding your first employee to the HR platform.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

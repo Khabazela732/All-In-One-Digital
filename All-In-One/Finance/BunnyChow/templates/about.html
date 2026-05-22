@@ -1,0 +1,191 @@
+{% load static %}
+
+<title>About Our ERP Enterprise</title>
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+{% block content %}
+
+<!-- Hero Banner -->
+<section class="about-hero">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h1>About {{ company.name }}</h1>
+            <p>Enterprise‑Grade ERP Solutions Since {{ company.established }}</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Company Overview -->
+<section class="about-overview">
+    <div class="container">
+        <div class="overview-grid">
+            <div class="overview-text">
+                <h2>Welcome to {{ company.name }}</h2>
+                <p class="lead">
+                    Based in Bergville, KwaZulu‑Natal, South Africa, {{ company.name }} delivers
+                    modern, modular ERP systems for small and medium enterprises.
+                    Our cloud‑based platform unifies finance, inventory, HR, and operations
+                    into one central dashboard tailored to each client’s unique workflow.
+                </p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span>Clients</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">30+</span>
+                        <span>Development & Support Team</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">99.5%</span>
+                        <span>Uptime SLA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overview-image">
+                <img src="{% static 'images/services.jpg' %}" alt="{{ company.name }} Dashboard">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CEO / Owner Section -->
+<section class="principal-section">
+    <div class="container">
+        <h2>Meet Our CEO</h2>
+        <div class="principal-card">
+            <div class="principal-photo">
+                <img src="{% static 'images/principal1.jpg' %}" alt="{{ company.ceo.name }}">
+            </div>
+            <div class="principal-info">
+                <h3>{{ company.ceo.name }}</h3>
+                <p class="principal-title">Chief Executive Officer</p>
+                <p class="principal-qual">{{ company.ceo.qualification }}</p>
+                <p>
+                    <strong>{{ company.ceo.experience }} years experience</strong> in enterprise software and ERP
+                    solutions. Committed to digital transformation for SMEs across Southern Africa.
+                </p>
+                <blockquote>
+                    "Empowering businesses with intelligent ERP tools is the future of African growth."
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Management / Team Section -->
+<section class="hods-section">
+    <div class="container">
+        <h2>Executive & Department Leaders</h2>
+        <div class="hods-grid">
+            {% for leader in company.leaders %}
+            <div class="hod-card">
+                <div class="hod-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h4>{{ leader.name }}</h4>
+                <p class="hod-dept">{{ leader.role }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Key ERP Modules (Instead of "Subjects") -->
+<section class="subjects-section">
+    <div class="container">
+        <h2>ERP Modules & Features</h2>
+        <div class="subjects-tabs">
+            <button class="tab-btn active" data-tab="core">Core Modules</button>
+            <button class="tab-btn" data-tab="advanced">Advanced & Integrations</button>
+        </div>
+
+        <div class="tab-content active" id="core">
+            <div class="subjects-grid">
+                {% for module in modules.core %}
+                <div class="subject-card">
+                    <span class="subject-name">{{ module }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="tab-content" id="advanced">
+            <div class="subjects-grid">
+                {% for module in modules.advanced %}
+                <div class="subject-card">
+                    <span class="subject-name">{{ module }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Location / Offices Section -->
+<section class="location-section">
+    <div class="container">
+        <h2>Our Office</h2>
+        <div class="location-content">
+            <div class="location-info">
+                <h3>Bergville, Acton Homes</h3>
+                <p>
+                    <strong>{{ company.name }}</strong><br>
+                    Acton Homes, Meadow Street, Bergville, 9860<br>
+                    KwaZulu‑Natal, South Africa<br><br>
+                    <strong>📞 Phone:</strong> {{ company.phone }}<br>
+                    <strong>📧 Email:</strong> {{ company.email }}<br>
+                    <strong>🕒 Office Hours:</strong> Mon–Fri 08:00–17:00
+                </p>
+            </div>
+            <div class="location-image">
+                <img src="{% static 'images/principal.jpg' %}" alt="{{ company.name }} Office">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Company History Timeline -->
+<section class="history-section">
+    <div class="container">
+        <h2>Our Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">2005</div>
+                <div class="timeline-content">
+                    <h4>Company Founded</h4>
+                    <p>Started as a small IT consulting firm serving local businesses in Bergville.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2013</div>
+                <div class="timeline-content">
+                    <h4>First ERP Pilot</h4>
+                    <p>Launched an internal ERP prototype for a manufacturing client.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                    <h4>Cloud ERP Platform</h4>
+                    <p>Released our first modular cloud ERP platform targeting SMEs.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2026</div>
+                <div class="timeline-content">
+                    <h4>Regional Expansion</h4>
+                    <p>Now serving 500+ businesses across KZN, Gauteng, and the Eastern Cape.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

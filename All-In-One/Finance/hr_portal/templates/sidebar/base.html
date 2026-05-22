@@ -1,0 +1,83 @@
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <!-- BRAND -->
+    <div class="sidebar-brand">
+        <i class="fas fa-users-gear"></i>
+        <span>HR Portal</span>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="sidebar-nav">
+
+        <!-- DASHBOARD -->
+        <a href="{% url 'hr_portal:dashboard' %}" class="nav-item active" data-title="Dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <!-- EMPLOYEE LIST -->
+        <a href="{% url 'hr_portal:employee_list' %}" class="nav-item" data-title="Employees">
+            <i class="fas fa-users"></i>
+            <span>Employees</span>
+        </a>
+
+        <!-- ADD EMPLOYEE -->
+        <a href="{% url 'hr_portal:add_employee' %}" class="nav-item" data-title="Add Employee">
+            <i class="fas fa-user-plus"></i>
+            <span>Add Employee</span>
+        </a>
+
+        <!-- DEPARTMENTS -->
+        <a href="{% url 'hr_portal:departments' %}" class="nav-item" data-title="Departments">
+            <i class="fas fa-building"></i>
+            <span>Departments</span>
+        </a>
+
+        <!-- RECRUITMENT -->
+        <a href="{% url 'hr_portal:recruitment' %}" class="nav-item" data-title="Recruitment">
+            <i class="fas fa-briefcase"></i>
+            <span>Recruitment</span>
+        </a>
+
+        <!-- APPLICATIONS -->
+        <a href="{% url 'hr_portal:applications' %}" class="nav-item" data-title="Applications">
+            <i class="fas fa-file-alt"></i>
+            <span>Applications</span>
+        </a>
+
+        <!-- ATTENDANCE -->
+        <a href="{% url 'hr_portal:attendance' %}" class="nav-item" data-title="Attendance">
+            <i class="fas fa-calendar-check"></i>
+            <span>Attendance</span>
+        </a>
+
+        <!-- PAYROLL -->
+        <a href="{% url 'hr_portal:payroll' %}" class="nav-item" data-title="Payroll">
+            <i class="fas fa-money-bill"></i>
+            <span>Payroll</span>
+        </a>
+
+        <!-- REPORTS -->
+        <a href="{% url 'hr_portal:reports' %}" class="nav-item" data-title="Reports">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports</span>
+        </a>
+
+        <!-- SETTINGS -->
+        <a href="{% url 'hr_portal:settings' %}" class="nav-item" data-title="Settings">
+            <i class="fas fa-gear"></i>
+            <span>Settings</span>
+        </a>
+
+        <hr class="sidebar-divider">
+
+        <!-- LOGOUT -->
+        <a href="{% url 'logout' %}" class="nav-item logout">
+            <i class="fas fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+
+    </nav>
+
+</aside>
