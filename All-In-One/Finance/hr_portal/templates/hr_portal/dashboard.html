@@ -1,24 +1,22 @@
 {% load static %}
-{% include "sidebar/base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HR Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'css/hr_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hr_main.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
+
 <div class="dashboard-container">
 
-    <!-- MAIN CONTENT -->
-    <main class="main">
-
-        <!-- TOGGLE BUTTON -->
-    <div class="sidebar-toggle" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </div>
+    <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
+<aside id="sidebar" class="sidebar">
 
     <!-- BRAND -->
     <div class="sidebar-brand">
@@ -26,12 +24,133 @@
         <span>HR Portal</span>
     </div>
 
-        <h1 class="page-title">HR Dashboard</h1>
-        <p class="subtitle">Overview of your organisation workforce and structure</p>
+    <!-- NAVIGATION -->
+    <nav class="sidebar-nav">
 
-        <!-- STATS -->
-        <div class="stats-grid">
+        <!-- DASHBOARD -->
+        <a href="{% url 'hr_portal:dashboard' %}" class="nav-item active" data-title="Dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
 
+        <!-- EMPLOYEE LIST -->
+        <a href="{% url 'hr_portal:employee_list' %}" class="nav-item" data-title="Employees">
+            <i class="fas fa-users"></i>
+            <span>Employees</span>
+        </a>
+
+        <!-- APPLICATIONS -->
+        <a href="{% url 'hr_portal:applications' %}" class="nav-item" data-title="Applications">
+            <i class="fas fa-file-alt"></i>
+            <span>Applications</span>
+        </a>
+
+        <!-- RECRUITMENT -->
+        <a href="{% url 'hr_portal:recruitment' %}" class="nav-item" data-title="Recruitment">
+            <i class="fas fa-briefcase"></i>
+            <span>Recruitment</span>
+        </a>
+
+        <!-- DEPARTMENTS -->
+        <a href="{% url 'hr_portal:departments' %}" class="nav-item" data-title="Departments">
+            <i class="fas fa-building"></i>
+            <span>Departments</span>
+        </a>
+
+        <!-- ATTENDANCE -->
+        <a href="{% url 'hr_portal:attendance' %}" class="nav-item" data-title="Attendance">
+            <i class="fas fa-calendar-check"></i>
+            <span>Attendance</span>
+        </a>
+
+        <!-- REPORTS -->
+        <a href="{% url 'hr_portal:reports' %}" class="nav-item" data-title="Reports">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports</span>
+        </a>
+
+        <!-- SETTINGS -->
+        <a href="{% url 'hr_portal:settings' %}" class="nav-item" data-title="Settings">
+            <i class="fas fa-gear"></i>
+            <span>Settings</span>
+        </a>
+
+        <hr class="sidebar-divider">
+
+        <!-- LOGOUT -->
+        <a href="{% url 'logout' %}" class="nav-item logout">
+            <i class="fas fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+
+    </nav>
+
+</aside>
+
+    <!-- MAIN AREA -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search employees, departments...">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="notification-wrapper">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">4</span>
+                    </button>
+                </div>
+
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="avatar">HR</div>
+                        <span>HR Manager</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+
+                    <div class="dropdown-menu" id="profileMenu">
+                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="{% url 'logout' %}">
+                            <i class="fas fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero-section">
+            <div>
+                <h1 class="page-title">Overview of workforce and operations</h1>
+                <p class="subtitle">Track employee information and departmental performance</p>
+            </div>
+
+            <button class="primary-btn">
+                <i class="fas fa-user-plus"></i>
+                Add Employee
+            </button>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="stats-grid">
             <div class="card">
                 <i class="fas fa-users"></i>
                 <div>
@@ -55,22 +174,22 @@
                     <p>Recent Hires</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- RECENT EMPLOYEES -->
-        <div class="table-section">
+        <section class="table-section">
 
             <div class="section-header">
                 <h2>Recent Employees</h2>
                 <a href="#" class="btn">View All</a>
             </div>
+
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Department</th>
                         <th>Email</th>
-                        <th>Date</th>
+                        <th>Hire Date</th>
                     </tr>
                 </thead>
 
@@ -85,29 +204,13 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
+
+        </section>
+
     </main>
+
 </div>
+
+<script src="{% static 'js/hr_dashboard.js' %}"></script>
 </body>
-
-<script>
-function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("collapsed");
-
-    // save state (enterprise behavior)
-    const isCollapsed = sidebar.classList.contains("collapsed");
-    localStorage.setItem("sidebar-collapsed", isCollapsed);
-}
-
-// restore state on load
-document.addEventListener("DOMContentLoaded", function () {
-    const sidebar = document.getElementById("sidebar");
-    const collapsed = localStorage.getItem("sidebar-collapsed");
-
-    if (collapsed === "true") {
-        sidebar.classList.add("collapsed");
-    }
-});
-</script>
 </html>

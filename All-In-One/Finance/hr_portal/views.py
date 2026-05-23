@@ -5,6 +5,7 @@ from authentication.utils import is_hr, is_admin
 from hr_portal.models import Employee, Department
 from .forms import EmployeeForm
 from authentication.decorators import hr_required
+from django.core.paginator import Paginator
 
 def dashboard(request):
 
@@ -20,8 +21,15 @@ def dashboard(request):
 @login_required
 @hr_required
 def employee_list(request):
-    employees = Employee.objects.all()
-    return render(request, "hr_portal/employees.html", {"employees": employees})
+    employees_list = Employee.objects.all().order_by('-id')
+
+    paginator = Paginator(employees_list, 10)
+    page_number = request.GET.get('page')
+    employees = paginator.get_page(page_number)
+
+    return render(request, 'hr_portal/employee_list.html', {
+        'employees': employees
+    })
 
 # add employee view
 @login_required
@@ -31,7 +39,7 @@ def add_employee(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("hr_employees")
+            return redirect("hr_portal:employee_list")
     else:
         form = EmployeeForm()
 

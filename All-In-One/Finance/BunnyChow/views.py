@@ -21,41 +21,6 @@ class HomeView(View):
         }
         return render(request, 'home.html', context)
 
-class SignupView(View):
-    def get(self, request):
-        return render(request, "authentication/signup.html")
-
-    def post(self, request):
-        username = request.POST.get("username")
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        password1 = request.POST.get("password1")
-        password2 = request.POST.get("password2")
-
-        # Basic validation
-        if not username or not email or not password1:
-            messages.error(request, "All fields are required.")
-        elif User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists.")
-        elif password1 != password2:
-            messages.error(request, "Passwords do not match.")
-        else:
-            try:
-                user = User.objects.create_user(
-                    username=username,
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    password=password1,
-                )
-                login(request, user)
-                messages.success(request, "Account created successfully!")
-                return redirect("login")  # your dashboard URL name
-            except Exception as e:
-                messages.error(request, "An error occurred. Please try again.")
-
-        return render(request, "authentication/signup.html")
 
 class AboutView(View):
     def get(self, request):
