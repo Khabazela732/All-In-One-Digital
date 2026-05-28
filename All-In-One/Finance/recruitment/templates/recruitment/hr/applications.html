@@ -1,0 +1,133 @@
+{% extends "hr_portal/base_hr.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/applications.css' %}">
+{% endblock %}
+
+{% block title %}
+Applications
+{% endblock %}
+<div class="table-topbar">
+    <form method="GET" class="search-box">
+        <i class="fas fa-search"></i>
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search_query|default:'' }}"
+            placeholder="Search applications..."
+        >
+    </form>
+</div>
+
+{% block recruitment_active %}active{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<div class="employee-header">
+
+    <div>
+        <h1>Applications</h1>
+
+        <p>
+            Manage job applications
+
+            <span class="count-badge">
+                {{ applications|length }} Applications
+            </span>
+        </p>
+    </div>
+
+    <!-- CREATE JOB BUTTON -->
+    <a href="{% url 'recruitment:create_job' %}" class="add-btn">
+        <i class="fas fa-plus"></i>
+        Create Job
+    </a>
+
+</div>
+
+<!-- TABLE CARD -->
+<div class="table-card">
+
+    <div class="table-wrapper">
+
+        <table class="employee-table">
+
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Job</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for app in applications %}
+                <tr>
+
+                    <td>
+                        {{ app.applicant.first_name }}
+                        {{ app.applicant.last_name }}
+                    </td>
+
+                    <td>
+                        {{ app.job.title }}
+                    </td>
+
+                    <td>
+                        <span class="status {{ app.status|lower }}">
+                            {{ app.status }}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <a class="btn-review"
+                           href="{% url 'update_application_status' app.id %}">
+                            Review
+                        </a>
+
+                        <a class="btn-hire"
+                           href="{% url 'hire_applicant' app.id %}">
+                            Hire
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+                <tr>
+
+                    <td colspan="4">
+
+                        <div class="empty">
+
+                            <i class="fas fa-file-circle-xmark"></i>
+
+                            <h3>No Applications Found</h3>
+
+                            <p>
+                                New applicants will appear here
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

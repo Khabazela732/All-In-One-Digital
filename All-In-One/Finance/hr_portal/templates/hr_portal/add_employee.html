@@ -34,12 +34,12 @@
                 <span>Employees</span>
             </a>
 
-            <a href="{% url 'hr_portal:applications' %}" class="nav-item" data-title="Applications">
+            <a href="{% url 'recruitment:applications' %}" class="nav-item" data-title="Applications">
                 <i class="fas fa-file-alt"></i>
                 <span>Applications</span>
             </a>
 
-            <a href="{% url 'hr_portal:recruitment' %}" class="nav-item" data-title="Recruitment">
+            <a href="#" class="nav-item" data-title="Recruitment">
                 <i class="fas fa-briefcase"></i>
                 <span>Recruitment</span>
             </a>
@@ -128,71 +128,70 @@
             <div style="padding: 22px;">
                 
                 <form method="post">
-                    
-                    {% csrf_token %}
-                <div class="form-grid">
+    {% csrf_token %}
 
-                <div class="form-group">
-                    {{ form.employee_id.label_tag }}
-                    {{ form.employee_id }}
-                </div><br>
+    {% if form.errors %}
+        <div class="alert-box error">
+            {{ form.errors }}
+        </div>
+    {% endif %}
 
-                <div class="form-group">
-                    {{ form.first_name.label_tag }}
-                    {{ form.first_name }}
-                </div><br>
+    <div class="form-grid">
 
-                <div class="form-group">
-                    {{ form.last_name.label_tag }}
-                    {{ form.last_name }}
-                </div><br>
+        <div class="form-group">
+            {{ form.employee_id.label_tag }}
+            {{ form.employee_id }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                </div><br>
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.phone.label_tag }}
-                    {{ form.phone }}
-                </div><br>
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.gender.label_tag }}
-                    {{ form.gender }}
-                </div><br>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.department.label_tag }}
-                    {{ form.department }}
-                </div><br>
+        <div class="form-group">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.position.label_tag }}
-                    {{ form.position }}
-                </div><br>
+        <div class="form-group">
+            {{ form.gender.label_tag }}
+            {{ form.gender }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.hire_date.label_tag }}
-                    {{ form.hire_date }}
-                </div><br>
+        <div class="form-group">
+            {{ form.department.label_tag }}
+            {{ form.department }}
+        </div>
 
-                <div class="form-group">
-                    {{ form.resign_date.label_tag }}
-                    {{ form.resign_date }}
-                </div><br>
+        <div class="form-group">
+            {{ form.position.label_tag }}
+            {{ form.position }}
+        </div>
 
-            </div>
+        <div class="form-group">
+            {{ form.hire_date.label_tag }}
+            {{ form.hire_date }}
+        </div>
 
-            <!-- ACTIONS -->
-            <div class="form-actions">
+    </div>
 
-                <button type="submit" class="add-btn">
-                    <i class="fas fa-save"></i>
-                    Save Employee
-                </button>
-            </div>
-        </form>
+    <div class="form-actions">
+        <button type="submit" class="add-btn">
+            <i class="fas fa-save"></i>
+            Save Employee
+        </button>
+    </div>
+</form>
     </div>
 </div>
 </main>

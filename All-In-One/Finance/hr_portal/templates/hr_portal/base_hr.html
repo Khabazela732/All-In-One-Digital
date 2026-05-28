@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}HR Portal{% endblock %}
+    </title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/hr_main.css' %}">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-brand">
+            <i class="fas fa-users-gear"></i>
+            <span>HR Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{% url 'hr_portal:dashboard' %}"
+               class="nav-item {% block dashboard_active %}{% endblock %}"
+               data-title="Dashboard">
+
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{% url 'hr_portal:employee_list' %}"
+               class="nav-item {% block employees_active %}{% endblock %}"
+               data-title="Employees">
+
+                <i class="fas fa-users"></i>
+                <span>Employees</span>
+            </a>
+
+            <a href="{% url 'recruitment:applications' %}"
+               class="nav-item {% block applications_active %}{% endblock %}"
+               data-title="Applications">
+
+                <i class="fas fa-file-alt"></i>
+                <span>Applications</span>
+            </a>
+
+            <a href="#"
+               class="nav-item {% block recruitment_active %}{% endblock %}"
+               data-title="Recruitment">
+
+                <i class="fas fa-briefcase"></i>
+                <span>Recruitment</span>
+            </a>
+
+            <a href="{% url 'hr_portal:departments' %}"
+               class="nav-item {% block departments_active %}{% endblock %}"
+               data-title="Departments">
+
+                <i class="fas fa-building"></i>
+                <span>Departments</span>
+            </a>
+
+            <a href="{% url 'hr_portal:attendance' %}"
+               class="nav-item {% block attendance_active %}{% endblock %}"
+               data-title="Attendance">
+
+                <i class="fas fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+
+            <a href="{% url 'hr_portal:reports' %}"
+               class="nav-item {% block reports_active %}{% endblock %}"
+               data-title="Reports">
+
+                <i class="fas fa-chart-pie"></i>
+                <span>Reports</span>
+            </a>
+
+            <a href="{% url 'hr_portal:settings' %}"
+               class="nav-item {% block settings_active %}{% endblock %}"
+               data-title="Settings">
+
+                <i class="fas fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <hr class="sidebar-divider">
+
+            <a href="{% url 'logout' %}" class="nav-item logout">
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                {% block searchbar %}
+                {% endblock %}
+
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="notification-wrapper">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">4</span>
+                    </button>
+                </div>
+
+                <div class="profile-dropdown">
+
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="avatar">HR</div>
+                        <span>HR Manager</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+
+                    <div class="dropdown-menu" id="profileMenu">
+
+                        <a href="#">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+
+                        <a href="#">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+
+                        <a href="{% url 'logout' %}">
+                            <i class="fas fa-right-from-bracket"></i> Logout
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        {% block content %}
+        {% endblock %}
+
+    </main>
+</div>
+
+<!-- MAIN JS -->
+<script src="{% static 'js/hr_dashboard.js' %}"></script>
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+</html>

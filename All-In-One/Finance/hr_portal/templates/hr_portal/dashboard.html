@@ -40,13 +40,16 @@
         </a>
 
         <!-- APPLICATIONS -->
-        <a href="{% url 'hr_portal:applications' %}" class="nav-item" data-title="Applications">
+        {% if user.userprofile.role == "HR" %}
+        <a href="{% url 'recruitment:applications' %}" class="nav-item" data-title="Applications">
             <i class="fas fa-file-alt"></i>
             <span>Applications</span>
         </a>
+        {% endif %}
+
 
         <!-- RECRUITMENT -->
-        <a href="{% url 'hr_portal:recruitment' %}" class="nav-item" data-title="Recruitment">
+        <a href="#" class="nav-item" data-title="Recruitment">
             <i class="fas fa-briefcase"></i>
             <span>Recruitment</span>
         </a>
@@ -134,7 +137,7 @@
                 </div>
 
             </div>
-        </header>
+        </header><br>
 
         <!-- HERO -->
         <section class="hero-section">
@@ -142,28 +145,23 @@
                 <h1 class="page-title">Overview of workforce and operations</h1>
                 <p class="subtitle">Track employee information and departmental performance</p>
             </div>
-
-            <button class="primary-btn">
-                <i class="fas fa-user-plus"></i>
-                Add Employee
-            </button>
-        </section>
+        </section><br>
 
         <!-- CONTENT -->
         <section class="stats-grid">
             <div class="card">
                 <i class="fas fa-users"></i>
                 <div>
-                    <h3>{{ total_employees }}</h3>
-                    <p>Employees</p>
+                    <h3>Total Employees</h3>
+                    <p>{{ total_employees }}</p>
                 </div>
             </div>
 
             <div class="card">
                 <i class="fas fa-building"></i>
                 <div>
-                    <h3>{{ total_departments }}</h3>
-                    <p>Departments</p>
+                    <h3>Total Departments</h3>
+                    <p>{{ total_departments }}</p>
                 </div>
             </div>
 
@@ -180,7 +178,7 @@
 
             <div class="section-header">
                 <h2>Recent Employees</h2>
-                <a href="#" class="btn">View All</a>
+                <a href="{% url 'hr_portal:employee_list' %}" class="btn">View All</a>
             </div>
 
             <table>

@@ -1,0 +1,380 @@
+/* =====================================================
+   APPLICATIONS PAGE - HR SAAS TABLE DESIGN
+===================================================== */
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+    flex-wrap: wrap;
+
+    margin-bottom: 28px;
+}
+
+.employee-header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.employee-header p {
+    margin-top: 6px;
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+/* =========================
+   COUNT BADGE
+========================= */
+
+.count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 12px;
+    padding: 6px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+
+    color: #60a5fa;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.table-card {
+    background: rgba(15, 23, 42, 0.75);
+
+    border: 1px solid rgba(59, 130, 246, 0.18);
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.20);
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+/* =========================
+   TABLE HEAD
+========================= */
+
+.employee-table thead {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+.employee-table th {
+    padding: 18px 22px;
+
+    text-align: left;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.06);
+}
+
+/* =========================
+   TABLE BODY
+========================= */
+
+.employee-table td {
+    padding: 20px 22px;
+
+    color: #f8fafc;
+    font-size: 14px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.05);
+}
+
+/* =========================
+   ROW HOVER
+========================= */
+
+.employee-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.employee-table tbody tr:hover {
+    background:
+        rgba(37, 99, 235, 0.08);
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: capitalize;
+}
+
+/* PENDING */
+
+.status.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+}
+
+/* REVIEWED */
+
+.status.reviewed {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+/* HIRED */
+
+.status.hired {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+}
+
+/* REJECTED */
+
+.status.rejected {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.btn-review,
+.btn-hire {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+/* REVIEW */
+
+.btn-review {
+    background: rgba(37, 99, 235, 0.15);
+    color: #60a5fa;
+
+    border:
+        1px solid rgba(37, 99, 235, 0.25);
+
+    margin-right: 10px;
+}
+
+.btn-review:hover {
+    background: #2563eb;
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+/* HIRE */
+
+.btn-hire {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+
+    border:
+        1px solid rgba(16, 185, 129, 0.25);
+}
+
+.btn-hire:hover {
+    background: #10b981;
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty i {
+    font-size: 54px;
+    color: #475569;
+
+    margin-bottom: 18px;
+}
+
+.empty h3 {
+    color: #f8fafc;
+    font-size: 24px;
+
+    margin-bottom: 10px;
+}
+
+.empty p {
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    max-width: 420px;
+
+    height: 52px;
+
+    padding: 0 18px;
+
+    border-radius: 14px;
+
+    background: rgba(15, 23, 42, 0.75);
+
+    border:
+        1px solid rgba(59, 130, 246, 0.20);
+
+    backdrop-filter: blur(10px);
+}
+
+.search-box i {
+    color: #64748b;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: #64748b;
+}
+
+/* =========================
+   CREATE BUTTON
+========================= */
+
+.add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(135deg, #2563eb, #1d4ed8);
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .employee-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+
+    .employee-table {
+        min-width: 700px;
+    }
+}

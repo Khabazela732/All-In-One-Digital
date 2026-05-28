@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'authentication',
     'BunnyChow',
     'hr_portal',
+    'recruitment',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,13 @@
+<h2>Hire Confirmation</h2>
+
+<p>You are about to hire:</p>
+
+<p>
+    {{ application.applicant.first_name }} {{ application.applicant.last_name }}
+    for {{ application.job.title }}
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Hire</button>
+</form>

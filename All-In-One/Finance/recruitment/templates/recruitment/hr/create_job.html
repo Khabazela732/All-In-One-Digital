@@ -1,0 +1,213 @@
+{% extends "hr_portal/base_hr.html" %}
+{% load static %}
+
+<!-- EXTRA PAGE CSS -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/create_job.css' %}">
+{% endblock %}
+
+{% block title %}
+Create Job
+{% endblock %}
+
+{% block recruitment_active %}
+active
+{% endblock %}
+
+{% block searchbar %}
+<div class="table-topbar">
+
+    <form class="search-box">
+
+        <i class="fas fa-briefcase"></i>
+
+        <input
+            type="text"
+            placeholder="Create new recruitment job..."
+            disabled
+        >
+
+    </form>
+
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- PAGE WRAPPER -->
+<div class="employee-page">
+
+    <!-- PAGE HEADER -->
+    <div class="employee-header">
+
+        <div>
+            <h1>Create Job</h1>
+
+            <p>
+                <h2>Create job vacancies from a centralized workforce platform</h2>
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="table-card form-card">
+
+        <div class="form-card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <!-- FORM GRID -->
+                <div class="form-grid">
+
+                    <!-- JOB TITLE -->
+                    <div class="form-group">
+
+                        <label>Job Title</label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Enter job title"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- DEPARTMENT -->
+                    <div class="form-group">
+
+                        <label>Department</label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            placeholder="Enter department"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="form-group">
+
+                        <label>Location</label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="Enter location"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Salary</label>
+                        <input type="text"
+                        name="salary"
+                        placeholder="e.g R25 000/month">
+                    </div>
+
+                    <!-- SALARY -->
+<div class="form-group">
+
+    <label>Salary</label>
+
+    <input
+        type="text"
+        name="salary"
+        placeholder="Enter salary range"
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label>Employment Type</label>
+
+    <select name="employment_type">
+
+        <option value="Full Time">
+            Full Time
+        </option>
+
+        <option value="Part Time">
+            Part Time
+        </option>
+
+        <option value="Contract">
+            Contract
+        </option>
+
+        <option value="Remote">
+            Remote
+        </option>
+
+    </select>
+
+</div>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="form-group form-section">
+
+                    <label>Job Description</label>
+
+                    <textarea
+                        name="description"
+                        rows="6"
+                        placeholder="Enter job description"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <!-- REQUIREMENTS -->
+                <div class="form-group form-section">
+
+                    <label>Requirements</label>
+
+                    <textarea
+                        name="requirements"
+                        rows="6"
+                        placeholder="Enter job requirements"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="form-actions">
+
+                    <!-- BACK BUTTON -->
+                    <a href="{% url 'recruitment:applications' %}"
+                       class="add-btn cancel-btn">
+
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+
+                    </a>
+
+                    <!-- CREATE BUTTON -->
+                    <button type="submit" class="add-btn">
+
+                        <i class="fas fa-plus"></i>
+                        Create Job
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

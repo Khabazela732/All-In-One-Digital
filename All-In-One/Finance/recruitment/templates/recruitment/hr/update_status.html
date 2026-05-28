@@ -1,0 +1,27 @@
+<h2>Update Application Status</h2>
+
+<p><strong>Applicant:</strong> {{ application.applicant.first_name }} {{ application.applicant.last_name }}</p>
+<p><strong>Job:</strong> {{ application.job.title }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Status</label>
+    <select name="status">
+        <option value="SUBMITTED">Submitted</option>
+        <option value="REVIEW">Under Review</option>
+        <option value="SHORTLISTED">Shortlisted</option>
+        <option value="INTERVIEW">Interview</option>
+        <option value="OFFERED">Offered</option>
+        <option value="HIRED">Hired</option>
+        <option value="REJECTED">Rejected</option>
+    </select>
+
+    <br><br>
+
+    <textarea name="hr_notes" placeholder="HR Notes"></textarea>
+
+    <br><br>
+
+    <button type="submit">Update</button>
+</form>

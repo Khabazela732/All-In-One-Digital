@@ -1,0 +1,124 @@
+{% load static %}
+
+<link rel="stylesheet"
+      href="{% static 'css/job_board.css' %}">
+
+<div class="job-detail-wrapper">
+
+    <!-- BACK BUTTON -->
+    <div class="job-detail-top">
+
+        <a href="{% url 'recruitment:job_list' %}"
+           class="back-btn">
+
+            <i class="fas fa-arrow-left"></i>
+            Back to Jobs
+
+        </a>
+
+    </div>
+
+    <!-- JOB DETAIL CARD -->
+    <div class="job-detail-card">
+
+        <!-- HEADER -->
+        <div class="job-detail-header">
+
+            <div>
+
+                <span class="job-type-badge">
+                    {{ job.department }}
+                </span>
+
+                <h1>{{ job.title }}</h1>
+
+            </div>
+
+            <div class="job-date">
+
+                <i class="fas fa-calendar"></i>
+
+                Posted {{ job.created_at|date:"M d, Y" }}
+
+            </div>
+
+        </div>
+
+        <!-- META -->
+        <div class="job-meta">
+
+            <span>
+                <i class="fas fa-location-dot"></i>
+                {{ job.location }}
+            </span>
+
+            <span>
+                <i class="fas fa-wallet"></i>
+                {{ job.salary }}
+            </span>
+
+            <span>
+                <i class="fas fa-briefcase"></i>
+                Full Time
+            </span>
+
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="job-section">
+
+            <h3>
+                <i class="fas fa-file-lines"></i>
+                Job Description
+            </h3>
+
+            <p>
+                {{ job.description }}
+            </p>
+
+        </div>
+
+        <!-- REQUIREMENTS -->
+        <div class="job-section">
+
+            <h3>
+                <i class="fas fa-list-check"></i>
+                Requirements
+            </h3>
+
+            <p>
+                {{ job.requirements }}
+            </p>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="job-detail-actions">
+
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'recruitment:apply_job' job.id %}"
+               class="btn-apply">
+
+                <i class="fas fa-paper-plane"></i>
+                Apply Now
+
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'login' %}"
+               class="btn-apply">
+
+                <i class="fas fa-right-to-bracket"></i>
+                Login To Apply
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,289 +1,230 @@
+{% extends 'hr_portal/base_hr.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RDS| Employee List</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/hr_employees.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+{% block title %}Employee List{% endblock %}
 
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hr_employees.css' %}">
+{% endblock %}
 
-<div class="dashboard-container">
+{% block content %}
 
-    <!-- ================= SIDEBAR ================= -->
-    <aside id="sidebar" class="sidebar">
+<div class="employee-page">
 
-        <div class="sidebar-brand">
-            <i class="fas fa-users-gear"></i>
-            <span>HR Portal</span>
+    <!-- PAGE HEADER -->
+    <div class="employee-header">
+
+        <div>
+            <h1>Employee Management</h1>
+
+            <p>
+                Manage employees, departments and HR records
+
+                <span class="count-badge">
+                    {{ employees|length }} Employees
+                </span>
+            </p>
         </div>
 
-        <nav class="sidebar-nav">
-
-            <a href="{% url 'hr_portal:dashboard' %}" class="nav-item" data-title="Dashboard">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="{% url 'hr_portal:employee_list' %}" class="nav-item active" data-title="Employees">
-                <i class="fas fa-users"></i>
-                <span>Employees</span>
-            </a>
-
-            <a href="{% url 'hr_portal:applications' %}" class="nav-item" data-title="Applications">
-                <i class="fas fa-file-alt"></i>
-                <span>Applications</span>
-            </a>
-
-            <a href="{% url 'hr_portal:recruitment' %}" class="nav-item" data-title="Recruitment">
-                <i class="fas fa-briefcase"></i>
-                <span>Recruitment</span>
-            </a>
-
-            <a href="{% url 'hr_portal:departments' %}" class="nav-item" data-title="Departments">
-                <i class="fas fa-building"></i>
-                <span>Departments</span>
-            </a>
-
-            <a href="{% url 'hr_portal:attendance' %}" class="nav-item" data-title="Attendance">
-                <i class="fas fa-calendar-check"></i>
-                <span>Attendance</span>
-            </a>
-
-            <a href="{% url 'hr_portal:reports' %}" class="nav-item" data-title="Reports">
-                <i class="fas fa-chart-pie"></i>
-                <span>Reports</span>
-            </a>
-
-            <a href="{% url 'hr_portal:settings' %}" class="nav-item" data-title="Settings">
-                <i class="fas fa-gear"></i>
-                <span>Settings</span>
-            </a>
-
-            <hr class="sidebar-divider">
-
-            <a href="{% url 'logout' %}" class="nav-item logout">
-                <i class="fas fa-right-from-bracket"></i>
-                <span>Logout</span>
-            </a>
-
-        </nav>
-
-    </aside>
-
-    <!-- ================= MAIN CONTENT ================= -->
-    <main class="main">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-
-            <div class="topbar-left">
-
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search employees, departments...">
-                </div>
-
-            </div>
-
-            <div class="topbar-right">
-
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-
-                <div class="notification-wrapper">
-                    <button class="notification-btn">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">4</span>
-                    </button>
-                </div>
-
-                <div class="profile-dropdown">
-                    <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">HR</div>
-                        <span>HR Manager</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-
-                    <div class="dropdown-menu" id="profileMenu">
-                        <a href="#"><i class="fas fa-user"></i> Profile</a>
-                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                        <a href="{% url 'logout' %}">
-                            <i class="fas fa-right-from-bracket"></i> Logout
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-        </header>
-
-        <!-- PAGE HEADER -->
-        <div class="employee-header">
-
-            <div>
-                <h1>Employee Management</h1>
-                <p>
-                    Manage employees, departments and HR records
-                    <span class="count-badge">{{ employees|length }} Employees</span>
-                </p>
-            </div>
-
-            <a href="{% url 'hr_portal:add_employee' %}" class="add-btn">
-                <i class="fas fa-plus"></i>
-                <span>Add Employee</span>
-            </a>
-
-        </div>
-
-        <!-- TABLE CARD -->
-        <div class="table-card">
-
-            <!-- SEARCH BAR -->
-            <div class="table-topbar">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search employees...">
-                </div>
-            </div>
-
-            <!-- TABLE WRAPPER -->
-            <div class="table-wrapper">
-
-                <table class="employee-table">
-
-                    <thead>
-                        <tr>
-                            <th>Employee Name</th>
-                            <th>ID</th>
-                            <th>Email</th>
-                            <th>Department</th>
-                            <th>Position</th>
-                            <th>Hire Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {% for emp in employees %}
-                        <tr>
-
-                            <td>
-                                <div class="emp-info">
-                                    <div class="avatar">
-                                        {{ emp.first_name|slice:":1" }}{{ emp.last_name|slice:":1" }}
-                                    </div>
-
-                                    <div class="emp-meta">
-                                        <h4>{{ emp.full_name }}</h4>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td class="muted">{{ emp.employee_id }}</td>
-                            <td class="muted">{{ emp.email }}</td>
-
-                            <td>
-                                <span class="badge">
-                                    {{ emp.department|default:"Unassigned" }}
-                                </span>
-                            </td>
-
-                            <td>{{ emp.position }}</td>
-
-                            <td class="muted">{{ emp.hire_date }}</td>
-
-                            <td>
-                                <span class="status active">Active</span>
-                            </td>
-
-                            <td>
-                                <div class="actions">
-
-                                    <button class="btn view">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-
-                                    <button class="btn edit">
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-
-                                    <button class="btn delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        {% empty %}
-                        <tr>
-                            <td colspan="8">
-                                <div class="empty">
-                                    <i class="fas fa-users-slash"></i>
-                                    <h3>No Employees Found</h3>
-                                    <p>Start by adding your first employee</p>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-        <!-- PAGINATION -->
-<div class="pagination-wrapper">
-
-    {% if employees.has_previous %}
-        <a href="?page={{ employees.previous_page_number }}" class="page-btn">
-            <i class="fas fa-chevron-left"></i>
+        <a href="{% url 'hr_portal:add_employee' %}" class="add-btn">
+            <i class="fas fa-plus"></i>
+            <span>Add Employee</span>
         </a>
-    {% else %}
-        <span class="page-btn disabled">
-            <i class="fas fa-chevron-left"></i>
-        </span>
-    {% endif %}
 
-    {% for num in employees.paginator.page_range %}
-        {% if employees.number == num %}
-            <span class="page-btn active">{{ num }}</span>
-        {% elif num > employees.number|add:'-3' and num < employees.number|add:'3' %}
-            <a href="?page={{ num }}" class="page-btn">{{ num }}</a>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="table-card">
+
+        <!-- TABLE TOPBAR -->
+        <div class="table-topbar">
+
+            <form method="GET" class="search-box">
+
+                <i class="fas fa-search"></i>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search_query|default:'' }}"
+                    placeholder="Search employees..."
+                >
+
+            </form>
+
+        </div>
+
+        <!-- TABLE WRAPPER -->
+        <div class="table-wrapper">
+
+            <table class="employee-table">
+
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Hire Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for emp in employees %}
+                    <tr>
+
+                        <td>
+                            <div class="emp-info">
+
+                                <div class="avatar">
+                                    {{ emp.first_name|slice:":1" }}{{ emp.last_name|slice:":1" }}
+                                </div>
+
+                                <div class="emp-meta">
+                                    <h4>{{ emp.full_name }}</h4>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <td class="muted">
+                            {{ emp.employee_id }}
+                        </td>
+
+                        <td class="muted">
+                            {{ emp.email }}
+                        </td>
+
+                        <td>
+                            <span class="badge">
+                                {{ emp.department|default:"Unassigned" }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ emp.position }}
+                        </td>
+
+                        <td class="muted">
+                            {{ emp.hire_date }}
+                        </td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button class="btn view">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+
+                                <button class="btn edit">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+
+                                <button class="btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            <div class="empty">
+
+                                <i class="fas fa-users-slash"></i>
+
+                                <h3>No Employees Found</h3>
+
+                                <p>
+                                    Start by adding your first employee
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-wrapper">
+
+        {% if employees.has_previous %}
+            <a href="?page={{ employees.previous_page_number }}"
+               class="page-btn">
+
+                <i class="fas fa-chevron-left"></i>
+
+            </a>
+        {% else %}
+            <span class="page-btn disabled">
+                <i class="fas fa-chevron-left"></i>
+            </span>
         {% endif %}
-    {% endfor %}
 
-    {% if employees.has_next %}
-        <a href="?page={{ employees.next_page_number }}" class="page-btn">
-            <i class="fas fa-chevron-right"></i>
-        </a>
-    {% else %}
-        <span class="page-btn disabled">
-            <i class="fas fa-chevron-right"></i>
-        </span>
-    {% endif %}
+        {% for num in employees.paginator.page_range %}
+
+            {% if employees.number == num %}
+
+                <span class="page-btn active">
+                    {{ num }}
+                </span>
+
+            {% elif num > employees.number|add:'-3' and num < employees.number|add:'3' %}
+
+                <a href="?page={{ num }}"
+                   class="page-btn">
+
+                    {{ num }}
+
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+
+        {% if employees.has_next %}
+            <a href="?page={{ employees.next_page_number }}"
+               class="page-btn">
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+        {% else %}
+            <span class="page-btn disabled">
+                <i class="fas fa-chevron-right"></i>
+            </span>
+        {% endif %}
+
+    </div>
 
 </div>
-    </main>
 
-</div>
-
-<script src="{% static 'js/hr_dashboard.js' %}"></script>
-</body>
-</html>
+{% endblock %}

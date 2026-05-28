@@ -28,4 +28,7 @@ urlpatterns = [
 
     # Admin APP (optional dashboard/home)
     path('', include('BunnyChow.urls')),
+
+    # RECRUITMENT
+    path('recruitment/', include('recruitment.urls')),
 ]

@@ -1,43 +1,82 @@
 // Stunning Loading Animation (FIRST - Critical)
 // Circular Progress Loading (0-100%)
+// Circular Progress Loading (0-100%)
 document.addEventListener('DOMContentLoaded', () => {
+    // =========================
+    // ELEMENTS
+    // =========================
     const loader = document.getElementById('loader');
     const pageContent = document.getElementById('page-content');
-    const letters = document.querySelectorAll('.letter');
     const progressFill = document.querySelector('.progress-fill');
     const progressText = document.querySelector('.progress-text');
-    
+
+    // =========================
+    // SAFETY CHECK
+    // =========================
+    if (!loader || !progressFill || !progressText) {
+        console.error('Loader elements missing');
+        return;
+    }
+
+    // =========================
+    // SETTINGS
+    // =========================
     let progress = 0;
     const maxProgress = 100;
-    const circumference = 534; // 2 * π * 85
-    
-    // Subtitle & typewriter (unchanged)
-    letters.forEach((letter, index) => {
-        letter.style.animationDelay = `${2.8 + (index * 0.15)}s`;
-    });
-    
-    // Progress animation (3s duration)
+    const radius = 85;
+    const circumference = 2 * Math.PI * radius;
+
+    // Lock scrolling while loading
+    document.body.style.overflow = 'hidden';
+
+    // =========================
+    // INITIAL SVG RING
+    // =========================
+    progressFill.style.strokeDasharray = circumference;
+    progressFill.style.strokeDashoffset = circumference;
+    progressText.textContent = '0%';
+
+    // =========================
+    // PROGRESS ANIMATION
+    // =========================
     const progressInterval = setInterval(() => {
-        progress += 2; // Speed control
+        progress += 2;
+
         if (progress >= maxProgress) {
             progress = maxProgress;
+        }
+
+        // Update circular ring
+        const offset =
+            circumference -
+            (progress / 100) * circumference;
+
+        progressFill.style.strokeDashoffset =
+            offset;
+
+        // Update percentage text
+        progressText.textContent =
+            `${progress}%`;
+
+        // Finish loader
+        if (progress === maxProgress) {
             clearInterval(progressInterval);
-            
-            // Final delay before page reveal
+
             setTimeout(() => {
                 loader.classList.add('hidden');
-                pageContent.classList.add('page-visible');
-                document.body.style.overflow = 'auto';
-            }, 800); // 0.8s celebration hold
+
+                // only if page-content exists
+                if (pageContent) {
+                    pageContent.classList.add(
+                        'page-visible'
+                    );
+                }
+
+                document.body.style.overflow =
+                    'auto';
+            }, 800);
         }
-        
-        // Update ring & text
-        const offset = circumference - (progress / 100) * circumference;
-        progressFill.style.strokeDashoffset = offset;
-        progressText.textContent = `${Math.floor(progress)}%`;
-    }, 50); // ~60fps smooth
-    
-    document.body.style.overflow = 'hidden';
+    }, 50);
 });
 
 
@@ -160,185 +199,191 @@ document.querySelectorAll('.dropdown-link').forEach(link => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const titleElement = document.getElementById("typing-title");
+    const subtitleElement = document.getElementById("typing-subtitle");
 
-    const titleText =
-    "Enterprise Human Resource & Recruitment Management Platform";
-
-const subtitleText =
-    "Streamline recruitment, employee onboarding, workforce management, vacancy publishing, candidate applications, HR analytics, and organizational operations through one secure and intelligent digital platform.";
-
-    const titleElement =
-        document.getElementById("typing-title");
-
-    const subtitleElement =
-        document.getElementById("typing-subtitle");
-
-    let titleIndex = 0;
-    let subtitleIndex = 0;
-
-    let isDeleting = false;
-
-    function typeEffect() {
-
-        // TITLE TYPING
-        if (!isDeleting) {
-
-            titleElement.textContent =
-                titleText.substring(0, titleIndex);
-
-            subtitleElement.textContent =
-                subtitleText.substring(0, subtitleIndex);
-
-            titleIndex++;
-            subtitleIndex++;
-
-            // FINISHED TYPING
-            if (
-                titleIndex > titleText.length &&
-                subtitleIndex > subtitleText.length
-            ) {
-
-                isDeleting = true;
-
-                setTimeout(typeEffect, 2000);
-
-                return;
-            }
-
-        } else {
-
-            // DELETE EFFECT
-            titleElement.textContent =
-                titleText.substring(0, titleIndex);
-
-            subtitleElement.textContent =
-                subtitleText.substring(0, subtitleIndex);
-
-            titleIndex--;
-            subtitleIndex--;
-
-            // FINISHED DELETING
-            if (titleIndex < 0 && subtitleIndex < 0) {
-
-                isDeleting = false;
-
-                setTimeout(typeEffect, 800);
-
-                return;
-            }
-        }
-
-        const speed = isDeleting ? 40 : 80;
-
-        setTimeout(typeEffect, speed);
+    if (titleElement) {
+        titleElement.textContent =
+            "Enterprise Human Resource & Recruitment Management Platform";
     }
 
-    typeEffect();
+    if (subtitleElement) {
+        subtitleElement.textContent =
+            "Streamline recruitment, employee onboarding, workforce management, vacancy publishing, candidate applications, HR analytics, and organizational operations through one secure and intelligent digital platform.";
+    }
 
+    // fade in title
+    setTimeout(() => {
+        titleElement?.classList.add("show-text");
+    }, 300);
+
+    // fade in subtitle slightly after
+    setTimeout(() => {
+        subtitleElement?.classList.add("show-text");
+    }, 700);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const slider =
-        document.getElementById("featuresSlider");
-    const cards =
-        document.querySelectorAll(".feature-card");
-    const dots =
-        document.querySelectorAll(".dot");
-    const prevBtn =
-        document.querySelector(".prev-btn");
-    const nextBtn =
-        document.querySelector(".next-btn");
+
+    const slider = document.getElementById("featuresSlider");
+    const cards = document.querySelectorAll(".feature-link");
+    const dots = document.querySelectorAll(".dot");
+
+    const prevBtn = document.querySelector(".prev-btn");
+    const nextBtn = document.querySelector(".next-btn");
+
     let currentIndex = 0;
     let autoSlide;
+
+    const slideDelay = 3500;
     const gap = 32;
 
+    // =========================
     // CARD WIDTH
+    // =========================
     function getCardWidth() {
         return cards[0].offsetWidth + gap;
     }
 
-    // UPDATE SLIDER
-    function updateSlider() {
-        const cardWidth = getCardWidth();
-        slider.style.transform =
-            `translateX(-${currentIndex * cardWidth}px)`;
+    // =========================
+    // UPDATE DOTS + ACTIVE CARD
+    // =========================
+    function updateUI() {
 
-        // ACTIVE CARD
         cards.forEach(card => {
-            card.classList.remove("active-card");
+            card.querySelector(".feature-card")
+                .classList.remove("active-card");
         });
-        cards[currentIndex]
-            .classList.add("active-card");
 
-        // ACTIVE DOT
         dots.forEach(dot => {
             dot.classList.remove("active-dot");
         });
+
+        cards[currentIndex]
+            .querySelector(".feature-card")
+            .classList.add("active-card");
+
         dots[currentIndex]
             .classList.add("active-dot");
     }
 
-    // NEXT SLIDE
+    // =========================
+    // MOVE SLIDER
+    // =========================
+    function moveSlider() {
+
+        const moveAmount =
+            currentIndex * getCardWidth();
+
+        slider.style.transform =
+            `translateX(-${moveAmount}px)`;
+
+        updateUI();
+    }
+
+    // =========================
+    // NEXT
+    // =========================
     function nextSlide() {
+
         currentIndex++;
+
         if (currentIndex >= cards.length) {
             currentIndex = 0;
         }
-        updateSlider();
+
+        moveSlider();
     }
 
-    // PREVIOUS SLIDE
+    // =========================
+    // PREVIOUS
+    // =========================
     function prevSlide() {
+
         currentIndex--;
+
         if (currentIndex < 0) {
             currentIndex = cards.length - 1;
         }
-        updateSlider();
+
+        moveSlider();
     }
 
-    // START AUTO SLIDE
+    // =========================
+    // AUTO SLIDE
+    // =========================
     function startAutoSlide() {
+
+        stopAutoSlide();
+
         autoSlide = setInterval(() => {
             nextSlide();
-        }, 4000);
+        }, slideDelay);
     }
 
-    // STOP AUTO SLIDE
     function stopAutoSlide() {
         clearInterval(autoSlide);
     }
 
-    // BUTTON EVENTS
+    // =========================
+    // PAUSE ON HOVER
+    // =========================
+    cards.forEach(card => {
+
+        card.addEventListener("mouseenter", () => {
+            stopAutoSlide();
+        });
+
+        card.addEventListener("mouseleave", () => {
+            startAutoSlide();
+        });
+
+    });
+
+    // =========================
+    // BUTTONS
+    // =========================
     nextBtn.addEventListener("click", () => {
-        stopAutoSlide();
+
         nextSlide();
         startAutoSlide();
+
     });
 
     prevBtn.addEventListener("click", () => {
-        stopAutoSlide();
+
         prevSlide();
         startAutoSlide();
+
     });
 
-    // DOT EVENTS
+    // =========================
+    // DOTS
+    // =========================
     dots.forEach((dot, index) => {
+
         dot.addEventListener("click", () => {
-            stopAutoSlide();
 
             currentIndex = index;
-            updateSlider();
-            startAutoSlide();
-        });
-    });
-    // PAUSE ON HOVER
-    slider.addEventListener("mouseenter", stopAutoSlide);
-    slider.addEventListener("mouseleave", startAutoSlide);
-    // RESPONSIVE UPDATE
-    window.addEventListener("resize", updateSlider);
 
-    // INITIALIZE
-    updateSlider();
+            moveSlider();
+
+            startAutoSlide();
+
+        });
+
+    });
+
+    // =========================
+    // RESPONSIVE
+    // =========================
+    window.addEventListener("resize", moveSlider);
+
+    // =========================
+    // INIT
+    // =========================
+    updateUI();
     startAutoSlide();
+
 });
 
